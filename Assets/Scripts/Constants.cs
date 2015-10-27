@@ -1,6 +1,6 @@
 ﻿/*
- * author : brian g. tria
- *   date : 2015.10.27
+ * developer     : brian g. tria
+ * creation date : 2015.10.27
  * 
  */
 
