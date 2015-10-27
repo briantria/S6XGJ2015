@@ -1,10 +1,11 @@
 ﻿/*
- * author : brian g. tria
- *   date : 2015.10.27
+ * developer     : brian g. tria
+ * creation date : 2015.10.27
  *
  */
 
 using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -13,6 +14,15 @@ public class UIFlowManager : MonoBehaviour
 	private static UIFlowManager m_instance = null;
 	public  static UIFlowManager Instance {get { return m_instance; }}
 	
+	public delegate void UIFlowUpdate (HudId p_hudID);
+	public static event UIFlowUpdate onActivateHud;
+	public static event UIFlowUpdate onDeactivateHud;
+	
+	#region PROPERTIES
+	public HudId ActiveHUD { set; get; }
+	#endregion
+	
+	#region CONSTANTS
 	private const string UI_RESOURCE_PATH = "Prefabs/HUD";
 	private readonly Dictionary <HudId, string> m_dictUIPrefabs = new Dictionary <HudId, string> ()
 	{
@@ -21,6 +31,9 @@ public class UIFlowManager : MonoBehaviour
 		{HudId.Settings,      "Settings"},
 		{HudId.LoadingScreen, "LoadingScreen"}
 	};
+	#endregion
+	
+	private Dictionary <HudId, GameObject> m_dictChildren = new Dictionary <HudId, GameObject> ();
 
 	protected void Awake ()
 	{
@@ -30,6 +43,11 @@ public class UIFlowManager : MonoBehaviour
 		}
 		
 		UIPrefabInit ();
+	}
+	
+	protected void Start ()
+	{
+		UpdateUI (HudId.Home);
 	}
 	
 	private void UIPrefabInit ()
@@ -45,8 +63,38 @@ public class UIFlowManager : MonoBehaviour
 				
 				Transform gTrans = gObj.transform;
 				gTrans.SetParent (this.transform);
+				
+				m_dictChildren.Add (go.GetComponent<HudManager>().ID, go);
 			}
 		}
+	}
+	
+	public void UpdateUI (HudId p_newHudID)
+	{
+		Debug.Log ("Active HUD: " + p_newHudID.ToString ());
+	
+		// refresh display
+		foreach (KeyValuePair <HudId, GameObject> child in m_dictChildren)
+		{
+			GameObject gObj = child.Value;
+			bool willActivate = (p_newHudID & gObj.GetComponent<HudManager>().ID) > 0;
+			Debug.Log (gObj.name + " will activate? " + willActivate);
+			
+			//if (willActivate == false) { continue; }
+			gObj.SetActive (willActivate);
+		}
+		
+//		if (onDeactivateHud != null)
+//		{
+//			onDeactivateHud (p_newHudID);
+//		}
+//		
+//		if (onActivateHud != null)
+//		{
+//			onActivateHud (p_newHudID);
+//		}
+		
+		ActiveHUD = p_newHudID;
 	}
 	
 	public string GetHudName (HudId p_hudID)
@@ -55,11 +103,12 @@ public class UIFlowManager : MonoBehaviour
 	}
 }
 
+[Flags]
 public enum HudId 
 {
-	Home,
-	Game,
-	LoadingScreen,
-	Settings
+	Home          = 1 << 0,
+	Game          = 1 << 1,
+	LoadingScreen = 1 << 2,
+	Settings      = 1 << 3
 }
 
