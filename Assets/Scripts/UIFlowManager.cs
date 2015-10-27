@@ -1,15 +1,13 @@
-﻿using UnityEngine;
+﻿/*
+ * author : brian g. tria
+ *   date : 2015.10.27
+ *
+ */
+
+using UnityEngine;
 using System.Collections;
 
-public class UIFlowManager : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
+public class UIFlowManager : MonoBehaviour 
+{
 	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 }
