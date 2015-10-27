@@ -4,27 +4,24 @@
  *
  */
 
-
-// https://msdn.microsoft.com/en-us/library/zk2z37d3.aspx
-
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
 public class UIFlowManager : MonoBehaviour 
 {
-	private const string UI_RESOURCE_PATH = "Prefabs/UI";
-	private readonly Dictionary <HudId, HudName> m_dictUIPrefabs = new Dictionary <HudId, HudName> ()
-	{
-		{HudId.Home,          new HudName (HudId.Home,          "Home")},
-		{HudId.Game,          new HudName (HudId.Game,          "Game")},
-		{HudId.Settings,      new HudName (HudId.Settings,      "Settings")},
-		{HudId.LoadingScreen, new HudName (HudId.LoadingScreen, "LoadingScreen")}
-	};
-
 	private static UIFlowManager m_instance = null;
 	public  static UIFlowManager Instance {get { return m_instance; }}
 	
+	private const string UI_RESOURCE_PATH = "Prefabs/HUD";
+	private readonly Dictionary <HudId, string> m_dictUIPrefabs = new Dictionary <HudId, string> ()
+	{
+		{HudId.Home,          "Home"},
+		{HudId.Game,          "Game"},
+		{HudId.Settings,      "Settings"},
+		{HudId.LoadingScreen, "LoadingScreen"}
+	};
+
 	protected void Awake ()
 	{
 		if (m_instance == null)
@@ -41,7 +38,7 @@ public class UIFlowManager : MonoBehaviour
 				
 		foreach (GameObject go in objArrUIPrefabs)
 		{
-			if (m_dictUIPrefabs.ContainsKey (new HudName))
+			if (m_dictUIPrefabs.ContainsValue (go.name))
 			{
 				GameObject gObj = (GameObject) Instantiate (go);
 				gObj.name = go.name;
@@ -51,5 +48,18 @@ public class UIFlowManager : MonoBehaviour
 			}
 		}
 	}
+	
+	public string GetHudName (HudId p_hudID)
+	{
+		return m_dictUIPrefabs [p_hudID];
+	}
+}
+
+public enum HudId 
+{
+	Home,
+	Game,
+	LoadingScreen,
+	Settings
 }
 
