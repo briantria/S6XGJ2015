@@ -1,0 +1,38 @@
+.DS_Store
+
+#Unity stuff
+Temp/
+Library/
+Library/metadata/
+obj/
+library/
+library/metadata/
+
+#ignoring pidb, they are just code completion caching data according to:
+# http://stackoverflow.com/questions/1022111/what-are-monodevelops-pidb-files
+#
+*.pidb
+*.userprefs
+*.orig
+*.unityproj
+
+# C# files
+*.csproj
+*.pidb
+*.sln
+*.suo
+
+# Save Files
+Assets/SaveData
+Assets/SaveData/
+Assets/SaveData.meta
+#Assets/datum01.bin
+#Assets/datum01.bin.meta
+#Assets/index01.bin
+#Assets/index01.bin.meta
+#Assets/index02.bin
+#Assets/index02.bin.meta
+#Assets/index03.bin
+#Assets/index03.bin.meta
+#Assets/index04.bin
+#Assets/index04.bin.meta
