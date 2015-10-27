@@ -14,6 +14,8 @@ public class MenuItemCustomUI
 	static void CreateCustomUI (MenuCommand p_menuCommand)
 	{
 		GameObject go = new GameObject ("Custom Canvas");
+		go.layer = 5;
+		
 		GameObjectUtility.SetParentAndAlign(go, p_menuCommand.context as GameObject);
 		Undo.RegisterCreatedObjectUndo(go, "Create " + go.name);
 		Selection.activeObject = go;
@@ -24,6 +26,8 @@ public class MenuItemCustomUI
 		go.AddComponent <GraphicRaycaster>();
 		
 		canvas.renderMode = RenderMode.ScreenSpaceCamera;
+		//canvas.sortingLayerName = Constants.SortingLayerNames [(int) SortingLayerIDs.UILayer];
+		
 		canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
 		canvasScaler.referenceResolution = new Vector2 (900, 600);
 		canvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;

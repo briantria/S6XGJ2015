@@ -41,3 +41,18 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: BGLayer
+    uniqueID: 1305028307
+    locked: 0
+  - name: GameLayer
+    uniqueID: 3699728417
+    locked: 0
+  - name: FGLayer
+    uniqueID: 3405797059
+    locked: 0
+  - name: UILayer
+    uniqueID: 2357136565
+    locked: 0
+  - name: LoadingLayer
+    uniqueID: 1492101021
+    locked: 0
