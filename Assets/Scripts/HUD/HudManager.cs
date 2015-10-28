@@ -39,7 +39,6 @@ public class HudManager : MonoBehaviour
 	
 	protected virtual void DeactivateHud ()
 	{
-		//this.gameObject.SetActive (false);
-		Debug.Log ("Deactivate: " + this.GetType().ToString());
+		this.gameObject.SetActive (false);
 	}
 }

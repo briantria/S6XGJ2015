@@ -64,35 +64,32 @@ public class UIFlowManager : MonoBehaviour
 				Transform gTrans = gObj.transform;
 				gTrans.SetParent (this.transform);
 				
-				m_dictChildren.Add (go.GetComponent<HudManager>().ID, go);
+				m_dictChildren.Add (go.GetComponent<HudManager>().ID, gObj);
 			}
 		}
 	}
 	
 	public void UpdateUI (HudId p_newHudID)
 	{
-		Debug.Log ("Active HUD: " + p_newHudID.ToString ());
-	
+		if (onDeactivateHud != null)
+		{
+			onDeactivateHud (p_newHudID);
+		}
+		
 		// refresh display
 		foreach (KeyValuePair <HudId, GameObject> child in m_dictChildren)
 		{
 			GameObject gObj = child.Value;
 			bool willActivate = (p_newHudID & gObj.GetComponent<HudManager>().ID) > 0;
-			Debug.Log (gObj.name + " will activate? " + willActivate);
 			
-			//if (willActivate == false) { continue; }
+			if (willActivate == false) { continue; }
 			gObj.SetActive (willActivate);
 		}
 		
-//		if (onDeactivateHud != null)
-//		{
-//			onDeactivateHud (p_newHudID);
-//		}
-//		
-//		if (onActivateHud != null)
-//		{
-//			onActivateHud (p_newHudID);
-//		}
+		if (onActivateHud != null)
+		{
+			onActivateHud (p_newHudID);
+		}
 		
 		ActiveHUD = p_newHudID;
 	}

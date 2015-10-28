@@ -11,7 +11,6 @@ public class HomeHudManager : HudManager
 {
 	public void OnClickPlay ()
 	{
-		Debug.Log ("CLICK PLAY!");
 		UIFlowManager.Instance.UpdateUI (HudId.Game);
 	}
 }
