@@ -54,17 +54,17 @@ public class UIFlowManager : MonoBehaviour
 	{
 		GameObject [] objArrUIPrefabs = Resources.LoadAll <GameObject> (UI_RESOURCE_PATH);
 				
-		foreach (GameObject go in objArrUIPrefabs)
+		foreach (GameObject goPrefab in objArrUIPrefabs)
 		{
-			if (m_dictUIPrefabs.ContainsValue (go.name))
+			if (m_dictUIPrefabs.ContainsValue (goPrefab.name))
 			{
-				GameObject gObj = (GameObject) Instantiate (go);
-				gObj.name = go.name;
+				GameObject goInstance = (GameObject) Instantiate (goPrefab);
+				goInstance.name = goPrefab.name;
 				
-				Transform gTrans = gObj.transform;
+				Transform gTrans = goInstance.transform;
 				gTrans.SetParent (this.transform);
 				
-				m_dictChildren.Add (go.GetComponent<HudManager>().ID, gObj);
+				m_dictChildren.Add (goInstance.GetComponent<HudManager>().ID, goInstance);
 			}
 		}
 	}
