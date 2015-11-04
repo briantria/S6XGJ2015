@@ -8,14 +8,14 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections;
 
-public class DesignGridGenerator : EditorWindow
+public class DesignGridEditor : EditorWindow
 {
 	private string m_jsonFilePath = string.Empty;
 
 	[MenuItem ("LevelDesign/Grid Generator")]
 	static void OpenGridGeneratorWindow ()
 	{
-		DesignGridGenerator gridGeneratorWindow = (DesignGridGenerator) EditorWindow.GetWindow (typeof (DesignGridGenerator));
+		DesignGridEditor gridGeneratorWindow = (DesignGridEditor) EditorWindow.GetWindow (typeof (DesignGridEditor));
 		gridGeneratorWindow.titleContent = new GUIContent ("Grid Generator");
 		gridGeneratorWindow.Show ();
 	}
@@ -25,12 +25,14 @@ public class DesignGridGenerator : EditorWindow
 		if (GUILayout.Button ("Generate New Grid"))
 		{
 			m_jsonFilePath = string.Empty;
-			Debug.Log ("Generate Grid!");
+			
+			DesignGrid designGridWindow = ScriptableObject.CreateInstance <DesignGrid>();
+			designGridWindow.ShowUtility ();
 		}
 		
 		if (GUILayout.Button ("Open"))
 		{
-			Debug.Log ("Select and load json file");
+			Debug.Log ("Select and load map data from json: ");
 		}
 		
 		if (GUILayout.Button ("Save"))

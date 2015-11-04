@@ -8,6 +8,8 @@ using UnityEngine;
 
 public class Constants 
 {
+	public static readonly float PPU = 0.01f;
+	public static readonly Vector2 ReferenceResolution = new Vector2 (2048, 1536);
 	public static readonly string [] SortingLayerNames = new string []
 	{
 		"Default",

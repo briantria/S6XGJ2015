@@ -29,7 +29,7 @@ public class MenuItemCustomUI
 		//canvas.sortingLayerName = Constants.SortingLayerNames [(int) SortingLayerIDs.UILayer];
 		
 		canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-		canvasScaler.referenceResolution = new Vector2 (2048, 1536);
+		canvasScaler.referenceResolution = Constants.ReferenceResolution;// new Vector2 (2048, 1536);
 		canvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
 		canvasScaler.matchWidthOrHeight = 0.5f;
 	}
