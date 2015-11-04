@@ -11,8 +11,8 @@ using System.Collections;
 public class DesignGrid : EditorWindow 
 {
 	private Vector2 m_v2GridSize = Vector2.one;
-	string m_strGridX = string.Empty;
-	string m_strGridY = string.Empty;
+	string m_strGridX = "15";
+	string m_strGridY = "10";
 
 	void OnGUI ()
 	{

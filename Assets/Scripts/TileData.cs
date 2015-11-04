@@ -36,12 +36,12 @@ public class TileData : ScriptableObject
 		
 		Vector3 pos    = trans.position;
 				pos.x  = m_v2Index.x * Size.x;
-				pos.x -= m_v2Index.x * Size.x * 0.25f;
-				pos.y  = m_v2Index.y * Size.y;
+				pos.x -= m_v2Index.x * Size.x * 0.1f;
+				pos.y  = m_v2Index.y * Size.y * 1.2f;
 				
 		if (m_v2Index.x % 2 == 1)
 		{
-			pos.y += Size.y * 0.5f;
+			pos.y += Size.y * 0.6f;
 		}
 		
 		pos.x *= Constants.PPU;
