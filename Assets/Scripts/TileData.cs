@@ -30,17 +30,18 @@ public class TileData : ScriptableObject
 		Transform trans = gObj.transform;
 				  trans.SetParent (p_tParent);
 				  trans.localScale = Vector3.one * scale;
+				  trans.position = Vector3.zero;
 		
 		m_v2Index = p_v2Index;
 		
 		Vector3 pos    = trans.position;
-				pos.x *= m_v2Index.x * Size.x;
-				//pos.x -= m_v2Index.x * Size.x * 0.25f;
-				pos.y *= m_v2Index.y * Size.y;
+				pos.x  = m_v2Index.x * Size.x;
+				pos.x -= m_v2Index.x * Size.x * 0.25f;
+				pos.y  = m_v2Index.y * Size.y;
 				
-		if (m_v2Index.y % 2 == 1)
+		if (m_v2Index.x % 2 == 1)
 		{
-			pos.y += Size.x * 0.5f;
+			pos.y += Size.y * 0.5f;
 		}
 		
 		pos.x *= Constants.PPU;

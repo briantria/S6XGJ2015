@@ -16,10 +16,10 @@ public class DesignGrid : EditorWindow
 
 	void OnGUI ()
 	{
-		GUILayout.Label ("Grid Size X:");
+		GUILayout.Label ("Column Count:");
 		m_strGridX = GUILayout.TextField (m_strGridX);
 		
-		GUILayout.Label ("Grid Size Y:");
+		GUILayout.Label ("Row Count:");
 		m_strGridY = GUILayout.TextField (m_strGridY);
 		
 		int iGridColCount, iGridRowCount;
