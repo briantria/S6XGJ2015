@@ -41,7 +41,8 @@ public class DesignGrid : EditorWindow
 				{
 					for (int iColIdx = 0; iColIdx < iGridRowCount; ++iColIdx)
 					{
-						TileData td = ScriptableObject.CreateInstance <TileData>();
+						GameObject gObj = Instantiate <GameObject>(Resources.Load <GameObject>(Tile.PREFAB_PATH));
+						Tile td = gObj.GetComponent <Tile> ();
 						td.AddTo (gridContainer.transform, new Vector2 (iRowIdx, iColIdx));
 					}
 				}
