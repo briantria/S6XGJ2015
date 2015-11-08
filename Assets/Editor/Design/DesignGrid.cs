@@ -44,6 +44,7 @@ public class DesignGrid : EditorWindow
 						GameObject gObj = Instantiate <GameObject>(Resources.Load <GameObject>(Tile.PREFAB_PATH));
 						Tile td = gObj.GetComponent <Tile> ();
 						td.AddTo (gridContainer.transform, new Vector2 (iRowIdx, iColIdx));
+						td.SetType (Random.Range (0, 2) > 0 ? TileType.Wall : TileType.Path);
 					}
 				}
 			}

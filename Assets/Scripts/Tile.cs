@@ -5,6 +5,7 @@
  */
 
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -35,6 +36,8 @@ public class Tile : MonoBehaviour
 	public Vector2 Index {get {return m_v2Index;}}
 	public TileType Type {get {return m_tileType;}}
 	#endregion
+	
+	[SerializeField] private SpriteRenderer m_spriteRenderer;
 	
 	private Vector2 m_v2Index = Vector2.zero;
 	private TileType m_tileType;
@@ -71,6 +74,7 @@ public class Tile : MonoBehaviour
 	
 	public void SetType (TileType p_tileType)
 	{
-		
+		m_tileType = p_tileType;
+		m_spriteRenderer.color = m_dictTileColor [m_tileType];
 	}
 }
