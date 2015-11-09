@@ -107,4 +107,9 @@ public class Tile : MonoBehaviour
 		m_tileType = p_tileType;
 		m_spriteRenderer.color = m_dictTileColor [m_tileType];
 	}
+	
+	public void Test ()
+	{
+		Debug.Log ("Test!");
+	}
 }
