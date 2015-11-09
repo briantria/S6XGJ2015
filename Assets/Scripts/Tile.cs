@@ -19,6 +19,7 @@ public enum TileType
 	Exit
 }
 
+[ExecuteInEditMode]
 public class Tile : MonoBehaviour
 {
 	#region Constants
@@ -39,9 +40,38 @@ public class Tile : MonoBehaviour
 	
 	[SerializeField] private SpriteRenderer m_spriteRenderer;
 	
+	private Transform m_transform;
 	private Vector2 m_v2Index = Vector2.zero;
 	private TileType m_tileType;
+	
+	protected void Awake ()
+	{
+		m_transform = this.transform;
+		Debug.Log ("AWAKE! " + gameObject.name);
+	}
+	
+	protected void Update ()
+	{
+		if (Input.GetMouseButtonUp (0))
+		{
+			Debug.Log ("test");
+		}
+	
+		#if UNITY_EDITOR
+		if (!Application.isPlaying && Input.GetMouseButtonUp (0))
+		{
+			EditModeClick ();
+		}
+		#endif 
+	}
 		
+	private void EditModeClick ()
+	{
+		Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+		float sqrMagnitude = ((Vector2)m_transform.position - mousePosition).sqrMagnitude;
+		Debug.Log ("[" + gameObject.name + "] Editor Click: " + sqrMagnitude);
+	}
+								
 	public void AddTo (Transform p_tParent, Vector2 p_v2Index)
 	{
 		GameObject gObj = this.gameObject;

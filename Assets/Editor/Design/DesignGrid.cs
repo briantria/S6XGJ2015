@@ -37,6 +37,10 @@ public class DesignGrid : EditorWindow
 					gridContainer = new GameObject ("GridContainer");
 				}
 				
+				// TODO:
+				//   Consider creating a matrix with 0s and 1s first
+				//   Then instantiate the tiles based on the matrix
+				
 				for (int iRowIdx = 0; iRowIdx < iGridColCount; ++iRowIdx)
 				{
 					for (int iColIdx = 0; iColIdx < iGridRowCount; ++iColIdx)
