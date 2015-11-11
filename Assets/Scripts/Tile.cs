@@ -19,11 +19,10 @@ public enum TileType
 	Exit
 }
 
-//[ExecuteInEditMode]
 public class Tile : MonoBehaviour
 {
 	#region Constants
-	public static readonly Vector2 Size = new Vector2 (124.0f, 108.0f);
+	public static readonly Vector2 Size = new Vector2 (128, 128); //new Vector2 (124.0f, 108.0f);
 	public static readonly string  PREFAB_PATH = "Prefabs/Tile";
 	
 	private Dictionary <TileType, Color> m_dictTileColor = new Dictionary <TileType, Color> ()
@@ -54,26 +53,13 @@ public class Tile : MonoBehaviour
 	{
 		if (Input.GetMouseButtonUp (0))
 		{
-			#if UNITY_EDITOR
-			if (!Application.isPlaying)
+			switch (m_tileType){
+			case TileType.Path:
 			{
-				EditModeClick ();
-			}
-			#endif
-			
-//			switch (m_tileType)
-//			{
-//				
-//			}
+				
+				break;
+			}}
 		}
-	}
-		
-	private void EditModeClick ()
-	{
-//		Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-//		float sqrMagnitude = ((Vector2)m_transform.position - mousePosition).sqrMagnitude;
-		float sqrMagnitude = InputManager.ClickToTargetDistance (m_transform.position);
-		Debug.Log ("[" + gameObject.name + "] Editor Click: " + sqrMagnitude);
 	}
 								
 	public void AddTo (Transform p_tParent, Vector2 p_v2Index)
@@ -92,14 +78,8 @@ public class Tile : MonoBehaviour
 		
 		Vector3 pos    = trans.position;
 				pos.x  = m_v2Index.x * Size.x;
-				pos.x -= m_v2Index.x * Size.x * 0.1f;
-				pos.y  = m_v2Index.y * Size.y * 1.2f;
-				
-		if (m_v2Index.x % 2 == 1)
-		{
-			pos.y += Size.y * 0.6f;
-		}
-		
+				pos.y  = m_v2Index.y * Size.y;
+			
 		pos.x *= Constants.PPU;
 		pos.y *= Constants.PPU;
 		

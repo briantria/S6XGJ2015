@@ -19,7 +19,6 @@ public class EditorInputListener : Editor
 		{
 			case EventType.mouseUp:
 			{
-				Debug.Log ("MOUSE UP!");
 				tile.ToggleTileType ();
 				Event.current.Use ();
 				break;
