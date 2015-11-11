@@ -19,7 +19,7 @@ public enum TileType
 	Exit
 }
 
-[ExecuteInEditMode]
+//[ExecuteInEditMode]
 public class Tile : MonoBehaviour
 {
 	#region Constants
@@ -44,31 +44,35 @@ public class Tile : MonoBehaviour
 	private Vector2 m_v2Index = Vector2.zero;
 	private TileType m_tileType;
 	
-	protected void Awake ()
+	protected void OnEnable ()
 	{
 		m_transform = this.transform;
-		Debug.Log ("AWAKE! " + gameObject.name);
+		m_tileType = TileType.Path;
 	}
 	
 	protected void Update ()
 	{
 		if (Input.GetMouseButtonUp (0))
 		{
-			Debug.Log ("test");
+			#if UNITY_EDITOR
+			if (!Application.isPlaying)
+			{
+				EditModeClick ();
+			}
+			#endif
+			
+//			switch (m_tileType)
+//			{
+//				
+//			}
 		}
-	
-		#if UNITY_EDITOR
-		if (!Application.isPlaying && Input.GetMouseButtonUp (0))
-		{
-			EditModeClick ();
-		}
-		#endif 
 	}
 		
 	private void EditModeClick ()
 	{
-		Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-		float sqrMagnitude = ((Vector2)m_transform.position - mousePosition).sqrMagnitude;
+//		Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+//		float sqrMagnitude = ((Vector2)m_transform.position - mousePosition).sqrMagnitude;
+		float sqrMagnitude = InputManager.ClickToTargetDistance (m_transform.position);
 		Debug.Log ("[" + gameObject.name + "] Editor Click: " + sqrMagnitude);
 	}
 								
@@ -108,8 +112,20 @@ public class Tile : MonoBehaviour
 		m_spriteRenderer.color = m_dictTileColor [m_tileType];
 	}
 	
-	public void Test ()
+	#if UNITY_EDITOR
+	public void ToggleTileType ()
 	{
-		Debug.Log ("Test!");
+		switch (m_tileType){
+		case TileType.Path:
+		{
+			SetType (TileType.Wall);
+			break;
+		}
+		case TileType.Wall:
+		{
+			SetType (TileType.Path);
+			break;
+		}}
 	}
+	#endif
 }
