@@ -20,7 +20,7 @@ public class UIPanelSlide : MonoBehaviour
 	private float m_fPanelAnchorMinX;
 	private float m_fPanelAnchorMaxY;
 	
-	protected void OnEnable ()
+	protected void Awake ()
 	{
 		m_bIsVisible = false;
 		m_canvas = this.gameObject.GetComponent<Canvas> ();

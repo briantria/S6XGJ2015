@@ -40,27 +40,57 @@ public class Tile : MonoBehaviour
 	[SerializeField] private SpriteRenderer m_spriteRenderer;
 	
 	private Transform m_transform;
+	private GameObject m_gameObject;
 	private Vector2 m_v2Index = Vector2.zero;
 	private TileType m_tileType;
 	
-	protected void OnEnable ()
+	protected void Awake ()
 	{
 		m_transform = this.transform;
+		m_gameObject = this.gameObject;
 		m_tileType = TileType.Path;
 	}
 	
-	protected void Update ()
+	protected void OnMouseUpAsButton ()
 	{
-		if (Input.GetMouseButtonUp (0))
+//		GameObject gObjRaycastClick = InputManager.RaycastClick ();
+//	
+//		if (gObjRaycastClick != null && m_gameObject.GetInstanceID () != m_gameObject.GetInstanceID ())
+//		{
+//			Debug.Log ("RAYCAST! BITCHES!!!!");
+//			return;
+//		}
+		
+		if (InputManager.OverlapClick () > 1)
 		{
-			switch (m_tileType){
-			case TileType.Path:
-			{
-				
-				break;
-			}}
+			return;
 		}
+		
+		switch (m_tileType){
+		case TileType.Path:
+		{
+			XyxySetupPanel.Instance.Open ();
+			XyxySetupPanel.Instance.SetPosition (m_transform.position);
+			break;
+		}}
 	}
+	
+//	protected void Update ()
+//	{
+//		if (Input.GetMouseButtonUp (0))
+//		{
+//			if (InputManager.ClickToTargetDistance (m_transform.position) < Size.x * Constants.PPU * 0.3f)
+//			{
+//				switch (m_tileType){
+//				case TileType.Path:
+//				{
+//					XyxySetupPanel.Instance.Open ();
+//					XyxySetupPanel.Instance.SetPosition (m_transform.position);
+//					break;
+//				}}
+//			}
+//		}
+//	}
 								
 	public void AddTo (Transform p_tParent, Vector2 p_v2Index)
 	{
