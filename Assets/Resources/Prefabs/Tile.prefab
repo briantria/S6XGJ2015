@@ -9,8 +9,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 457330}
   - 212: {fileID: 21233382}
-  - 114: {fileID: 11490768}
   - 61: {fileID: 6181144}
+  - 114: {fileID: 11490768}
   m_Layer: 0
   m_Name: Tile
   m_TagString: Untagged
