@@ -19,6 +19,8 @@ public class Constants
 		"UILayer",
 		"LoadingLayer"
 	};
+	
+	public static readonly string BGCamTag = "BGCamera";
 }
 
 public enum SortingLayerIDs

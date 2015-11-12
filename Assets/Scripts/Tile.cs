@@ -40,14 +40,14 @@ public class Tile : MonoBehaviour
 	[SerializeField] private SpriteRenderer m_spriteRenderer;
 	
 	private Transform m_transform;
-	private GameObject m_gameObject;
+//	private GameObject m_gameObject;
 	private Vector2 m_v2Index = Vector2.zero;
 	private TileType m_tileType = TileType.Path;
 	
 	protected void Awake ()
 	{
 		m_transform = this.transform;
-		m_gameObject = this.gameObject;
+//		m_gameObject = this.gameObject;
 	}
 	
 	protected void OnMouseUpAsButton ()
