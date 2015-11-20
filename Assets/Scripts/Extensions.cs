@@ -28,6 +28,11 @@ public struct IntVector2
     
     public override string ToString ()
     {
-        return "(" + x + ", " + y + ")";
+        return "(" + this.x + ", " + this.y + ")";
+    }
+    
+    public IntVector2 Sum (IntVector2 p_iv2)
+    {
+        return new IntVector2 (this.x + p_iv2.x, this.y + p_iv2.y);
     }
 }

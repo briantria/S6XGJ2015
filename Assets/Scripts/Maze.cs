@@ -11,6 +11,6 @@ public class Maze : MonoBehaviour
 {
 	public void Display ()
     {
-        
+    
     }
 }
