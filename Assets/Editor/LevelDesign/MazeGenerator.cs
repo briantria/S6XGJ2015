@@ -18,6 +18,24 @@ public class MazeGenerator : EditorWindow
 
 	protected void OnGUI ()
 	{
+        if (MazeData.GeneratorState == MazeGeneratorState.ComputingPath)
+        {
+            GUILayout.Label ("Generating Maze...");
+            return;
+        }
+        
+        if (MazeData.GeneratorState == MazeGeneratorState.Saving)
+        {
+            GUILayout.Label ("Saving Maze...");
+            return;
+        }
+        
+        if (MazeData.GeneratorState == MazeGeneratorState.Fetching)
+        {
+            GUILayout.Label ("Loading Maze...");
+            return;
+        }
+    
 		GUILayout.Label ("Width:");
 		m_strColCount = GUILayout.TextField (m_strColCount);
 		
@@ -28,9 +46,70 @@ public class MazeGenerator : EditorWindow
 		{
 			if (GUILayout.Button ("Generate Random Maze"))
 			{
-				Maze.Create (m_iColCount, m_iRowCount);
+                if (MazeData.IsEmpty || MazeData.IsSaved)
+                {
+                    MazeData.Create (m_iColCount, m_iRowCount);
+                }
+                else
+                {
+                    int option = EditorUtility.DisplayDialogComplex
+                                 (
+                                    "Warning!",
+                                    "Current changes will be lost. Save changes?",
+                                    "Save Maze",
+                                    "Proceed without Saving",
+                                    "Cancel"
+                                 );
+                                 
+                    switch (option)
+                    {
+                        case 0:
+                        {
+                            //Debug.Log ("save maze");
+                            MazeData.Save ();
+                            break;
+                        }
+                        
+                        case 1:
+                        {
+                            //Debug.Log ("proceed without saving");
+                            MazeData.Clear ();
+                            MazeData.Create (m_iColCount, m_iRowCount);
+                            break;
+                        }
+                        
+//                        case 2:
+//                        {
+//                            //Debug.Log ("cancel");
+//                            break;
+//                        }
+                    }
+                }
 			}
 		}
+        
+        if (MazeData.IsEmpty == false)
+        {
+            if (GUILayout.Button ("Display Maze"))
+            {
+                //MazeData.Display ();
+            }
+            
+            if (GUILayout.Button ("Clear Maze"))
+            {
+                if (MazeData.IsSaved == false &&
+                    EditorUtility.DisplayDialog (
+                        "Clear Maze",
+                        "Save changes?",
+                        "Save",
+                        "Proceed without Saving"))
+                {
+                    MazeData.Save ();
+                }
+                
+                MazeData.Clear ();
+            }
+        }
 	}
 	
 	[MenuItem ("LevelDesign/Maze Generator")]
@@ -44,11 +123,10 @@ public class MazeGenerator : EditorWindow
 
 /*
 data stored in json
-- (half of) adjacency matrix
+- neighbor (adjacency) matrix
+- maze dimension
 - start coordinate
 - exit coordinate
-- vertex spacing (for drawing maze)
-- world position of vertex (0,0)
 - level id
 */
 
