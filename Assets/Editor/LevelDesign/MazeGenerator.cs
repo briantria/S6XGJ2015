@@ -18,19 +18,19 @@ public class MazeGenerator : EditorWindow
 
 	protected void OnGUI ()
 	{
-        if (MazeData.GeneratorState == MazeGeneratorState.ComputingPath)
+        if (MazeGeneratorData.State == MazeGeneratorState.ComputingPath)
         {
             GUILayout.Label ("Generating Maze...");
             return;
         }
         
-        if (MazeData.GeneratorState == MazeGeneratorState.Saving)
+        if (MazeGeneratorData.State == MazeGeneratorState.Saving)
         {
             GUILayout.Label ("Saving Maze...");
             return;
         }
         
-        if (MazeData.GeneratorState == MazeGeneratorState.Fetching)
+        if (MazeGeneratorData.State == MazeGeneratorState.Fetching)
         {
             GUILayout.Label ("Loading Maze...");
             return;
@@ -46,9 +46,9 @@ public class MazeGenerator : EditorWindow
 		{
 			if (GUILayout.Button ("Generate Random Maze"))
 			{
-                if (MazeData.IsEmpty || MazeData.IsSaved)
+                if (MazeGeneratorData.IsEmpty || MazeGeneratorData.IsSaved)
                 {
-                    MazeData.Create (m_iColCount, m_iRowCount);
+                    MazeGeneratorData.Create (m_iColCount, m_iRowCount);
                 }
                 else
                 {
@@ -66,15 +66,15 @@ public class MazeGenerator : EditorWindow
                         case 0:
                         {
                             //Debug.Log ("save maze");
-                            MazeData.Save ();
+                            MazeGeneratorData.Save ();
                             break;
                         }
                         
                         case 1:
                         {
                             //Debug.Log ("proceed without saving");
-                            MazeData.Clear ();
-                            MazeData.Create (m_iColCount, m_iRowCount);
+                            MazeGeneratorData.Clear ();
+                            MazeGeneratorData.Create (m_iColCount, m_iRowCount);
                             break;
                         }
                         
@@ -88,26 +88,28 @@ public class MazeGenerator : EditorWindow
 			}
 		}
         
-        if (MazeData.IsEmpty == false)
+        if (MazeGeneratorData.IsEmpty == false)
         {
             if (GUILayout.Button ("Display Maze"))
             {
-                //MazeData.Display ();
+                GameObject objMaze = new GameObject ();
+                Maze maze = objMaze.AddComponent <Maze>();
+                maze.Display (MazeGeneratorData.MazeDimension);
             }
             
             if (GUILayout.Button ("Clear Maze"))
             {
-                if (MazeData.IsSaved == false &&
+                if (MazeGeneratorData.IsSaved == false &&
                     EditorUtility.DisplayDialog (
                         "Clear Maze",
                         "Save changes?",
                         "Save",
                         "Proceed without Saving"))
                 {
-                    MazeData.Save ();
+                    MazeGeneratorData.Save ();
                 }
                 
-                MazeData.Clear ();
+                MazeGeneratorData.Clear ();
             }
         }
 	}

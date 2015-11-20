@@ -27,7 +27,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public static class MazeData
+public static class MazeGeneratorData
 {
     #region Constants
     private static readonly IntVector2 [] k_iv2NeighborOffsets = new IntVector2[]
@@ -49,7 +49,8 @@ public static class MazeData
     private static MazeGeneratorState m_generatorSate = MazeGeneratorState.Ready;
     
     #region Properties
-    public static MazeGeneratorState GeneratorState {get {return m_generatorSate;}}
+    public static IntVector2 MazeDimension {get {return new IntVector2 (m_iWidth, m_height);}}
+    public static MazeGeneratorState State {get {return m_generatorSate;}}
     public static bool IsSaved {get {return m_saved;}}
     public static bool IsEmpty 
     {
@@ -122,9 +123,9 @@ public static class MazeData
             }
         }
         
-//        DebugDrawMaze ();
+        DebugDrawMaze ();
         GenerateRandomPath ();
-//        DebugDrawMaze ();
+        DebugDrawMaze ();
 	}
 	
 	public static void Clear ()
@@ -258,17 +259,26 @@ public static class MazeData
          *       
          */
          
-        int iRowIdx  = (m_iWidth * p_iv2Current.y) + p_iv2Current.x;
-//        Debug.Log ("[RemoveWallBetween] iRowIdx: " + iRowIdx);
+         // NEIGBOR POSITION IS IMPORTANT!
+        
+        int iRowIdx;
+        int iColIdx;
+        
+        iRowIdx = (m_iWidth * p_iv2Current.y) + p_iv2Current.x;
+        iColIdx = (m_height * m_iWidth) - 1;
+        
         if (iRowIdx < 0 || iRowIdx >= m_wallPlacements.Length)
         {
-            return;
+            iRowIdx  = (m_iWidth * p_iv2Neighbor.y) + p_iv2Neighbor.x;
+            iColIdx -= (m_iWidth * p_iv2Current.y) + p_iv2Current.x;
+        }
+        else
+        {
+            iColIdx -= (m_iWidth * p_iv2Neighbor.y) + p_iv2Neighbor.x;
         }
         
-        int iColIdx  = (m_height * m_iWidth) - 1;
-            iColIdx -= (m_iWidth * p_iv2Neighbor.y) + p_iv2Neighbor.x;
-//        Debug.Log ("[RemoveWallBetween] iColIdx: " + iColIdx);
-        if (iColIdx < 0 || iColIdx >= m_wallPlacements[iRowIdx].Count)
+        if (   iRowIdx < 0 || iRowIdx >= m_wallPlacements.Length
+            || iColIdx < 0 || iColIdx >= m_wallPlacements[iRowIdx].Count)
         {
             return;
         }
@@ -362,40 +372,32 @@ public static class MazeData
         for (int row = 0; row < m_wallPlacements.Length; ++row)
         {
             int mazeRow = m_listMazeVerteces[row].y;
-        
             for (int col = 0; col < m_wallPlacements[row].Count; ++col)
             {
                 int mazeCol = m_listMazeVerteces[iSignificantVertexCount - col].x;
-            
                 switch (m_wallPlacements[row][col])
                 {
                     case WallPlacement.Up:
                     {
-                        int currStrRowLen = strRow[mazeRow].Length;
                         int strRowEstLen = (mazeCol * 2);
-                        
-                        if (strRowEstLen > currStrRowLen)
+                        while (strRow[mazeRow].Length <  strRowEstLen)
                         {
-                            strRow[mazeRow] += ",";
+                            strRow[mazeRow] += " ";
                         }
                         
                         strRow[mazeRow] += "-";
-                        
                         break;
                     }
                     
                     case WallPlacement.Right:
                     {
-                        int currStrRowLen = strRow[mazeRow].Length;
                         int strRowEstLen = (mazeCol * 2) + 1;
-                        
-                        if (strRowEstLen > currStrRowLen)
+                        while (strRow[mazeRow].Length <= strRowEstLen)
                         {
-                            strRow[mazeRow] += ".";
+                            strRow[mazeRow] += " ";
                         }
                         
-                        strRow[mazeRow] += "|";
-                        
+                        strRow[mazeRow] += ",";
                         break;
                     }
                 }
@@ -420,14 +422,4 @@ public enum MazeGeneratorState
     Saving,
     Fetching,
     Done
-}
-
-[System.Flags]
-public enum WallPlacement
-{
-    None,
-    Left,
-    Up,
-    Right,
-    Down
 }
