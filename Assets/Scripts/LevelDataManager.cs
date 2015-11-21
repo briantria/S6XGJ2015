@@ -18,6 +18,7 @@ public class LevelDataManager
     private static LevelDataManager m_instance = null;
     private List<LevelData> m_listLevelData = new List<LevelData> ();
     
+    public List<LevelData> ListLevelData {get {return m_listLevelData;}}
     public static LevelDataManager Instance
     {
         get
@@ -32,15 +33,16 @@ public class LevelDataManager
         }
     }
     
-    public void Load ()
+    public bool Load ()
     {
         string strPath = Utilities.GetGameDataDirectory () + LEVELDATA_FILENAME;
-        if (File.Exists (strPath) == false) { return; }
+        if (File.Exists (strPath) == false) { return false; }
         
         string strJson = File.ReadAllText (Utilities.GetGameDataDirectory () + LEVELDATA_FILENAME);
-        if (string.IsNullOrEmpty (strJson)) { return; }
+        if (string.IsNullOrEmpty (strJson)) { return false; }
         
         m_listLevelData = JsonMapper.ToObject<List<LevelData>> (strJson);
+        return true;
         
 //        string strLevelData = string.Empty;
 //        for (int idx = 0; idx < m_listLevelData.Count; ++idx)

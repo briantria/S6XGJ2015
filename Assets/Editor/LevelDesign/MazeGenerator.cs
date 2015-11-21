@@ -90,7 +90,10 @@ public class MazeGenerator : EditorWindow
         
         if (GUILayout.Button ("Load Maze"))
         {
-            MazeGeneratorData.Load ();
+            if (MazeGeneratorData.Load () == false)
+            {
+                EditorUtility.DisplayDialog ("Load Maze", "Load failed. No level data saved.", "Ok");
+            }
         }
         
         if (MazeGeneratorData.IsEmpty == false)

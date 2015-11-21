@@ -45,13 +45,12 @@ public class MazeGeneratorData : ScriptableObject
     private static int [,] m_visitMatrix;
     
 	private static int m_iWidth;
-	private static int m_height;
+	private static int m_iHeight;
     private static bool m_saved;
     private static MazeGeneratorState m_generatorSate = MazeGeneratorState.Ready;
     private static MazeEditorDisplay m_mazeEditorDisplay = null;
     
     #region Properties
-    public static IntVector2 MazeDimension {get {return new IntVector2 (m_iWidth, m_height);}}
     public static MazeGeneratorState State {get {return m_generatorSate;}}
     public static List<WallPlacement> [] WallPlacementData {get {return m_wallPlacements;}}
     public static bool IsSaved {get {return m_saved;}}
@@ -64,7 +63,7 @@ public class MazeGeneratorData : ScriptableObject
 	public static void Create (int p_iCol, int p_iRow)
 	{
 		m_iWidth = p_iCol;
-		m_height = p_iRow;
+		m_iHeight = p_iRow;
         m_saved = false;
 		
         /* 2 x 2 Maze
@@ -79,10 +78,10 @@ public class MazeGeneratorData : ScriptableObject
          *
          */
          
-        m_listMazeVerteces = new List<IntVector2> (m_iWidth * m_height);
-        m_visitMatrix = new int[m_iWidth, m_height];
+        m_listMazeVerteces = new List<IntVector2> (m_iWidth * m_iHeight);
+        m_visitMatrix = new int[m_iWidth, m_iHeight];
 		
-        for (int iRowIdx = 0; iRowIdx < m_height; ++iRowIdx)
+        for (int iRowIdx = 0; iRowIdx < m_iHeight; ++iRowIdx)
 		{
 			for (int iColIdx = 0; iColIdx < m_iWidth; ++iColIdx)
 			{
@@ -121,7 +120,54 @@ public class MazeGeneratorData : ScriptableObject
         
         GenerateRandomPath ();
         //DebugPrintWallData ();
+        DisplayMaze ();
+	}
+	
+	public static void Clear ()
+	{
+		m_iWidth = 0;
+		m_iHeight = 0;
+		m_listMazeVerteces.Clear ();
+        m_wallPlacements = null;
+        m_visitMatrix = null;
+        DestroyImmediate (m_mazeEditorDisplay.gameObject);
+        m_mazeEditorDisplay = null;
         
+        System.GC.Collect ();
+	}
+    
+    public static void Save ()
+    {
+        LevelData levelData = new LevelData ();
+        levelData.MazeHeight = m_iHeight;
+        levelData.MazeWidth = m_iWidth;
+        levelData.StartPointID = 0;
+        levelData.EndPointID = 0;
+        levelData.WallPlacementFlags = m_wallPlacements;
+        
+        LevelDataManager.Instance.Save (levelData);
+    }
+    
+    public static bool Load (int p_iLevelId = 0)
+    {
+        bool bLoadSuccesful = LevelDataManager.Instance.Load ();
+    
+        if (bLoadSuccesful)
+        {
+            List<LevelData> listLevelData = LevelDataManager.Instance.ListLevelData;
+            m_iWidth = listLevelData[p_iLevelId].MazeWidth;
+            m_iHeight = listLevelData[p_iLevelId].MazeHeight;
+            //listLevelData[p_iLevelId].StartPointID
+            //listLevelData[p_iLevelId].EndPointID
+            m_wallPlacements = listLevelData[p_iLevelId].WallPlacementFlags;
+            DisplayMaze ();
+        }
+        
+        return bLoadSuccesful;
+    }
+    
+    private static void DisplayMaze ()
+    {
         if (m_mazeEditorDisplay == null)
         {
             m_mazeEditorDisplay = GameObject.FindObjectOfType<MazeEditorDisplay> ();
@@ -133,36 +179,7 @@ public class MazeGeneratorData : ScriptableObject
         }
         
         m_mazeEditorDisplay.LoadWallPlacements (m_wallPlacements);
-        m_mazeEditorDisplay.Display (MazeDimension);
-	}
-	
-	public static void Clear ()
-	{
-		m_iWidth = 0;
-		m_height = 0;
-		m_listMazeVerteces.Clear ();
-        m_wallPlacements = null;
-        m_visitMatrix = null;
-        DestroyImmediate (m_mazeEditorDisplay.gameObject);
-        
-        System.GC.Collect ();
-	}
-    
-    public static void Save ()
-    {
-        LevelData levelData = new LevelData ();
-        levelData.MazeHeight = m_height;
-        levelData.MazeWidth = m_iWidth;
-        levelData.StartPointID = 0;
-        levelData.EndPointID = 0;
-        levelData.WallPlacementFlags = m_wallPlacements;
-        
-        LevelDataManager.Instance.Save (levelData);
-    }
-    
-    public static void Load ()
-    {
-        LevelDataManager.Instance.Load ();
+        m_mazeEditorDisplay.Display (new IntVector2 (m_iWidth, m_iHeight));
     }
     
     private static void GenerateRandomPath ()
@@ -171,21 +188,22 @@ public class MazeGeneratorData : ScriptableObject
         
             GENERATE RANDOM MAZE PATH
                 1. get random initial m_listMazeVerteces index (push to backtrack stack and mark visitMatrix [x][y] = 1)
-                2. GET RANDOM NEIGHBOR
-                   if all neighbors are visited, pop from backtrack. if backtrack is empty, end; else (backtrack not empty) repeat 2.
-                3. if neighbor is valid and unvisited (visitMatrix [x][y] == 0); mark it visited, push to backtrack and UPDATE WALL PLACEMENTS MATRIX.
-                   else (invalid or visited neigbor) go back to 2.
+                2. GET RANDOM NEIGHBOR of backtrack[count-1] (top of stack). if all neighbors are visited, pop from backtrack. else, skip to step 4.
+                3. if backtrack is empty, end; else goto step 2.
+                4. if neighbor is valid and unvisited (visitMatrix [x][y] == 0) mark it visited. else goto step 2.
+                5. push neighbor to backtrack and UPDATE WALL PLACEMENTS MATRIX. goto step 2.
                 
             GET RANDOM NEIGHBOR
-                1. n = 4;
-                2. index = random.range (0,n)
-                3. if neighbor[index] != valid, n--
-                4. if n <= 0, no more valid neighbor. else, repeat 2
+                1. indexArr[] = {0,1,2,3};
+                2. index = indexArr[random.range (0,indexArr.len)]
+                3. if neighbor[index] != valid, indexArr.remove(index)
+                4. if indexArr.len <= 0, no more valid neighbor. else, goto step 2
             
             UPDATE WALL PLACEMENTS MATRIX
                 1. get m_wallPlacements rowIdx using backtrack [current-1]
                 2. get m_wallPlacements colIdx using backtrack [current]
-                3. mark m_wallPlacements [rowIdx][colIdx] = none
+                3. if either rowIdx or colIdx is out of bounds, switch them
+                4. mark m_wallPlacements [rowIdx][colIdx] = none
                 
         *************************************************************************/
         
@@ -231,7 +249,7 @@ public class MazeGeneratorData : ScriptableObject
             if (   p_iv2Neighbor.x < 0
                 || p_iv2Neighbor.y < 0
                 || p_iv2Neighbor.x >= m_iWidth
-                || p_iv2Neighbor.y >= m_height )
+                || p_iv2Neighbor.y >= m_iHeight )
             {
                 m_listIndeces.RemoveAt (index);
                 continue;
@@ -276,7 +294,7 @@ public class MazeGeneratorData : ScriptableObject
         int iColIdx;
         
         iRowIdx = (m_iWidth * p_iv2Current.y) + p_iv2Current.x;
-        iColIdx = (m_height * m_iWidth) - 1;
+        iColIdx = (m_iHeight * m_iWidth) - 1;
         
         // if either iRowIdx or iColIdx is out of bounds, switch them
         if (iRowIdx < 0 || iRowIdx >= m_wallPlacements.Length)
@@ -292,7 +310,7 @@ public class MazeGeneratorData : ScriptableObject
             {
                 // reset iColIdx then switch
                 iRowIdx  = (m_iWidth * p_iv2Neighbor.y) + p_iv2Neighbor.x;
-                iColIdx  = (m_height * m_iWidth) - 1;
+                iColIdx  = (m_iHeight * m_iWidth) - 1;
                 iColIdx -= (m_iWidth * p_iv2Current.y) + p_iv2Current.x;
             }
         }
