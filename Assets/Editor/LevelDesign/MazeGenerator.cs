@@ -88,16 +88,18 @@ public class MazeGenerator : EditorWindow
 			}
 		}
         
+        if (GUILayout.Button ("Load Maze"))
+        {
+            MazeGeneratorData.Load ();
+        }
+        
         if (MazeGeneratorData.IsEmpty == false)
         {
-//            if (GUILayout.Button ("Display Maze"))
-//            {
-//                GameObject objMaze = new GameObject ();
-//                MazeEditorDisplay mazeEditorDisplay = objMaze.AddComponent <MazeEditorDisplay>();
-//                mazeEditorDisplay.LoadWallPlacements (MazeGeneratorData.WallPlacementData);
-//                mazeEditorDisplay.Display (MazeGeneratorData.MazeDimension);
-//            }
-            
+            if (GUILayout.Button ("Save Maze"))
+            {
+                MazeGeneratorData.Save ();
+            }
+        
             if (GUILayout.Button ("Clear Maze"))
             {
                 if (MazeGeneratorData.IsSaved == false &&

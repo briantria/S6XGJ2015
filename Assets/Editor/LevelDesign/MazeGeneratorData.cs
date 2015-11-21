@@ -48,7 +48,7 @@ public class MazeGeneratorData : ScriptableObject
 	private static int m_height;
     private static bool m_saved;
     private static MazeGeneratorState m_generatorSate = MazeGeneratorState.Ready;
-    private static MazeEditorDisplay m_mazeEditorDispplay = null;
+    private static MazeEditorDisplay m_mazeEditorDisplay = null;
     
     #region Properties
     public static IntVector2 MazeDimension {get {return new IntVector2 (m_iWidth, m_height);}}
@@ -122,18 +122,18 @@ public class MazeGeneratorData : ScriptableObject
         GenerateRandomPath ();
         //DebugPrintWallData ();
         
-        if (m_mazeEditorDispplay == null)
+        if (m_mazeEditorDisplay == null)
         {
-            m_mazeEditorDispplay = GameObject.FindObjectOfType<MazeEditorDisplay> ();
-            if (m_mazeEditorDispplay == null)
+            m_mazeEditorDisplay = GameObject.FindObjectOfType<MazeEditorDisplay> ();
+            if (m_mazeEditorDisplay == null)
             {
                 GameObject objMazeEditor = new GameObject ("MazeEditorDisplay");
-                m_mazeEditorDispplay = objMazeEditor.AddComponent<MazeEditorDisplay> ();
+                m_mazeEditorDisplay = objMazeEditor.AddComponent<MazeEditorDisplay> ();
             }
         }
         
-        m_mazeEditorDispplay.LoadWallPlacements (m_wallPlacements);
-        m_mazeEditorDispplay.Display (MazeDimension);
+        m_mazeEditorDisplay.LoadWallPlacements (m_wallPlacements);
+        m_mazeEditorDisplay.Display (MazeDimension);
 	}
 	
 	public static void Clear ()
@@ -143,17 +143,26 @@ public class MazeGeneratorData : ScriptableObject
 		m_listMazeVerteces.Clear ();
         m_wallPlacements = null;
         m_visitMatrix = null;
+        DestroyImmediate (m_mazeEditorDisplay.gameObject);
+        
         System.GC.Collect ();
 	}
     
     public static void Save ()
     {
+        LevelData levelData = new LevelData ();
+        levelData.MazeHeight = m_height;
+        levelData.MazeWidth = m_iWidth;
+        levelData.StartPointID = 0;
+        levelData.EndPointID = 0;
+        levelData.WallPlacementFlags = m_wallPlacements;
         
+        LevelDataManager.Instance.Save (levelData);
     }
     
     public static void Load ()
     {
-        
+        LevelDataManager.Instance.Load ();
     }
     
     private static void GenerateRandomPath ()
