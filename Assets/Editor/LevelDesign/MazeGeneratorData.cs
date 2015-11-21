@@ -51,6 +51,7 @@ public static class MazeGeneratorData
     #region Properties
     public static IntVector2 MazeDimension {get {return new IntVector2 (m_iWidth, m_height);}}
     public static MazeGeneratorState State {get {return m_generatorSate;}}
+    public static List<WallPlacement> [] WallPlacementData {get {return m_wallPlacements;}}
     public static bool IsSaved {get {return m_saved;}}
     public static bool IsEmpty 
     {
@@ -102,7 +103,6 @@ public static class MazeGeneratorData
 		 */
          
         int iSignificantVertexCount = m_listMazeVerteces.Count - 1;
-        //int iAdjMatrixSize = (m_height * m_iWidth) - 1;
         m_wallPlacements = new List<WallPlacement> [iSignificantVertexCount];
         
         for (int iRowIdx = 0; iRowIdx < iSignificantVertexCount; ++iRowIdx)
@@ -113,24 +113,16 @@ public static class MazeGeneratorData
             {
                 IntVector2 currentVertex  = m_listMazeVerteces [iRowIdx];
                 IntVector2 neighborVertex = m_listMazeVerteces [iSignificantVertexCount - iColIdx];
-                
-//                Debug.Log ("====");
-//                Debug.Log ("iRowIdx: " + iRowIdx + ", iColIdx: " + iColIdx);
-//                Debug.Log ("currentVertex: " + currentVertex.ToString() + " :: neighborVertex:" + neighborVertex.ToString ());
-//                Debug.Log ("WallPlacement." + GetWallPlacement (currentVertex, neighborVertex));
-                
                 m_wallPlacements[iRowIdx].Add (GetWallPlacement (currentVertex, neighborVertex));
             }
         }
         
-        DebugDrawMaze ();
         GenerateRandomPath ();
-        DebugDrawMaze ();
+        DebugPrintWallData ();
 	}
 	
 	public static void Clear ()
 	{
-        //Debug.Log ("CLEAR");
 		m_iWidth = 0;
 		m_height = 0;
 		m_listMazeVerteces.Clear ();
@@ -151,30 +143,27 @@ public static class MazeGeneratorData
     
     private static void GenerateRandomPath ()
     {
-        /*
-            visitMatrix[][].zero
-            list<IntVector2> backtrack
-        */
-         
-        /* 1. get random initial m_listMazeVerteces index (push to backtrack stack and mark visitMatrix [x][y] = 1)
-         * 2. *get random neighbor.
-         *    if all neighbors are visited, pop from backtrack. if backtrack is empty, end; else (backtrack not empty) repeat 2.
-         * 3. if neighbor is valid and unvisited (visitMatrix [x][y] == 0); mark it visited, push to backtrack and *update m_wallPlacements matrix.
-         *    else (invalid or visited neigbor) go back to 2.
-         */
+        /**************************************************************************
         
-        
-        /* GET RANDOM NEIGHBOR
-             1. n = 4;
-             2. index = random.range (0,n)
-             3. if neighbor[index] != valid, n--
-             4. if n <= 0, no more valid neighbor. else, repeat 2
-           
-           UPDATE WALL PLACEMENTS MATRIX
-             1. get m_wallPlacements rowIdx using backtrack [current-1]
-             2. get m_wallPlacements colIdx using backtrack [current]
-             3. mark m_wallPlacements [rowIdx][colIdx] = none
-        */
+            GENERATE RANDOM MAZE PATH
+                1. get random initial m_listMazeVerteces index (push to backtrack stack and mark visitMatrix [x][y] = 1)
+                2. GET RANDOM NEIGHBOR
+                   if all neighbors are visited, pop from backtrack. if backtrack is empty, end; else (backtrack not empty) repeat 2.
+                3. if neighbor is valid and unvisited (visitMatrix [x][y] == 0); mark it visited, push to backtrack and UPDATE WALL PLACEMENTS MATRIX.
+                   else (invalid or visited neigbor) go back to 2.
+                
+            GET RANDOM NEIGHBOR
+                1. n = 4;
+                2. index = random.range (0,n)
+                3. if neighbor[index] != valid, n--
+                4. if n <= 0, no more valid neighbor. else, repeat 2
+            
+            UPDATE WALL PLACEMENTS MATRIX
+                1. get m_wallPlacements rowIdx using backtrack [current-1]
+                2. get m_wallPlacements colIdx using backtrack [current]
+                3. mark m_wallPlacements [rowIdx][colIdx] = none
+                
+        *************************************************************************/
         
         List<IntVector2> iv2BactrackStack = new List<IntVector2> ();
         IntVector2 iv2Neighbor;
@@ -258,8 +247,6 @@ public static class MazeGeneratorData
          *  T
          *       
          */
-         
-         // NEIGBOR POSITION IS IMPORTANT!
         
         int iRowIdx;
         int iColIdx;
@@ -267,6 +254,7 @@ public static class MazeGeneratorData
         iRowIdx = (m_iWidth * p_iv2Current.y) + p_iv2Current.x;
         iColIdx = (m_height * m_iWidth) - 1;
         
+        // if either iRowIdx or iColIdx is out of bounds, switch them
         if (iRowIdx < 0 || iRowIdx >= m_wallPlacements.Length)
         {
             iRowIdx  = (m_iWidth * p_iv2Neighbor.y) + p_iv2Neighbor.x;
@@ -275,12 +263,14 @@ public static class MazeGeneratorData
         else
         {
             iColIdx -= (m_iWidth * p_iv2Neighbor.y) + p_iv2Neighbor.x;
-        }
-        
-        if (   iRowIdx < 0 || iRowIdx >= m_wallPlacements.Length
-            || iColIdx < 0 || iColIdx >= m_wallPlacements[iRowIdx].Count)
-        {
-            return;
+            
+            if (iColIdx < 0 || iColIdx >= m_wallPlacements[iRowIdx].Count)
+            {
+                // reset iColIdx then switch
+                iRowIdx  = (m_iWidth * p_iv2Neighbor.y) + p_iv2Neighbor.x;
+                iColIdx  = (m_height * m_iWidth) - 1;
+                iColIdx -= (m_iWidth * p_iv2Current.y) + p_iv2Current.x;
+            }
         }
         
         m_wallPlacements [iRowIdx] [iColIdx] = WallPlacement.None;
@@ -303,7 +293,6 @@ public static class MazeGeneratorData
     
         int xOffset = p_possibleNeighbor.x - p_currentVertex.x;
         int yOffset = p_possibleNeighbor.y - p_currentVertex.y;
-//        Debug.Log ("xOffset: " + xOffset + ", yOffset: " + yOffset);
         
         if (Mathf.Abs (xOffset) > 1 || Mathf.Abs (yOffset) > 1)
         {
@@ -334,82 +323,25 @@ public static class MazeGeneratorData
     }
     
     #region DEBUG
-    private static void DebugDrawMaze ()
+    private static void DebugPrintWallData ()
     {
-        // given neighbor matrix, draw from bottom-left to upper-right
+        string str = "\t";
         
-        /* Adjacency matrix : used to determine neighbors and wall placements
-         *                  : 'x' means not to be allocated
-         *
-         *           <------------------------
-         *            (1,1)    (0,1)    (1,0)  | (0,0)
-         *  | (0,0) [  None,    None,    None  |   x  ] 
-         *  | (1,0) [  None,    None,     x    |   x  ]
-         *  v (0,1) [  None,     x,       x    |   x  ]
-         *    ---------------------------------|-------
-         *    (1,1) [   x,       x.       x,   |   x  ]
-         *          
-         */
-         
-        /*
-         *  2 x 2
-         *
-         *  _|_
-         *   |
-         *    ,
-         *   -,-
-         *
-         */
-        
-        int iSignificantVertexCount = m_listMazeVerteces.Count - 1;
-        string   strMaze = string.Empty;
-        string[] strRow  = new string[m_height+1];
-        for (int idx = 0; idx <= m_height; ++idx)
+        for (int idx = m_listMazeVerteces.Count-1; idx > 0; --idx)
         {
-            strRow[idx] = string.Empty;
+            str += m_listMazeVerteces[idx].ToString () + "\t";
         }
         
-        for (int row = 0; row < m_wallPlacements.Length; ++row)
+        for (int idx = 0; idx < m_wallPlacements.Length; ++idx)
         {
-            int mazeRow = m_listMazeVerteces[row].y;
-            for (int col = 0; col < m_wallPlacements[row].Count; ++col)
+            str += "\n" + m_listMazeVerteces[idx].ToString ();
+            for (int jdx = 0; jdx < m_wallPlacements[idx].Count; ++jdx)
             {
-                int mazeCol = m_listMazeVerteces[iSignificantVertexCount - col].x;
-                switch (m_wallPlacements[row][col])
-                {
-                    case WallPlacement.Up:
-                    {
-                        int strRowEstLen = (mazeCol * 2);
-                        while (strRow[mazeRow].Length <  strRowEstLen)
-                        {
-                            strRow[mazeRow] += " ";
-                        }
-                        
-                        strRow[mazeRow] += "-";
-                        break;
-                    }
-                    
-                    case WallPlacement.Right:
-                    {
-                        int strRowEstLen = (mazeCol * 2) + 1;
-                        while (strRow[mazeRow].Length <= strRowEstLen)
-                        {
-                            strRow[mazeRow] += " ";
-                        }
-                        
-                        strRow[mazeRow] += ",";
-                        break;
-                    }
-                }
+                str += "\t" + m_wallPlacements[idx][jdx];
             }
         }
         
-        for (int idx = strRow.Length-1; idx >= 0; --idx)
-        {
-            strMaze += (strRow[idx] + "\n");
-        }
-        
-        Debug.Log (strMaze);
+        Debug.Log (str + "\n");
     }
     #endregion
 }

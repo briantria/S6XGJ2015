@@ -94,6 +94,7 @@ public class MazeGenerator : EditorWindow
             {
                 GameObject objMaze = new GameObject ();
                 Maze maze = objMaze.AddComponent <Maze>();
+                maze.LoadWallPlacements (MazeGeneratorData.WallPlacementData);
                 maze.Display (MazeGeneratorData.MazeDimension);
             }
             
