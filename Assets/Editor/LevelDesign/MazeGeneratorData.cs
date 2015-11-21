@@ -27,7 +27,8 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public static class MazeGeneratorData
+// TODO: fully functional scriptable object
+public class MazeGeneratorData : ScriptableObject
 {
     #region Constants
     private static readonly IntVector2 [] k_iv2NeighborOffsets = new IntVector2[]
@@ -47,6 +48,7 @@ public static class MazeGeneratorData
 	private static int m_height;
     private static bool m_saved;
     private static MazeGeneratorState m_generatorSate = MazeGeneratorState.Ready;
+    private static MazeEditorDisplay m_mazeEditorDispplay = null;
     
     #region Properties
     public static IntVector2 MazeDimension {get {return new IntVector2 (m_iWidth, m_height);}}
@@ -118,7 +120,20 @@ public static class MazeGeneratorData
         }
         
         GenerateRandomPath ();
-        DebugPrintWallData ();
+        //DebugPrintWallData ();
+        
+        if (m_mazeEditorDispplay == null)
+        {
+            m_mazeEditorDispplay = GameObject.FindObjectOfType<MazeEditorDisplay> ();
+            if (m_mazeEditorDispplay == null)
+            {
+                GameObject objMazeEditor = new GameObject ("MazeEditorDisplay");
+                m_mazeEditorDispplay = objMazeEditor.AddComponent<MazeEditorDisplay> ();
+            }
+        }
+        
+        m_mazeEditorDispplay.LoadWallPlacements (m_wallPlacements);
+        m_mazeEditorDispplay.Display (MazeDimension);
 	}
 	
 	public static void Clear ()

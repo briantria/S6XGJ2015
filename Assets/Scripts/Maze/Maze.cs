@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 public class Maze : MonoBehaviour
 {
-    private List<WallPlacement> [] m_wallPlacements;
+    protected List<WallPlacement> [] m_wallPlacements;
 
 	public void Display (IntVector2 p_iv2Dimension)
     {
@@ -47,11 +47,6 @@ public class Maze : MonoBehaviour
             
             verteces[idx].SetActiveWalls (activeWallFlags);
         }
-    }
-    
-    public void LoadWallPlacements (List<WallPlacement> [] p_wallPlacements)
-    {
-        m_wallPlacements = p_wallPlacements;
     }
 }
 

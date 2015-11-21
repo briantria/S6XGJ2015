@@ -90,13 +90,13 @@ public class MazeGenerator : EditorWindow
         
         if (MazeGeneratorData.IsEmpty == false)
         {
-            if (GUILayout.Button ("Display Maze"))
-            {
-                GameObject objMaze = new GameObject ();
-                Maze maze = objMaze.AddComponent <Maze>();
-                maze.LoadWallPlacements (MazeGeneratorData.WallPlacementData);
-                maze.Display (MazeGeneratorData.MazeDimension);
-            }
+//            if (GUILayout.Button ("Display Maze"))
+//            {
+//                GameObject objMaze = new GameObject ();
+//                MazeEditorDisplay mazeEditorDisplay = objMaze.AddComponent <MazeEditorDisplay>();
+//                mazeEditorDisplay.LoadWallPlacements (MazeGeneratorData.WallPlacementData);
+//                mazeEditorDisplay.Display (MazeGeneratorData.MazeDimension);
+//            }
             
             if (GUILayout.Button ("Clear Maze"))
             {
