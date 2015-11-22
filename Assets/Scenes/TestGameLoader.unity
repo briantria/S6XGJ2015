@@ -107923,7 +107923,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1621047186}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 2074203041}
+  m_Script: {fileID: 11500000, guid: d2a99f5ad3c630e4282fa4c92ad38569, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1621333936
@@ -137329,21 +137329,6 @@ SpriteRenderer:
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: dca59dd49700d874e9b0697163ab8479, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
---- !u!115 &2074203041
-MonoScript:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: 
-  serializedVersion: 4
-  m_Script: 
-  m_DefaultReferences: {}
-  m_Icon: {fileID: 0}
-  m_ExecutionOrder: 0
-  m_ClassName: MazeEditorDisplay
-  m_Namespace: 
-  m_AssemblyName: Assembly-CSharp-Editor.dll
-  m_IsEditorScript: 0
 --- !u!1 &2074590284
 GameObject:
   m_ObjectHideFlags: 0

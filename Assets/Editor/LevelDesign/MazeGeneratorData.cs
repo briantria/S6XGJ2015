@@ -150,7 +150,7 @@ public class MazeGeneratorData : ScriptableObject
     
     public static bool Load (int p_iLevelId = 0)
     {
-        // TODO: fix load / display maze
+        // TODO: fix load / display maze. maybe attach Maze.cs instead of MazeEditorDisplay.cs ?
     
         bool bLoadSuccesful = LevelDataManager.Instance.Load ();
     

@@ -66,6 +66,34 @@ public class MazeVertex : MonoBehaviour
         m_spritePipeT = Resources.Load<Sprite> ("Images/Pipes/pipes-05");
         
         m_srConnector = m_tConnector.GetComponent<SpriteRenderer> ();
+        
+        Debug.Log ("VERTEX AWAKE");
+    }
+    
+    public void ExtendWalls (float p_scale, float p_padding)
+    {
+        Vector3 scale;
+        Vector3 position;
+        Transform tTopWall = m_listWalls[0].transform;
+        Transform tRightWall = m_listWalls[1].transform;
+        
+        // adjust wall length
+        scale = tTopWall.localScale;
+        scale.x *= p_scale * 1.75f;
+        tTopWall.localScale = scale;
+        
+        scale = tRightWall.localScale;
+        scale.x *= p_scale * 1.75f; // x because it is rotated
+        tRightWall.localScale = scale;
+        
+        // adjust wall offset
+        position = tTopWall.position;
+        position.x -= (p_padding * p_scale * 0.362f);
+        tTopWall.position = position;
+        
+        position = tRightWall.position;
+        position.y -= (p_padding * p_scale * 0.36f);
+        tRightWall.position = position;
     }
     
     public void ConnectorSetup ()
