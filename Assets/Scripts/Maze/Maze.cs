@@ -12,23 +12,56 @@ public class Maze : MonoBehaviour
 {
     private readonly float PADDING = 280.0f * Constants.PPU;
     private readonly float OFFSET  = 600.0f * Constants.PPU;
+    
+    [SerializeField] private Transform m_tVertexContainer = null;
+    [SerializeField] private Transform m_tStartPoint;
+    [SerializeField] private Transform m_tEndPoint;
 
     protected List<RelativePosition> [] m_wallPlacements;
     private   List<MazeVertex> m_listVerteces;
+    private   Camera m_mainCamera;
     private   int m_iWidth;
     private   int m_iHeight;
+    
+    // for demo, set init value
+    private   int m_iStartPointID = 65;
+    private   int m_iEndPointID = 35;
 
     protected void Awake ()
     {
-        Debug.Log ("MAZE AWAKE");
-    
+        m_mainCamera = Camera.main;
+    }
+
+    protected void Start ()
+    {
         // For Demo
         float scaleUp = 2.5f;
-        MazeVertex[] verteces = this.transform.GetComponentsInChildren<MazeVertex> ();
+        MazeVertex[] verteces = m_tVertexContainer.GetComponentsInChildren<MazeVertex> ();
         for (int idx = 0; idx < verteces.Length; ++idx)
         {
             verteces[idx].transform.position = verteces[idx].transform.position * scaleUp;
             verteces[idx].ExtendWalls (scaleUp, PADDING);
+            
+            if (idx == m_iStartPointID)
+            {
+                Vector3 pos = verteces[idx].transform.position;
+                pos.x -= (PADDING * scaleUp * 0.5f);
+                pos.y -= (PADDING * scaleUp * 0.5f);
+                m_tStartPoint.position = pos;
+                
+                pos.x +=   7;
+                pos.y +=   4;
+                pos.z  = -10;
+                m_mainCamera.transform.position = pos;
+            }
+            
+            if (idx == m_iEndPointID)
+            {
+                Vector3 pos = verteces[idx].transform.position;
+                pos.x -= (PADDING * scaleUp * 0.5f);
+                pos.y -= (PADDING * scaleUp * 0.5f);
+                m_tEndPoint.position = pos;
+            }
         }
         ////////////////
     }
@@ -37,6 +70,13 @@ public class Maze : MonoBehaviour
     {
         // TODO: Object pooling
         // TODO: cache references
+        if (m_tVertexContainer == null)
+        {
+            GameObject obj = new GameObject("Verteces");
+            m_tVertexContainer = obj.transform;
+            m_tVertexContainer.SetParent (this.transform);
+        }
+        
         m_listVerteces = new List<MazeVertex> ();
         m_iWidth = p_iv2Dimension.x;
         m_iHeight = p_iv2Dimension.y;
@@ -49,7 +89,7 @@ public class Maze : MonoBehaviour
             for (int iCol = 0; iCol < p_iv2Dimension.x; ++iCol)
             {
                 Transform tVertex = Instantiate<Transform> (Resources.Load<Transform> ("Prefabs/MazeVertex"));
-                tVertex.SetParent (this.transform);
+                tVertex.SetParent (m_tVertexContainer);
                 tVertex.position = new Vector3 ((PADDING * iCol) - OFFSET, (PADDING * iRow) - OFFSET, 0.0f);
                 
                 MazeVertex vertex = tVertex.GetComponent <MazeVertex>();
@@ -60,7 +100,7 @@ public class Maze : MonoBehaviour
         }
         
         // wall setup loop
-        MazeVertex[] verteces = this.transform.GetComponentsInChildren<MazeVertex> ();
+        MazeVertex[] verteces = m_tVertexContainer.GetComponentsInChildren<MazeVertex> ();
         for (int idx = verteces.Length-2; idx >= 0; --idx)
         {
             RelativePosition activeWallFlags = RelativePosition.None;

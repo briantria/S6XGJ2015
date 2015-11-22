@@ -66,8 +66,6 @@ public class MazeVertex : MonoBehaviour
         m_spritePipeT = Resources.Load<Sprite> ("Images/Pipes/pipes-05");
         
         m_srConnector = m_tConnector.GetComponent<SpriteRenderer> ();
-        
-        Debug.Log ("VERTEX AWAKE");
     }
     
     public void ExtendWalls (float p_scale, float p_padding)
