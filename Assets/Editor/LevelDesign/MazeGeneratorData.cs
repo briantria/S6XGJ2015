@@ -48,7 +48,8 @@ public class MazeGeneratorData : ScriptableObject
 	private static int m_iHeight;
     private static bool m_saved;
     private static MazeGeneratorState m_generatorSate = MazeGeneratorState.Ready;
-    private static MazeEditorDisplay m_mazeEditorDisplay = null;
+    //private static MazeEditorDisplay m_mazeEditorDisplay = null;
+    private static Maze m_mazeEditorDisplay = null;
     
     #region Properties
     public static MazeGeneratorState State {get {return m_generatorSate;}}
@@ -172,11 +173,13 @@ public class MazeGeneratorData : ScriptableObject
     {
         if (m_mazeEditorDisplay == null)
         {
-            m_mazeEditorDisplay = GameObject.FindObjectOfType<MazeEditorDisplay> ();
+            //m_mazeEditorDisplay = GameObject.FindObjectOfType<MazeEditorDisplay> ();
+            m_mazeEditorDisplay = GameObject.FindObjectOfType<Maze> ();
             if (m_mazeEditorDisplay == null)
             {
                 GameObject objMazeEditor = new GameObject ("MazeEditorDisplay");
-                m_mazeEditorDisplay = objMazeEditor.AddComponent<MazeEditorDisplay> ();
+                //m_mazeEditorDisplay = objMazeEditor.AddComponent<MazeEditorDisplay> ();
+                m_mazeEditorDisplay = objMazeEditor.AddComponent<Maze> ();
             }
         }
         
@@ -345,12 +348,7 @@ public class MazeGeneratorData : ScriptableObject
         
         if (xOffset == 0 && yOffset > 0)
         {
-//            if (yOffset > 0)
-//            {
-                return RelativePosition.Up;
-//            }
-//            
-//            return RelativePosition.Down;
+            return RelativePosition.Up;
         }
         
         if (yOffset != 0)
@@ -358,12 +356,7 @@ public class MazeGeneratorData : ScriptableObject
             return RelativePosition.None;
         }
         
-//        if (xOffset > 0)
-//        {
-            return RelativePosition.Right;
-//        }
-        
-//        return RelativePosition.Left;
+        return RelativePosition.Right;
     }
     
     #region DEBUG

@@ -60,8 +60,8 @@ public class Tile : MonoBehaviour
 		switch (m_tileType){
 		case TileType.Path:
 		{
-			XyxySetupPanel.Instance.Open ();
-			XyxySetupPanel.Instance.SetPosition (m_transform.position);
+			HexSetupPanel.Instance.Open ();
+			HexSetupPanel.Instance.SetPosition (m_transform.position);
 			break;
 		}}
 	}

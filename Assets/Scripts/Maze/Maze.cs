@@ -14,8 +14,6 @@ public class Maze : MonoBehaviour
     private readonly float OFFSET  = 600.0f * Constants.PPU;
     
     [SerializeField] private Transform m_tVertexContainer = null;
-    [SerializeField] private Transform m_tStartPoint;
-    [SerializeField] private Transform m_tEndPoint;
 
     protected List<RelativePosition> [] m_wallPlacements;
     private   List<MazeVertex> m_listVerteces;
@@ -23,13 +21,20 @@ public class Maze : MonoBehaviour
     private   int m_iWidth;
     private   int m_iHeight;
     
+    private Transform m_tStartPoint;
+    private Transform m_tEndPoint;
     // for demo, set init value
-    private   int m_iStartPointID = 65;
-    private   int m_iEndPointID = 35;
+    private   int m_iStartPointID = 215;
+    private   int m_iEndPointID = 95;
 
     protected void Awake ()
     {
         m_mainCamera = Camera.main;
+        m_tStartPoint = Instantiate<Transform> (Resources.Load<Transform> ("Prefabs/StartEndPoint"));// new GameObject ("StartPoint").transform;
+        m_tEndPoint = Instantiate<Transform> (Resources.Load<Transform> ("Prefabs/StartEndPoint"));//new GameObject ("EndPoint").transform;
+        
+        m_tStartPoint.SetParent (this.transform);
+        m_tEndPoint.SetParent (this.transform);
     }
 
     protected void Start ()
@@ -65,6 +70,11 @@ public class Maze : MonoBehaviour
         }
         ////////////////
     }
+    
+    public void LoadWallPlacements (List<RelativePosition> [] p_wallPlacements)
+    {
+        m_wallPlacements = p_wallPlacements;
+    }
 
 	public void Display (IntVector2 p_iv2Dimension)
     {
@@ -96,6 +106,8 @@ public class Maze : MonoBehaviour
                 vertex.Id = (p_iv2Dimension.x * iRow) + iCol;
                 vertex.Coordinates = new IntVector2 (iCol, iRow);
                 m_listVerteces.Add (vertex);
+                
+                tVertex.name = "[" + vertex.Id + "]" + " " + vertex.Coordinates.ToString ();
             }
         }
         

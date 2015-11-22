@@ -8,7 +8,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class MazeVertex : MonoBehaviour
+public class MazeVertex : MonoBehaviour, ISpriteButtonListener
 {
     #region Constants
     /*
@@ -37,6 +37,7 @@ public class MazeVertex : MonoBehaviour
 
     [SerializeField] private List<GameObject> m_listWalls = new List<GameObject> ();
     [SerializeField] private Transform m_tConnector;
+    [SerializeField] private GameObject m_objAddHexButton;
     
     private Dictionary<RelativePosition, GameObject> m_dictWalls = null;
     private SpriteRenderer m_srConnector = null;
@@ -240,7 +241,7 @@ public class MazeVertex : MonoBehaviour
         }
         
         m_srConnector.transform.eulerAngles = new Vector3 (0, 0, zRotation);
-        Debug.Log (str + ", zRotation: " + zRotation);
+//        Debug.Log (str + ", zRotation: " + zRotation);
     }
     
     public void SetActiveWalls (Maze p_maze, RelativePosition p_activeWallFlags)
@@ -270,5 +271,12 @@ public class MazeVertex : MonoBehaviour
         {
             wall.Value.SetActive ((wall.Key & p_activeWallFlags) > 0);
         }
+    }
+
+    public void OnClickSpriteButton ()
+    {
+        //throw new System.NotImplementedException ();
+        HexSetupPanel.Instance.Open ();
+        HexSetupPanel.Instance.SetPosition (this.transform.position);
     }
 }

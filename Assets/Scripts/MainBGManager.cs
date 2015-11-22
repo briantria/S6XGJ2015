@@ -57,6 +57,10 @@ public class MainBGManager : MonoBehaviour
         Vector2 camPosDelta = m_v2PrevCameraPosition - m_v2CurrCameraPosition;
         m_v2CameraDistanceFromOrigin += (camPosDelta * Time.deltaTime * 20);
         
+        // TODO: something is fishy
+        //       bg seems to ignore camera at some point
+        //       maybe reset m_v2CameraDistanceFromOrigin? or think of other algo
+        
         for (int idx = 0; idx < 9; ++idx)
         {
             Vector2 bgTilePos = m_v2CameraDistanceFromOrigin + Vector2.Scale (m_v2BgSize, bgPositionOffset[idx]);
