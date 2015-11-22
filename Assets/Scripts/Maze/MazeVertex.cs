@@ -77,20 +77,20 @@ public class MazeVertex : MonoBehaviour
         
         // adjust wall length
         scale = tTopWall.localScale;
-        scale.x *= p_scale * 1.75f;
+        scale.x *= (p_scale * 1.55f);
         tTopWall.localScale = scale;
         
         scale = tRightWall.localScale;
-        scale.x *= p_scale * 1.75f; // x because it is rotated
+        scale.x *= (p_scale * 1.55f); // .x because it is rotated
         tRightWall.localScale = scale;
         
         // adjust wall offset
         position = tTopWall.position;
-        position.x -= (p_padding * p_scale * 0.362f);
+        position.x -= ((1.5f * p_scale * 0.5f)); // sprite_size * ppu * scaleup * 0.5f
         tTopWall.position = position;
         
         position = tRightWall.position;
-        position.y -= (p_padding * p_scale * 0.36f);
+        position.y -= ((1.5f * p_scale * 0.5f));
         tRightWall.position = position;
     }
     
