@@ -75,5 +75,5 @@ public class LevelData
     public int EndPointID { get; set; }
     
     // TODO: convert to procedural level generation: just save the seed
-    public List<WallPlacement> [] WallPlacementFlags { get; set; }
+    public List<RelativePosition> [] WallPlacementFlags { get; set; }
 }

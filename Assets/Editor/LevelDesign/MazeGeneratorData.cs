@@ -41,7 +41,7 @@ public class MazeGeneratorData : ScriptableObject
     #endregion
 
     private static List<IntVector2> m_listMazeVerteces = null;
-	private static List<WallPlacement> [] m_wallPlacements;
+	private static List<RelativePosition> [] m_wallPlacements;
     private static int [,] m_visitMatrix;
     
 	private static int m_iWidth;
@@ -52,7 +52,7 @@ public class MazeGeneratorData : ScriptableObject
     
     #region Properties
     public static MazeGeneratorState State {get {return m_generatorSate;}}
-    public static List<WallPlacement> [] WallPlacementData {get {return m_wallPlacements;}}
+    public static List<RelativePosition> [] WallPlacementData {get {return m_wallPlacements;}}
     public static bool IsSaved {get {return m_saved;}}
     public static bool IsEmpty 
     {
@@ -104,11 +104,11 @@ public class MazeGeneratorData : ScriptableObject
 		 */
          
         int iSignificantVertexCount = m_listMazeVerteces.Count - 1;
-        m_wallPlacements = new List<WallPlacement> [iSignificantVertexCount];
+        m_wallPlacements = new List<RelativePosition> [iSignificantVertexCount];
         
         for (int iRowIdx = 0; iRowIdx < iSignificantVertexCount; ++iRowIdx)
         {
-            m_wallPlacements[iRowIdx] = new List<WallPlacement> ();
+            m_wallPlacements[iRowIdx] = new List<RelativePosition> ();
         
             for (int iColIdx = 0; iColIdx < (iSignificantVertexCount - iRowIdx); ++iColIdx)
             {
@@ -150,6 +150,8 @@ public class MazeGeneratorData : ScriptableObject
     
     public static bool Load (int p_iLevelId = 0)
     {
+        // TODO: fix load / display maze
+    
         bool bLoadSuccesful = LevelDataManager.Instance.Load ();
     
         if (bLoadSuccesful)
@@ -315,10 +317,10 @@ public class MazeGeneratorData : ScriptableObject
             }
         }
         
-        m_wallPlacements [iRowIdx] [iColIdx] = WallPlacement.None;
+        m_wallPlacements [iRowIdx] [iColIdx] = RelativePosition.None;
     }
     
-    private static WallPlacement GetWallPlacement (IntVector2 p_currentVertex, IntVector2 p_possibleNeighbor)
+    private static RelativePosition GetWallPlacement (IntVector2 p_currentVertex, IntVector2 p_possibleNeighbor)
     {
         /*
          * 4-way neighbor validation
@@ -338,30 +340,30 @@ public class MazeGeneratorData : ScriptableObject
         
         if (Mathf.Abs (xOffset) > 1 || Mathf.Abs (yOffset) > 1)
         {
-            return WallPlacement.None;
+            return RelativePosition.None;
         }
         
-        if (xOffset == 0)
+        if (xOffset == 0 && yOffset > 0)
         {
-            if (yOffset > 0)
-            {
-                return WallPlacement.Up;
-            }
-            
-            return WallPlacement.Down;
+//            if (yOffset > 0)
+//            {
+                return RelativePosition.Up;
+//            }
+//            
+//            return RelativePosition.Down;
         }
         
         if (yOffset != 0)
         {
-            return WallPlacement.None;
+            return RelativePosition.None;
         }
         
-        if (xOffset > 0)
-        {
-            return WallPlacement.Right;
-        }
+//        if (xOffset > 0)
+//        {
+            return RelativePosition.Right;
+//        }
         
-        return WallPlacement.Left;
+//        return RelativePosition.Left;
     }
     
     #region DEBUG

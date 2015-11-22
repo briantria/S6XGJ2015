@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 public class MazeEditorDisplay : Maze
 {
-    public void LoadWallPlacements (List<WallPlacement> [] p_wallPlacements)
+    public void LoadWallPlacements (List<RelativePosition> [] p_wallPlacements)
     {
         m_wallPlacements = p_wallPlacements;
     }
