@@ -25,12 +25,5 @@ public class SpriteButton : MonoBehaviour
         }
         
         m_spriteButtonListener.OnClickSpriteButton ();
-//        switch (m_tileType){
-//        case TileType.Path:
-//        {
-//            XyxySetupPanel.Instance.Open ();
-//            XyxySetupPanel.Instance.SetPosition (m_transform.position);
-//            break;
-//            }}
     }
 }
