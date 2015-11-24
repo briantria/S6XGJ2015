@@ -28,6 +28,8 @@ public class CameraDrag : MonoBehaviour
 	
 	protected void Update ()
 	{
+		if (GameManager.Instance.CurrentGamePhase == GamePhase.Play) { return; }
+		
 		if (Input.GetMouseButtonDown (0))
 		{
 			m_bDidMouseDown = true;

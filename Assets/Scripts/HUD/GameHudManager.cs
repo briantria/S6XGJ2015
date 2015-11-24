@@ -5,9 +5,24 @@
  */
 
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class GameHudManager : HudManager
 {
+	[SerializeField] private Text m_textPlayButtonLabel;
 	
+	public void ToggleGamePhase ()
+	{
+		if (GameManager.Instance.CurrentGamePhase == GamePhase.Edit)
+		{
+			m_textPlayButtonLabel.text = "Edit";
+			GameManager.Instance.UpdateGamePhase (GamePhase.Play);
+		}
+		else if (GameManager.Instance.CurrentGamePhase == GamePhase.Play)
+		{
+			m_textPlayButtonLabel.text = "Play";
+			GameManager.Instance.UpdateGamePhase (GamePhase.Edit);
+		}
+	}
 }

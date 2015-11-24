@@ -27,6 +27,16 @@ public class Maze : MonoBehaviour
     private   int m_iStartPointID = 215;
     private   int m_iEndPointID = 95;
 
+	protected void OnEnable ()
+	{
+		GameManager.OnGamePhaseUpdate += OnGamePhaseUpdate;
+	}
+	
+	protected void OnDisable ()
+	{
+		GameManager.OnGamePhaseUpdate -= OnGamePhaseUpdate;
+	}
+
     protected void Awake ()
     {
         m_mainCamera = Camera.main;
@@ -56,7 +66,7 @@ public class Maze : MonoBehaviour
                 
                 pos.x +=   7;
                 pos.y +=   4;
-                pos.z  = -10;
+				pos.z  = -10;
                 m_mainCamera.transform.position = pos;
             }
             
@@ -69,6 +79,19 @@ public class Maze : MonoBehaviour
             }
         }
         ////////////////
+    }
+    
+    private void OnGamePhaseUpdate (GamePhase p_gamePhase)
+    {
+		if (p_gamePhase == GamePhase.Play)
+    	{
+			Vector3 pos = m_tStartPoint.position;
+			pos.x +=   7;
+			pos.y +=   4;
+			pos.z  = -10;
+			m_mainCamera.transform.position = pos;
+			m_mainCamera.orthographicSize = CameraZoom.ORTHO_SIZE;
+    	}
     }
     
     public void LoadWallPlacements (List<RelativePosition> [] p_wallPlacements)

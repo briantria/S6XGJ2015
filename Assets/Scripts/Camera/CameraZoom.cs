@@ -22,6 +22,8 @@ public class CameraZoom : MonoBehaviour
 	
 	protected void Update ()
 	{
+		if (GameManager.Instance.CurrentGamePhase == GamePhase.Play) { return; }
+	
 		if (m_mainCamera.orthographicSize < MAX_ORTHOSIZE && Input.GetAxis ("Mouse ScrollWheel") < 0)
 		{
 			m_mainCamera.orthographicSize = Mathf.Min (m_mainCamera.orthographicSize + (m_fZoomSpeed * Time.deltaTime), MAX_ORTHOSIZE);

@@ -53,6 +53,16 @@ public class MazeVertex : MonoBehaviour, ISpriteButtonListener
     public IntVector2 Coordinates { get; set; }
     public RelativePosition ActiveWallFlags {get {return m_activeWallFlags;}}
     
+	protected void OnEnable ()
+	{
+		GameManager.OnGamePhaseUpdate += OnGamePhaseUpdate;
+	}
+	
+	protected void OnDisable ()
+	{
+		GameManager.OnGamePhaseUpdate -= OnGamePhaseUpdate;
+	}
+    
     protected void Awake ()
     {
         m_dictWalls = new Dictionary<RelativePosition, GameObject> ()
@@ -68,6 +78,11 @@ public class MazeVertex : MonoBehaviour, ISpriteButtonListener
         
         m_srConnector = m_tConnector.GetComponent<SpriteRenderer> ();
     }
+    
+	private void OnGamePhaseUpdate (GamePhase p_gamePhase)
+	{
+		m_objAddHexButton.SetActive (p_gamePhase == GamePhase.Edit);
+	}
     
     public void ExtendWalls (float p_scale, float p_padding)
     {
