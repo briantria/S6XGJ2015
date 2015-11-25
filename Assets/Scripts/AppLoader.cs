@@ -21,7 +21,9 @@ public class AppLoader : MonoBehaviour
 		
 		for (int idx = canvasObjectArray.Length-1; idx >= 0; --idx)
 		{
-//			canvasObjectArray.
+			GameObject obj = Instantiate<GameObject> (canvasObjectArray[idx]);
+            obj.name = canvasObjectArray[idx].name;
+            yield return new WaitForSeconds (0.01f);
 		}
 		#endregion
 	}

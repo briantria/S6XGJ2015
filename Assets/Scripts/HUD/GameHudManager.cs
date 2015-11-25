@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
-public class GameHudManager : HudManager
+public class GameHudManager : MonoBehaviour //HudManager
 {
 	[SerializeField] private Text m_textPlayButtonLabel;
 	

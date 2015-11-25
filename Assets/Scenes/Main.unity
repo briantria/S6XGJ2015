@@ -93,8 +93,10 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 523860968}
+  - 114: {fileID: 523860969}
+  - 114: {fileID: 523860970}
   m_Layer: 0
-  m_Name: AppLoader
+  m_Name: AppInitManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -112,6 +114,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
+--- !u!114 &523860969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 523860967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abea5423b34a647e89eb21c31f3817b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &523860970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 523860967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41cc6c53b2a18aa48bc34cd8fc700b12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1162721052
 GameObject:
   m_ObjectHideFlags: 0
@@ -224,6 +248,14 @@ Prefab:
     - target: {fileID: 455870, guid: ab907821a9d8543e6b8ef313caaac05b, type: 2}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11409428, guid: ab907821a9d8543e6b8ef313caaac05b, type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11423600, guid: ab907821a9d8543e6b8ef313caaac05b, type: 2}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ab907821a9d8543e6b8ef313caaac05b, type: 2}
