@@ -9,8 +9,9 @@ using System.Collections;
 
 public class AppLoader : MonoBehaviour 
 {
-	protected void Awake ()
+	protected void Start ()
 	{
+		AppFlowManager.Instance.AppStateUpdate (AppState.OnLoadingScreen);
 		StartCoroutine ("LoadApp");
 	}
 	
@@ -26,5 +27,7 @@ public class AppLoader : MonoBehaviour
             yield return new WaitForSeconds (0.01f);
 		}
 		#endregion
+		
+		AppFlowManager.Instance.AppStateUpdate (AppState.OnHomeScreen);
 	}
 }

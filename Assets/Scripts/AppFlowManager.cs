@@ -18,6 +18,11 @@ public class AppFlowManager : MonoBehaviour
     private AppState m_currentAppState = AppState.OnHomeScreen;
     public AppState CurrentAppState {get {return m_currentAppState;}}
     
+    protected void Awake ()
+    {
+    	m_instance = this;
+    }
+    
     public void AppStateUpdate (AppState p_appState)
     {
         if (appStateUpdate != null)
