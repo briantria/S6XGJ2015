@@ -8,13 +8,14 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class MainBGManager : MonoBehaviour
+public class MainBGManager : MonoBehaviour, IAppFlowListener
 {
 	[SerializeField] Transform m_bgTransform;
     
     private List<Transform> m_tBgTiles = new List<Transform> ();
     private Transform m_tMainCamera;
     private Transform m_transform;
+    private bool m_bAllowDisplay;
     private Vector2 m_v2BgSize;
     private Vector2 m_v2PrevCameraPosition;
     private Vector2 m_v2CurrCameraPosition;
@@ -34,6 +35,7 @@ public class MainBGManager : MonoBehaviour
     {
         m_transform = this.transform;
         m_tMainCamera = Camera.main.transform;
+        m_bAllowDisplay = false;
         
         Sprite bgSprite = m_bgTransform.GetComponent<SpriteRenderer> ().sprite;
         m_v2BgSize = bgSprite.bounds.size * m_bgTransform.localScale.x; // bg scale must be uniform
@@ -53,6 +55,8 @@ public class MainBGManager : MonoBehaviour
     
     protected void Update ()
     {
+        if (!m_bAllowDisplay) { return; }
+        
         m_v2CurrCameraPosition = m_tMainCamera.position;
         Vector2 camPosDelta = m_v2PrevCameraPosition - m_v2CurrCameraPosition;
         m_v2CameraDistanceFromOrigin += (camPosDelta * Time.deltaTime * 20);
@@ -91,5 +95,14 @@ public class MainBGManager : MonoBehaviour
         }
         
         m_v2PrevCameraPosition = m_v2CurrCameraPosition;
+    }
+    
+    public void AllowDisplay (bool p_bAllowDisplay)
+    {
+        m_bAllowDisplay = p_bAllowDisplay;
+        for (int idx = m_tBgTiles.Count-1; idx >= 0; --idx)
+        {
+            m_tBgTiles[idx].gameObject.SetActive (p_bAllowDisplay);
+        }
     }
 }
