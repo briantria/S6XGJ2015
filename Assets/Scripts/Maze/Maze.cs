@@ -50,12 +50,12 @@ public class Maze : MonoBehaviour
     protected void Start ()
     {
         // For Demo
-        float scaleUp = 2.5f;
+        float scaleUp = 1.0f;//2.5f;
         MazeVertex[] verteces = m_tVertexContainer.GetComponentsInChildren<MazeVertex> ();
         for (int idx = 0; idx < verteces.Length; ++idx)
         {
             verteces[idx].transform.position = verteces[idx].transform.position * scaleUp;
-            verteces[idx].ExtendWalls (scaleUp, PADDING);
+            //verteces[idx].ExtendWalls (scaleUp, PADDING);
             
             if (idx == m_iStartPointID)
             {

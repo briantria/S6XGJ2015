@@ -7,10 +7,11 @@
 using UnityEngine;
 using System.Collections;
 
-public class HomeHudManager : HudManager
+public class HomeHudManager : MonoBehaviour// HudManager
 {
 	public void OnClickPlay ()
 	{
-		UIFlowManager.Instance.UpdateUI (HudId.Game);
+		//UIFlowManager.Instance.UpdateUI (HudId.Game);
+		AppFlowManager.Instance.AppStateUpdate (AppState.OnGameScreen);
 	}
 }
