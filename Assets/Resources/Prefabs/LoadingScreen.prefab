@@ -9,6 +9,7 @@ GameObject:
   m_Component:
   - 224: {fileID: 22407176}
   - 223: {fileID: 22322334}
+  - 222: {fileID: 22289628}
   - 114: {fileID: 11457482}
   - 114: {fileID: 11415960}
   - 114: {fileID: 11467690}
@@ -172,6 +173,12 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 114172}
+--- !u!222 &22289628
+CanvasRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 103836}
 --- !u!223 &22322334
 Canvas:
   m_ObjectHideFlags: 1
