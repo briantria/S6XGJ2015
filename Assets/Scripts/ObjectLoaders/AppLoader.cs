@@ -48,11 +48,28 @@ public class AppLoader : MonoBehaviour
         #endregion
         
         #region LOAD MAZE POOL
+        GameObject mazeObject = new GameObject ("Maze");
+        Maze maze = mazeObject.AddComponent<Maze> ();
+        yield return new WaitForEndOfFrame ();
         
+        GameObject verteces = new GameObject ("Verteces");
+        Transform vertecesTransform = verteces.transform;
+        vertecesTransform.SetParent (mazeObject.transform);
+        maze.SetVertexContainer (vertecesTransform);
+        yield return new WaitForEndOfFrame ();
+        
+        for (int idx = 0; idx < 600; ++idx)
+        {
+            Transform tVertex = Instantiate<Transform> (Resources.Load<Transform> ("Prefabs/MazeVertex"));
+            tVertex.SetParent (vertecesTransform);
+        }
+        
+        DisplayManager mazeDisplayMngr = mazeObject.AddComponent<DisplayManager> ();
+        mazeDisplayMngr.RequiredAppState = AppState.OnGameScreen;
+        yield return new WaitForEndOfFrame ();
         #endregion
         
 		AppFlowManager.Instance.AppStateUpdate (AppState.OnHomeScreen);
-        
         yield return new WaitForSeconds (0.2f);
         LoadingScreenManager.Instance.Close ();
 	}

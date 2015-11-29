@@ -45,6 +45,9 @@ public class Maze : MonoBehaviour
         
         m_tStartPoint.SetParent (this.transform);
         m_tEndPoint.SetParent (this.transform);
+        
+        m_tStartPoint.name = "StartPoint";
+        m_tEndPoint.name = "EndPoint";
     }
 
 //    protected void Start ()
@@ -92,6 +95,11 @@ public class Maze : MonoBehaviour
 			m_mainCamera.transform.position = pos;
 			m_mainCamera.orthographicSize = CameraZoom.ORTHO_SIZE;
     	}
+    }
+    
+    public void SetVertexContainer (Transform p_container)
+    {
+        m_tVertexContainer = p_container;
     }
     
     public void LoadWallPlacements (List<RelativePosition> [] p_wallPlacements)
