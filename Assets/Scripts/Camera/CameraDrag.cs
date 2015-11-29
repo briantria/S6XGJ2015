@@ -28,7 +28,8 @@ public class CameraDrag : MonoBehaviour
 	
 	protected void Update ()
 	{
-		if (GameManager.Instance.CurrentGamePhase == GamePhase.Play) { return; }
+        if (AppFlowManager.Instance == null || AppFlowManager.Instance.CurrentAppState != AppState.OnGameScreen) { return; }
+        if (GameManager.Instance == null || GameManager.Instance.CurrentGamePhase == GamePhase.Play) { return; }
 		
 		if (Input.GetMouseButtonDown (0))
 		{

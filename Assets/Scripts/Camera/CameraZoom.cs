@@ -14,7 +14,7 @@ public class CameraZoom : MonoBehaviour
 	
 	private Camera m_mainCamera;
 	private float m_fZoomSpeed = 30.5f;
-	
+    
 	protected void Awake ()
 	{
 		m_mainCamera = Camera.main;
@@ -22,7 +22,8 @@ public class CameraZoom : MonoBehaviour
 	
 	protected void Update ()
 	{
-		if (GameManager.Instance.CurrentGamePhase == GamePhase.Play) { return; }
+        if (AppFlowManager.Instance == null || AppFlowManager.Instance.CurrentAppState != AppState.OnGameScreen) { return; }
+        if (GameManager.Instance == null || GameManager.Instance.CurrentGamePhase == GamePhase.Play) { return; }
 	
 		if (m_mainCamera.orthographicSize < MAX_ORTHOSIZE && Input.GetAxis ("Mouse ScrollWheel") < 0)
 		{
