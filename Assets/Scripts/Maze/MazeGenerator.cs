@@ -28,7 +28,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 // TODO: fully functional scriptable object
-public class MazeGeneratorData : ScriptableObject
+public class MazeGenerator : ScriptableObject
 {
     #region Constants
     private static readonly IntVector2 [] k_iv2NeighborOffsets = new IntVector2[]
@@ -48,8 +48,7 @@ public class MazeGeneratorData : ScriptableObject
 	private static int m_iHeight;
     private static bool m_saved;
     private static MazeGeneratorState m_generatorSate = MazeGeneratorState.Ready;
-    //private static MazeEditorDisplay m_mazeEditorDisplay = null;
-    private static Maze m_mazeEditorDisplay = null;
+    private static Maze m_maze = null;
     
     #region Properties
     public static MazeGeneratorState State {get {return m_generatorSate;}}
@@ -121,7 +120,7 @@ public class MazeGeneratorData : ScriptableObject
         
         GenerateRandomPath ();
         //DebugPrintWallData ();
-        DisplayMaze ();
+        //DisplayMaze ();
 	}
 	
 	public static void Clear ()
@@ -131,8 +130,8 @@ public class MazeGeneratorData : ScriptableObject
 		m_listMazeVerteces.Clear ();
         m_wallPlacements = null;
         m_visitMatrix = null;
-        DestroyImmediate (m_mazeEditorDisplay.gameObject);
-        m_mazeEditorDisplay = null;
+        DestroyImmediate (m_maze.gameObject);
+        m_maze = null;
         
         System.GC.Collect ();
 	}
@@ -171,20 +170,18 @@ public class MazeGeneratorData : ScriptableObject
     
     private static void DisplayMaze ()
     {
-        if (m_mazeEditorDisplay == null)
+        if (m_maze == null)
         {
-            //m_mazeEditorDisplay = GameObject.FindObjectOfType<MazeEditorDisplay> ();
-            m_mazeEditorDisplay = GameObject.FindObjectOfType<Maze> ();
-            if (m_mazeEditorDisplay == null)
+            m_maze = GameObject.FindObjectOfType<Maze> ();
+            if (m_maze == null)
             {
-                GameObject objMazeEditor = new GameObject ("MazeEditorDisplay");
-                //m_mazeEditorDisplay = objMazeEditor.AddComponent<MazeEditorDisplay> ();
-                m_mazeEditorDisplay = objMazeEditor.AddComponent<Maze> ();
+                GameObject objMazeEditor = new GameObject ("Maze");
+                m_maze = objMazeEditor.AddComponent<Maze> ();
             }
         }
         
-        m_mazeEditorDisplay.LoadWallPlacements (m_wallPlacements);
-        m_mazeEditorDisplay.Display (new IntVector2 (m_iWidth, m_iHeight));
+        m_maze.LoadWallPlacements (m_wallPlacements);
+        m_maze.Display (new IntVector2 (m_iWidth, m_iHeight));
     }
     
     private static void GenerateRandomPath ()

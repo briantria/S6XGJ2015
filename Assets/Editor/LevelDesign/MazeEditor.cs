@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections;
 
-public class MazeGenerator : EditorWindow
+public class MazeEditor : EditorWindow
 {
 	private string m_strRowCount = "5";
 	private string m_strColCount = "5";
@@ -18,19 +18,19 @@ public class MazeGenerator : EditorWindow
 
 	protected void OnGUI ()
 	{
-        if (MazeGeneratorData.State == MazeGeneratorState.ComputingPath)
+        if (MazeGenerator.State == MazeGeneratorState.ComputingPath)
         {
             GUILayout.Label ("Generating Maze...");
             return;
         }
         
-        if (MazeGeneratorData.State == MazeGeneratorState.Saving)
+        if (MazeGenerator.State == MazeGeneratorState.Saving)
         {
             GUILayout.Label ("Saving Maze...");
             return;
         }
         
-        if (MazeGeneratorData.State == MazeGeneratorState.Fetching)
+        if (MazeGenerator.State == MazeGeneratorState.Fetching)
         {
             GUILayout.Label ("Loading Maze...");
             return;
@@ -46,9 +46,9 @@ public class MazeGenerator : EditorWindow
 		{
 			if (GUILayout.Button ("Generate Random Maze"))
 			{
-                if (MazeGeneratorData.IsEmpty || MazeGeneratorData.IsSaved)
+                if (MazeGenerator.IsEmpty || MazeGenerator.IsSaved)
                 {
-                    MazeGeneratorData.Create (m_iColCount, m_iRowCount);
+                    MazeGenerator.Create (m_iColCount, m_iRowCount);
                 }
                 else
                 {
@@ -66,15 +66,15 @@ public class MazeGenerator : EditorWindow
                         case 0:
                         {
                             //Debug.Log ("save maze");
-                            MazeGeneratorData.Save ();
+                            MazeGenerator.Save ();
                             break;
                         }
                         
                         case 1:
                         {
                             //Debug.Log ("proceed without saving");
-                            MazeGeneratorData.Clear ();
-                            MazeGeneratorData.Create (m_iColCount, m_iRowCount);
+                            MazeGenerator.Clear ();
+                            MazeGenerator.Create (m_iColCount, m_iRowCount);
                             break;
                         }
                         
@@ -90,32 +90,32 @@ public class MazeGenerator : EditorWindow
         
         if (GUILayout.Button ("Load Maze"))
         {
-            if (MazeGeneratorData.Load () == false)
+            if (MazeGenerator.Load () == false)
             {
                 EditorUtility.DisplayDialog ("Load Maze", "Load failed. No level data saved.", "Ok");
             }
         }
         
-        if (MazeGeneratorData.IsEmpty == false)
+        if (MazeGenerator.IsEmpty == false)
         {
             if (GUILayout.Button ("Save Maze"))
             {
-                MazeGeneratorData.Save ();
+                MazeGenerator.Save ();
             }
         
             if (GUILayout.Button ("Clear Maze"))
             {
-                if (MazeGeneratorData.IsSaved == false &&
+                if (MazeGenerator.IsSaved == false &&
                     EditorUtility.DisplayDialog (
                         "Clear Maze",
                         "Save changes?",
                         "Save",
                         "Proceed without Saving"))
                 {
-                    MazeGeneratorData.Save ();
+                    MazeGenerator.Save ();
                 }
                 
-                MazeGeneratorData.Clear ();
+                MazeGenerator.Clear ();
             }
         }
 	}
@@ -123,7 +123,7 @@ public class MazeGenerator : EditorWindow
 	[MenuItem ("LevelDesign/Maze Generator")]
 	public static void OpenGridGeneratorWindow ()
 	{
-		MazeGenerator gridGeneratorWindow = (MazeGenerator) EditorWindow.GetWindow (typeof (MazeGenerator));
+		MazeEditor gridGeneratorWindow = (MazeEditor) EditorWindow.GetWindow (typeof (MazeEditor));
 		gridGeneratorWindow.titleContent = new GUIContent ("Maze Generator");
 		gridGeneratorWindow.Show ();
 	}

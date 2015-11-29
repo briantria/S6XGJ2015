@@ -9,7 +9,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
-public class HexSetupPanel : MonoBehaviour, IAppFlowListener
+public class HexSetupPanel : MonoBehaviour
 {
 	private static HexSetupPanel m_instance = null;
 	public  static HexSetupPanel Instance {get {return m_instance;}}
@@ -60,9 +60,4 @@ public class HexSetupPanel : MonoBehaviour, IAppFlowListener
 	{
 		m_rectTransform.anchoredPosition = p_v2Position;
 	}
-
-    public void AllowDisplay (bool p_bAllowDisplay)
-    {
-        m_bAllowDisplay = p_bAllowDisplay;
-    }
 }

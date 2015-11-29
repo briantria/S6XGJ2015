@@ -8,7 +8,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class MainBGManager : MonoBehaviour, IAppFlowListener
+public class MainBGManager : MonoBehaviour
 {
 	[SerializeField] Transform m_bgTransform;
     
@@ -95,14 +95,5 @@ public class MainBGManager : MonoBehaviour, IAppFlowListener
         }
         
         m_v2PrevCameraPosition = m_v2CurrCameraPosition;
-    }
-    
-    public void AllowDisplay (bool p_bAllowDisplay)
-    {
-        m_bAllowDisplay = p_bAllowDisplay;
-        for (int idx = m_tBgTiles.Count-1; idx >= 0; --idx)
-        {
-            m_tBgTiles[idx].gameObject.SetActive (p_bAllowDisplay);
-        }
     }
 }

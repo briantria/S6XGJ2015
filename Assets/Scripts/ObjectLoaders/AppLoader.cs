@@ -9,9 +9,8 @@ using System.Collections;
 
 public class AppLoader : MonoBehaviour 
 {
-	protected void Start ()
+	protected void Awake ()
 	{
-		AppFlowManager.Instance.AppStateUpdate (AppState.OnLoadingScreen);
 		StartCoroutine ("LoadApp");
 	}
 	
@@ -27,8 +26,8 @@ public class AppLoader : MonoBehaviour
 			GameObject obj = Instantiate<GameObject> (canvasObjectArray[idx]);
             obj.name = canvasObjectArray[idx].name;
             
-            AppFlowListener appFlowListener = obj.AddComponent<AppFlowListener> ();
-            appFlowListener.RequiredAppState = AppState.OnHomeScreen;
+            DisplayManager displayMngr = obj.AddComponent<DisplayManager> ();
+            displayMngr.RequiredAppState = AppState.OnHomeScreen;
             
             yield return new WaitForEndOfFrame ();
 		}
@@ -41,13 +40,20 @@ public class AppLoader : MonoBehaviour
             GameObject obj = Instantiate<GameObject> (transformObjectArray[idx]);
             obj.name = transformObjectArray[idx].name;
             
-            AppFlowListener appFlowListener = obj.AddComponent<AppFlowListener> ();
-            appFlowListener.RequiredAppState = AppState.OnGameScreen;
+            DisplayManager displayMngr = obj.AddComponent<DisplayManager> ();
+            displayMngr.RequiredAppState = AppState.OnGameScreen;
             
             yield return new WaitForEndOfFrame ();
         }
         #endregion
         
+        #region LOAD MAZE POOL
+        
+        #endregion
+        
 		AppFlowManager.Instance.AppStateUpdate (AppState.OnHomeScreen);
+        
+        yield return new WaitForSeconds (0.2f);
+        LoadingScreenManager.Instance.Close ();
 	}
 }

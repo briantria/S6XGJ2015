@@ -21,6 +21,9 @@ public class AppFlowManager : MonoBehaviour
     protected void Awake ()
     {
     	m_instance = this;
+        LoadingScreenManager.Instance.Open ();
+        AppStateUpdate (AppState.OnLoadingScreen);
+        this.gameObject.AddComponent<AppLoader> ();
     }
     
     public void AppStateUpdate (AppState p_appState)
