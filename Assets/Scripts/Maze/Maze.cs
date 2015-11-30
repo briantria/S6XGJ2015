@@ -83,7 +83,7 @@ public class Maze : MonoBehaviour
             case AppState.OnGameScreen:
             {
                 MazeGenerator.Clear ();
-                MazeGenerator.Create (30, 20);
+                MazeGenerator.Create (20, 10);
                 
                 float scaleUp = 2.5f;
                 //MazeVertex[] verteces = m_tVertexContainer.GetComponentsInChildren<MazeVertex> ();
@@ -192,9 +192,12 @@ public class Maze : MonoBehaviour
             RelativePosition activeWallFlags = RelativePosition.None;
             int iVertexId = m_listVerteces[idx].Id;
             
-            for (int jdx = m_wallPlacements[iVertexId].Count-1; jdx >= 0; --jdx)
+            if (iVertexId < m_wallPlacements.Length)
             {
-                activeWallFlags |= m_wallPlacements[iVertexId][jdx];
+                for (int jdx = m_wallPlacements[iVertexId].Count-1; jdx >= 0; --jdx)
+                {
+                    activeWallFlags |= m_wallPlacements[iVertexId][jdx];
+                } 
             }
             
             m_listVerteces[idx].SetActiveWalls (this, activeWallFlags);

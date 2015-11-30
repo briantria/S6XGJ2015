@@ -19,6 +19,11 @@ public class AppLoader : MonoBehaviour
         // TODO: use AppState enum and loop
         //       dictionary vs Enum.Parse
     
+        #region RESOURCE LOADERS
+        MazeImageLoader.Instance.LoadImages ();
+        yield return new WaitForEndOfFrame ();
+        #endregion
+    
 		#region LOAD HOME SCREEN OBJECTS
 		GameObject[] canvasObjectArray = Resources.LoadAll<GameObject> ("Prefabs/OnHomeScreen");
 		for (int idx = canvasObjectArray.Length-1; idx >= 0; --idx)
