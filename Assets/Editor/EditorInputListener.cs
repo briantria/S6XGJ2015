@@ -15,14 +15,12 @@ public class EditorInputListener : Editor
 		Event e = Event.current;
 		Tile tile = (Tile) target;
 		
-		switch (e.type)
+		switch (e.type) {
+		case EventType.mouseUp:
 		{
-			case EventType.mouseUp:
-			{
-				tile.ToggleTileType ();
-				Event.current.Use ();
-				break;
-			}
-		}
+			tile.ToggleTileType ();
+			Event.current.Use ();
+			break;
+		}}
 	}
 }

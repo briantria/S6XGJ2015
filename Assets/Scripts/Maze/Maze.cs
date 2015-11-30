@@ -54,71 +54,61 @@ public class Maze : MonoBehaviour
     
     private void OnGamePhaseUpdate (GamePhase p_gamePhase)
     {
-        switch (p_gamePhase)
+        switch (p_gamePhase) {
+        case GamePhase.Play:
         {
-//            case GamePhase.Edit:
-//            {
-//                MazeGenerator.Clear ();
-//                MazeGenerator.Create (30, 20);
-//                break;
-//            }
-            case GamePhase.Play:
-            {
-                HexSetupPanel.Instance.Close ();
-                Vector3 pos = m_tStartPoint.position;
-                pos.x +=   7;
-                pos.y +=   4;
-                pos.z  = -10;
-                m_mainCamera.transform.position = pos;
-                m_mainCamera.orthographicSize = CameraZoom.ORTHO_SIZE;
-                
-                break;
-            }
-        }
+            HexSetupPanel.Instance.Close ();
+            Vector3 pos = m_tStartPoint.position;
+            pos.x +=   7;
+            pos.y +=   4;
+            pos.z  = -10;
+            m_mainCamera.transform.position = pos;
+            m_mainCamera.orthographicSize = CameraZoom.ORTHO_SIZE;
+            
+            break;
+        }}
     }
     
     private void AppStateUpdate (AppState p_appState)
     {
-        switch (p_appState)
+        switch (p_appState) {
+        case AppState.OnGameScreen:
         {
-            case AppState.OnGameScreen:
+            HexSetupPanel.Instance.Close ();
+            MazeGenerator.Clear ();
+            MazeGenerator.Create (20, 10);
+            
+            float scaleUp = 2.5f;
+            for (int idx = 0; idx < m_listVerteces.Count; ++idx)
             {
-                HexSetupPanel.Instance.Close ();
-                MazeGenerator.Clear ();
-                MazeGenerator.Create (20, 10);
+                m_listVerteces[idx].transform.position = m_listVerteces[idx].transform.position * scaleUp;
+                m_listVerteces[idx].ExtendWalls (scaleUp, PADDING);
                 
-                float scaleUp = 2.5f;
-                for (int idx = 0; idx < m_listVerteces.Count; ++idx)
+                if (idx == m_iStartPointID)
                 {
-                    m_listVerteces[idx].transform.position = m_listVerteces[idx].transform.position * scaleUp;
-                    m_listVerteces[idx].ExtendWalls (scaleUp, PADDING);
+                    Vector3 pos = m_listVerteces[idx].transform.position;
+                    pos.x -= (PADDING * scaleUp * 0.5f);
+                    pos.y -= (PADDING * scaleUp * 0.5f);
+                    m_tStartPoint.position = pos;
                     
-                    if (idx == m_iStartPointID)
-                    {
-                        Vector3 pos = m_listVerteces[idx].transform.position;
-                        pos.x -= (PADDING * scaleUp * 0.5f);
-                        pos.y -= (PADDING * scaleUp * 0.5f);
-                        m_tStartPoint.position = pos;
-                        
-                        m_tStartPoint.name = "StartPoint at " + m_listVerteces[idx].Id;
-                    
-                        pos.x +=   7;
-                        pos.y +=   4;
-                        pos.z  = -10;
-                        m_mainCamera.transform.position = pos;
-                    }
-                    
-                    if (idx == m_iEndPointID)
-                    {
-                        Vector3 pos = m_listVerteces[idx].transform.position;
-                        pos.x -= (PADDING * scaleUp * 0.5f);
-                        pos.y -= (PADDING * scaleUp * 0.5f);
-                        m_tEndPoint.position = pos;
-                    }
+                    m_tStartPoint.name = "StartPoint at " + m_listVerteces[idx].Id;
+                
+                    pos.x +=   7;
+                    pos.y +=   4;
+                    pos.z  = -10;
+                    m_mainCamera.transform.position = pos;
                 }
-                break;
+                
+                if (idx == m_iEndPointID)
+                {
+                    Vector3 pos = m_listVerteces[idx].transform.position;
+                    pos.x -= (PADDING * scaleUp * 0.5f);
+                    pos.y -= (PADDING * scaleUp * 0.5f);
+                    m_tEndPoint.position = pos;
+                }
             }
-        }
+            break;
+        }}
     }
     
     public void SetVertexContainer (Transform p_container)
@@ -217,24 +207,22 @@ public class Maze : MonoBehaviour
     {
         MazeVertex vertex = null;
         
-        switch (p_relativePosition)
+        switch (p_relativePosition) {
+        case RelativePosition.Up:
         {
-            case RelativePosition.Up:
-            {
-                if (p_iv2Coordinates.y + 1 >= m_iHeight) { break; }
-                vertex = m_listVerteces [p_id + m_iWidth];
-                
-                break;
-            }
+            if (p_iv2Coordinates.y + 1 >= m_iHeight) { break; }
+            vertex = m_listVerteces [p_id + m_iWidth];
             
-            case RelativePosition.Right:
-            {
-                if (p_iv2Coordinates.x + 1 >= m_iWidth) { break; }
-                vertex = m_listVerteces [p_id + 1];
-                
-                break;
-            }
+            break;
         }
+        
+        case RelativePosition.Right:
+        {
+            if (p_iv2Coordinates.x + 1 >= m_iWidth) { break; }
+            vertex = m_listVerteces [p_id + 1];
+            
+            break;
+        }}
         
         return vertex;
     }

@@ -61,29 +61,21 @@ public class MazeEditor : EditorWindow
                                     "Cancel"
                                  );
                                  
-                    switch (option)
+                    switch (option) {
+                    case 0:
                     {
-                        case 0:
-                        {
-                            //Debug.Log ("save maze");
-                            MazeGenerator.Save ();
-                            break;
-                        }
-                        
-                        case 1:
-                        {
-                            //Debug.Log ("proceed without saving");
-                            MazeGenerator.Clear ();
-                            MazeGenerator.Create (m_iColCount, m_iRowCount);
-                            break;
-                        }
-                        
-//                        case 2:
-//                        {
-//                            //Debug.Log ("cancel");
-//                            break;
-//                        }
+                        //Debug.Log ("save maze");
+                        MazeGenerator.Save ();
+                        break;
                     }
+                    
+                    case 1:
+                    {
+                        //Debug.Log ("proceed without saving");
+                        MazeGenerator.Clear ();
+                        MazeGenerator.Create (m_iColCount, m_iRowCount);
+                        break;
+                    }}
                 }
 			}
 		}

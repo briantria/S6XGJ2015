@@ -99,7 +99,7 @@ public class Tile : MonoBehaviour
 	#if UNITY_EDITOR
 	public void ToggleTileType ()
 	{
-		switch (m_tileType){
+		switch (m_tileType) {
 		case TileType.Path:
 		{
 			SetType (TileType.Wall);

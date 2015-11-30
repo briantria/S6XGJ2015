@@ -57,8 +57,7 @@ public class VertexConnector : MonoBehaviour
         m_ColliderX.SetActive (false);
         m_ColliderT.SetActive (false);
     
-        switch (p_iConnectorType)
-        {
+        switch (p_iConnectorType) {
         case CONNECTOR_H: // --
         {
             m_spriteRenderer.sprite = MazeImageLoader.Instance.PipeI;
@@ -152,8 +151,7 @@ public class VertexConnector : MonoBehaviour
             //m_tConnector.gameObject.SetActive (false);
             m_spriteRenderer.enabled = false;
             break;
-        }
-        }
+        }}
         
         m_spriteRenderer.transform.eulerAngles = new Vector3 (0, 0, zRotation);
     }
