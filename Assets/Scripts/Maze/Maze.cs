@@ -16,7 +16,7 @@ public class Maze : MonoBehaviour
     [SerializeField] private Transform m_tVertexContainer = null;
 
     protected List<RelativePosition> [] m_wallPlacements;
-    private   List<MazeVertex> m_listVerteces;
+    private   List<MazeVertex> m_listVerteces = new List<MazeVertex> ();
     private   Camera m_mainCamera;
     private   int m_iWidth;
     private   int m_iHeight;
@@ -30,11 +30,13 @@ public class Maze : MonoBehaviour
 	protected void OnEnable ()
 	{
 		GameManager.OnGamePhaseUpdate += OnGamePhaseUpdate;
+        AppFlowManager.appStateUpdate += AppStateUpdate;
 	}
 	
 	protected void OnDisable ()
 	{
-		GameManager.OnGamePhaseUpdate -= OnGamePhaseUpdate;
+        GameManager.OnGamePhaseUpdate -= OnGamePhaseUpdate;
+        AppFlowManager.appStateUpdate -= AppStateUpdate;
 	}
 
     protected void Awake ()
@@ -86,20 +88,55 @@ public class Maze : MonoBehaviour
     
     private void OnGamePhaseUpdate (GamePhase p_gamePhase)
     {
-		if (p_gamePhase == GamePhase.Play)
-    	{
-			Vector3 pos = m_tStartPoint.position;
-			pos.x +=   7;
-			pos.y +=   4;
-			pos.z  = -10;
-			m_mainCamera.transform.position = pos;
-			m_mainCamera.orthographicSize = CameraZoom.ORTHO_SIZE;
-    	}
+        switch (p_gamePhase)
+        {
+//            case GamePhase.Edit:
+//            {
+//                MazeGenerator.Clear ();
+//                MazeGenerator.Create (30, 20);
+//                break;
+//            }
+            case GamePhase.Play:
+            {
+                Vector3 pos = m_tStartPoint.position;
+                pos.x +=   7;
+                pos.y +=   4;
+                pos.z  = -10;
+                m_mainCamera.transform.position = pos;
+                m_mainCamera.orthographicSize = CameraZoom.ORTHO_SIZE;
+                
+                break;
+            }
+        }
+    }
+    
+    private void AppStateUpdate (AppState p_appState)
+    {
+        switch (p_appState)
+        {
+            case AppState.OnGameScreen:
+            {
+                MazeGenerator.Clear ();
+                MazeGenerator.Create (30, 20);
+                break;
+            }
+        }
     }
     
     public void SetVertexContainer (Transform p_container)
     {
         m_tVertexContainer = p_container;
+    }
+    
+    public void InitVertexPool ()
+    {
+        for (int idx = 0; idx < 600; ++idx)
+        {
+            Transform tVertex = Instantiate<Transform> (Resources.Load<Transform> ("Prefabs/MazeVertex"));
+            tVertex.SetParent (m_tVertexContainer);
+            m_listVerteces.Add (tVertex.GetComponent <MazeVertex>());
+            tVertex.gameObject.SetActive (false);
+        }
     }
     
     public void LoadWallPlacements (List<RelativePosition> [] p_wallPlacements)
@@ -109,7 +146,6 @@ public class Maze : MonoBehaviour
 
 	public void Display (IntVector2 p_iv2Dimension)
     {
-        // TODO: Object pooling
         // TODO: cache references
         if (m_tVertexContainer == null)
         {
@@ -118,7 +154,6 @@ public class Maze : MonoBehaviour
             m_tVertexContainer.SetParent (this.transform);
         }
         
-        m_listVerteces = new List<MazeVertex> ();
         m_iWidth = p_iv2Dimension.x;
         m_iHeight = p_iv2Dimension.y;
         
@@ -129,38 +164,51 @@ public class Maze : MonoBehaviour
         {
             for (int iCol = 0; iCol < p_iv2Dimension.x; ++iCol)
             {
-                Transform tVertex = Instantiate<Transform> (Resources.Load<Transform> ("Prefabs/MazeVertex"));
-                tVertex.SetParent (m_tVertexContainer);
+                int id = (p_iv2Dimension.x * iRow) + iCol;
+                Transform tVertex;
+                MazeVertex vertex;
+                
+                if (id < m_listVerteces.Count)
+                {
+                    tVertex = m_listVerteces[id].transform;
+                    tVertex.gameObject.SetActive (true);
+                    vertex = tVertex.GetComponent <MazeVertex>();
+                }
+                else
+                {
+                    tVertex = Instantiate<Transform> (Resources.Load<Transform> ("Prefabs/MazeVertex"));
+                    tVertex.SetParent (m_tVertexContainer);
+                    vertex = tVertex.GetComponent <MazeVertex>();
+                    m_listVerteces.Add (vertex);
+                }
+            
                 tVertex.position = new Vector3 ((PADDING * iCol) - OFFSET, (PADDING * iRow) - OFFSET, 0.0f);
                 
-                MazeVertex vertex = tVertex.GetComponent <MazeVertex>();
-                vertex.Id = (p_iv2Dimension.x * iRow) + iCol;
+                vertex.Id = id;
                 vertex.Coordinates = new IntVector2 (iCol, iRow);
-                m_listVerteces.Add (vertex);
-                
                 tVertex.name = "[" + vertex.Id + "]" + " " + vertex.Coordinates.ToString ();
             }
         }
         
         // wall setup loop
-        MazeVertex[] verteces = m_tVertexContainer.GetComponentsInChildren<MazeVertex> ();
-        for (int idx = verteces.Length-2; idx >= 0; --idx)
+        //MazeVertex[] verteces = m_tVertexContainer.GetComponentsInChildren<MazeVertex> ();
+        for (int idx = m_listVerteces.Count-2; idx >= 0; --idx)
         {
             RelativePosition activeWallFlags = RelativePosition.None;
-            int iVertexId = verteces[idx].Id;
+            int iVertexId = m_listVerteces[idx].Id;
             
             for (int jdx = m_wallPlacements[iVertexId].Count-1; jdx >= 0; --jdx)
             {
                 activeWallFlags |= m_wallPlacements[iVertexId][jdx];
             }
             
-            verteces[idx].SetActiveWalls (this, activeWallFlags);
+            m_listVerteces[idx].SetActiveWalls (this, activeWallFlags);
         }
         
         // connector setup loop
-        for (int idx = verteces.Length-2; idx >= 0; --idx)
+        for (int idx = m_listVerteces.Count-2; idx >= 0; --idx)
         {
-            verteces[idx].ConnectorSetup ();
+            m_listVerteces[idx].ConnectorSetup ();
         }
     }
     

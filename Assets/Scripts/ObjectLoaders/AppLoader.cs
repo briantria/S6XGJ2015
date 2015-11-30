@@ -56,13 +56,8 @@ public class AppLoader : MonoBehaviour
         Transform vertecesTransform = verteces.transform;
         vertecesTransform.SetParent (mazeObject.transform);
         maze.SetVertexContainer (vertecesTransform);
+        maze.InitVertexPool ();
         yield return new WaitForEndOfFrame ();
-        
-        for (int idx = 0; idx < 600; ++idx)
-        {
-            Transform tVertex = Instantiate<Transform> (Resources.Load<Transform> ("Prefabs/MazeVertex"));
-            tVertex.SetParent (vertecesTransform);
-        }
         
         DisplayManager mazeDisplayMngr = mazeObject.AddComponent<DisplayManager> ();
         mazeDisplayMngr.RequiredAppState = AppState.OnGameScreen;

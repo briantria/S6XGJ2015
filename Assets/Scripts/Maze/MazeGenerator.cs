@@ -120,20 +120,23 @@ public class MazeGenerator : ScriptableObject
         
         GenerateRandomPath ();
         //DebugPrintWallData ();
-        //DisplayMaze ();
+        DisplayMaze ();
 	}
 	
 	public static void Clear ()
 	{
 		m_iWidth = 0;
 		m_iHeight = 0;
-		m_listMazeVerteces.Clear ();
         m_wallPlacements = null;
         m_visitMatrix = null;
-        DestroyImmediate (m_maze.gameObject);
-        m_maze = null;
+        if (m_listMazeVerteces != null) { m_listMazeVerteces.Clear (); }
         
-        System.GC.Collect ();
+//        #if UNITY_EDITOR
+//        DestroyImmediate (m_maze.gameObject);
+//        m_maze = null;
+//        #endif
+//        
+//        System.GC.Collect ();
 	}
     
     public static void Save ()
