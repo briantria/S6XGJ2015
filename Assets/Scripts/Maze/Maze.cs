@@ -64,6 +64,7 @@ public class Maze : MonoBehaviour
 //            }
             case GamePhase.Play:
             {
+                HexSetupPanel.Instance.Close ();
                 Vector3 pos = m_tStartPoint.position;
                 pos.x +=   7;
                 pos.y +=   4;

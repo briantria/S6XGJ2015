@@ -17,38 +17,32 @@ public class HexSetupPanel : MonoBehaviour
     private List<GameObject> m_objChildren = new List<GameObject> ();
 	private RectTransform m_rectTransform;
     private Canvas m_canvas;
-	//private GameObject m_gameObject;
-    //private bool m_bAllowDisplay;
 	
 	protected void Awake ()
 	{
 		m_instance = this;
 		m_rectTransform = this.GetComponent<RectTransform> ();
         m_canvas = this.GetComponent<Canvas> ();
-		//m_gameObject = this.gameObject;
 		
         foreach (Transform t in m_rectTransform)
         {
             m_objChildren.Add (t.gameObject);
         }
         
-        //m_bAllowDisplay = false;
 		Close ();
 	}
 	
 	public void Open ()
 	{
-		//m_gameObject.SetActive (true);
-        m_canvas.enabled = true;//m_bAllowDisplay;
+        m_canvas.enabled = true;
         for (int idx = m_objChildren.Count-1; idx >= 0; --idx)
         {
-            m_objChildren[idx].SetActive (true);//m_bAllowDisplay);
+            m_objChildren[idx].SetActive (true);
         }
 	}
 	
 	public void Close ()
 	{
-		//m_gameObject.SetActive (false);
         m_canvas.enabled = false;
         for (int idx = m_objChildren.Count-1; idx >= 0; --idx)
         {
