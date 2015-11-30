@@ -49,6 +49,7 @@ public class MazeGenerator : ScriptableObject
     private static bool m_saved;
     private static MazeGeneratorState m_generatorSate = MazeGeneratorState.Ready;
     private static Maze m_maze = null;
+    private static System.Random m_random = null;
     
     #region Properties
     public static MazeGeneratorState State {get {return m_generatorSate;}}
@@ -65,6 +66,7 @@ public class MazeGenerator : ScriptableObject
 		m_iWidth = p_iCol;
 		m_iHeight = p_iRow;
         m_saved = false;
+        m_random = new System.Random (10);
 		
         /* 2 x 2 Maze
          * cell -> (col, row) or (screen pos x, screen pos y)
@@ -129,6 +131,7 @@ public class MazeGenerator : ScriptableObject
 		m_iHeight = 0;
         m_wallPlacements = null;
         m_visitMatrix = null;
+        m_random = null;
         if (m_listMazeVerteces != null) { m_listMazeVerteces.Clear (); }
         
 //        #if UNITY_EDITOR
@@ -217,7 +220,7 @@ public class MazeGenerator : ScriptableObject
         int iBactrackCount;
         
         // push random root
-        iv2BactrackStack.Add (m_listMazeVerteces [Random.Range (0, m_listMazeVerteces.Count)]);
+        iv2BactrackStack.Add (m_listMazeVerteces [m_random.Next (0, m_listMazeVerteces.Count)]);//[Random.Range (0, m_listMazeVerteces.Count)]);
         m_visitMatrix [iv2BactrackStack[0].x, iv2BactrackStack[0].y] = 1;
         iBactrackCount = iv2BactrackStack.Count;
         
@@ -247,7 +250,7 @@ public class MazeGenerator : ScriptableObject
         
         do
         {
-            index = Random.Range (0, m_listIndeces.Count);
+            index = m_random.Next (0, m_listIndeces.Count);//Random.Range (0, m_listIndeces.Count);
             p_iv2Neighbor = p_iv2Current.Sum (k_iv2NeighborOffsets [m_listIndeces[index]]);
             
             // choose another neigbor if this is outside the maze
