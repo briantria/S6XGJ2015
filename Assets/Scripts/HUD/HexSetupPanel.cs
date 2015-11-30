@@ -18,7 +18,7 @@ public class HexSetupPanel : MonoBehaviour
 	private RectTransform m_rectTransform;
     private Canvas m_canvas;
 	//private GameObject m_gameObject;
-    private bool m_bAllowDisplay;
+    //private bool m_bAllowDisplay;
 	
 	protected void Awake ()
 	{
@@ -32,17 +32,17 @@ public class HexSetupPanel : MonoBehaviour
             m_objChildren.Add (t.gameObject);
         }
         
-        m_bAllowDisplay = false;
+        //m_bAllowDisplay = false;
 		Close ();
 	}
 	
 	public void Open ()
 	{
 		//m_gameObject.SetActive (true);
-        m_canvas.enabled = m_bAllowDisplay;
+        m_canvas.enabled = true;//m_bAllowDisplay;
         for (int idx = m_objChildren.Count-1; idx >= 0; --idx)
         {
-            m_objChildren[idx].SetActive (m_bAllowDisplay);
+            m_objChildren[idx].SetActive (true);//m_bAllowDisplay);
         }
 	}
 	
