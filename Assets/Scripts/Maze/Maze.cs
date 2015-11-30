@@ -51,40 +51,6 @@ public class Maze : MonoBehaviour
         m_tStartPoint.name = "StartPoint";
         m_tEndPoint.name = "EndPoint";
     }
-
-//    protected void Start ()
-//    {
-//        // For Demo
-//        float scaleUp = 1.0f;//2.5f;
-//        MazeVertex[] verteces = m_tVertexContainer.GetComponentsInChildren<MazeVertex> ();
-//        for (int idx = 0; idx < verteces.Length; ++idx)
-//        {
-//            verteces[idx].transform.position = verteces[idx].transform.position * scaleUp;
-//            //verteces[idx].ExtendWalls (scaleUp, PADDING);
-//            
-//            if (idx == m_iStartPointID)
-//            {
-//                Vector3 pos = verteces[idx].transform.position;
-//                pos.x -= (PADDING * scaleUp * 0.5f);
-//                pos.y -= (PADDING * scaleUp * 0.5f);
-//                m_tStartPoint.position = pos;
-//                
-//                pos.x +=   7;
-//                pos.y +=   4;
-//				pos.z  = -10;
-//                m_mainCamera.transform.position = pos;
-//            }
-//            
-//            if (idx == m_iEndPointID)
-//            {
-//                Vector3 pos = verteces[idx].transform.position;
-//                pos.x -= (PADDING * scaleUp * 0.5f);
-//                pos.y -= (PADDING * scaleUp * 0.5f);
-//                m_tEndPoint.position = pos;
-//            }
-//        }
-//        ////////////////
-//    }
     
     private void OnGamePhaseUpdate (GamePhase p_gamePhase)
     {
@@ -118,6 +84,35 @@ public class Maze : MonoBehaviour
             {
                 MazeGenerator.Clear ();
                 MazeGenerator.Create (30, 20);
+                
+                float scaleUp = 2.5f;
+                //MazeVertex[] verteces = m_tVertexContainer.GetComponentsInChildren<MazeVertex> ();
+                for (int idx = 0; idx < m_listVerteces.Count; ++idx)
+                {
+                    m_listVerteces[idx].transform.position = m_listVerteces[idx].transform.position * scaleUp;
+                    m_listVerteces[idx].ExtendWalls (scaleUp, PADDING);
+                    
+                    if (idx == m_iStartPointID)
+                    {
+                        Vector3 pos = m_listVerteces[idx].transform.position;
+                        pos.x -= (PADDING * scaleUp * 0.5f);
+                        pos.y -= (PADDING * scaleUp * 0.5f);
+                        m_tStartPoint.position = pos;
+                        
+                        pos.x +=   7;
+                        pos.y +=   4;
+                        pos.z  = -10;
+                        m_mainCamera.transform.position = pos;
+                    }
+                    
+                    if (idx == m_iEndPointID)
+                    {
+                        Vector3 pos = m_listVerteces[idx].transform.position;
+                        pos.x -= (PADDING * scaleUp * 0.5f);
+                        pos.y -= (PADDING * scaleUp * 0.5f);
+                        m_tEndPoint.position = pos;
+                    }
+                }
                 break;
             }
         }
