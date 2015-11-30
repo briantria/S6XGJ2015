@@ -33,6 +33,10 @@ public class VertexConnector : MonoBehaviour
     private const int CONNECTOR_X  = 39;//0x100111; //  +
     #endregion
     
+    [SerializeField] private GameObject m_ColliderL;
+    [SerializeField] private GameObject m_ColliderI;
+    [SerializeField] private GameObject m_ColliderX;
+    [SerializeField] private GameObject m_ColliderT;
     private SpriteRenderer m_spriteRenderer;
     
     protected void Awake ()
@@ -48,12 +52,17 @@ public class VertexConnector : MonoBehaviour
     public void Setup (int p_iConnectorType)
     {
         int zRotation = 0;
+        m_ColliderL.SetActive (false);
+        m_ColliderI.SetActive (false);
+        m_ColliderX.SetActive (false);
+        m_ColliderT.SetActive (false);
     
         switch (p_iConnectorType)
         {
         case CONNECTOR_H: // --
         {
             m_spriteRenderer.sprite = MazeImageLoader.Instance.PipeI;
+            m_ColliderI.SetActive (true);
             zRotation = 0;
             break;
         }
@@ -61,6 +70,7 @@ public class VertexConnector : MonoBehaviour
         case CONNECTOR_V: // |
         {
             m_spriteRenderer.sprite = MazeImageLoader.Instance.PipeI;
+            m_ColliderI.SetActive (true);
             zRotation = 90;
             break;
         }
@@ -68,6 +78,7 @@ public class VertexConnector : MonoBehaviour
         case CONNECTOR_L0: // L
         {
             m_spriteRenderer.sprite = MazeImageLoader.Instance.PipeL;
+            m_ColliderL.SetActive (true);
             zRotation = 90;
             break;
         }
@@ -75,6 +86,7 @@ public class VertexConnector : MonoBehaviour
         case CONNECTOR_L1: // <
         {
             m_spriteRenderer.sprite = MazeImageLoader.Instance.PipeL;
+            m_ColliderL.SetActive (true);
             zRotation = 0;
             break;
         }
@@ -82,6 +94,7 @@ public class VertexConnector : MonoBehaviour
         case CONNECTOR_L2: // 7
         {
             m_spriteRenderer.sprite = MazeImageLoader.Instance.PipeL;
+            m_ColliderL.SetActive (true);
             zRotation = 270;
             break;
         }
@@ -89,6 +102,7 @@ public class VertexConnector : MonoBehaviour
         case CONNECTOR_L3: // J
         {
             m_spriteRenderer.sprite = MazeImageLoader.Instance.PipeL;
+            m_ColliderL.SetActive (true);
             zRotation = 180;
             break;
         }
@@ -96,6 +110,7 @@ public class VertexConnector : MonoBehaviour
         case CONNECTOR_T1: // --|
         {
             m_spriteRenderer.sprite = MazeImageLoader.Instance.PipeT;
+            m_ColliderT.SetActive (true);
             zRotation = 90;
             break;
         }
@@ -103,6 +118,7 @@ public class VertexConnector : MonoBehaviour
         case CONNECTOR_T2: // _|_
         {
             m_spriteRenderer.sprite = MazeImageLoader.Instance.PipeT;
+            m_ColliderT.SetActive (true);
             zRotation = 0;
             break;
         }
@@ -110,6 +126,7 @@ public class VertexConnector : MonoBehaviour
         case CONNECTOR_T3: // |--
         {
             m_spriteRenderer.sprite = MazeImageLoader.Instance.PipeT;
+            m_ColliderT.SetActive (true);
             zRotation = 270;
             break;
         }
@@ -117,6 +134,7 @@ public class VertexConnector : MonoBehaviour
         case CONNECTOR_T0: // T
         {
             m_spriteRenderer.sprite = MazeImageLoader.Instance.PipeT;
+            m_ColliderT.SetActive (true);
             zRotation = 180;
             break;
         }
@@ -124,6 +142,7 @@ public class VertexConnector : MonoBehaviour
         case CONNECTOR_X: // +
         {
             m_spriteRenderer.sprite = MazeImageLoader.Instance.PipeX;
+            m_ColliderX.SetActive (true);
             zRotation = 0;
             break;
         }

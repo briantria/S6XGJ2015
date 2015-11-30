@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 public class Maze : MonoBehaviour
 {
-    private readonly float PADDING = 280.0f * Constants.PPU;
-    private readonly float OFFSET  = 600.0f * Constants.PPU;
+    private readonly float PADDING = Constants.PPU * 280.0f;
+    private readonly float OFFSET  = Constants.PPU * 600.0f;
     
     [SerializeField] private Transform m_tVertexContainer = null;
 
@@ -24,8 +24,8 @@ public class Maze : MonoBehaviour
     private Transform m_tStartPoint;
     private Transform m_tEndPoint;
     // for demo, set init value
-    private   int m_iStartPointID = 215;
-    private   int m_iEndPointID = 95;
+    private   int m_iStartPointID = 2;
+    private   int m_iEndPointID = 3;
 
 	protected void OnEnable ()
 	{
@@ -83,11 +83,11 @@ public class Maze : MonoBehaviour
         {
             case AppState.OnGameScreen:
             {
+                HexSetupPanel.Instance.Close ();
                 MazeGenerator.Clear ();
                 MazeGenerator.Create (20, 10);
                 
                 float scaleUp = 2.5f;
-                //MazeVertex[] verteces = m_tVertexContainer.GetComponentsInChildren<MazeVertex> ();
                 for (int idx = 0; idx < m_listVerteces.Count; ++idx)
                 {
                     m_listVerteces[idx].transform.position = m_listVerteces[idx].transform.position * scaleUp;
@@ -100,6 +100,8 @@ public class Maze : MonoBehaviour
                         pos.y -= (PADDING * scaleUp * 0.5f);
                         m_tStartPoint.position = pos;
                         
+                        m_tStartPoint.name = "StartPoint at " + m_listVerteces[idx].Id;
+                    
                         pos.x +=   7;
                         pos.y +=   4;
                         pos.z  = -10;
