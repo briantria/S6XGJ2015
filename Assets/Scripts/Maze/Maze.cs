@@ -24,8 +24,8 @@ public class Maze : MonoBehaviour
     private Transform m_tStartPoint;
     private Transform m_tEndPoint;
     // for demo, set init value
-    private   int m_iStartPointID = 2;
-    private   int m_iEndPointID = 3;
+    private   int m_iStartPointID = 42;
+    private   int m_iEndPointID = 64;
 
 	protected void OnEnable ()
 	{

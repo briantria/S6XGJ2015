@@ -12,7 +12,7 @@ public class MazeVertex : MonoBehaviour, ISpriteButtonListener
 {
     [SerializeField] private List<GameObject> m_listWalls = new List<GameObject> ();
     [SerializeField] private VertexConnector m_vertexConnector;
-    [SerializeField] private GameObject m_objAddHexButton;
+    [SerializeField] private HexButtonManager m_hexButtonManager;
     
     private Dictionary<RelativePosition, GameObject> m_dictWalls = null;
     private RelativePosition m_activeWallFlags;
@@ -22,15 +22,15 @@ public class MazeVertex : MonoBehaviour, ISpriteButtonListener
     public IntVector2 Coordinates { get; set; }
     public RelativePosition ActiveWallFlags {get {return m_activeWallFlags;}}
     
-	protected void OnEnable ()
-	{
-		GameManager.OnGamePhaseUpdate += OnGamePhaseUpdate;
-	}
-	
-	protected void OnDisable ()
-	{
-		GameManager.OnGamePhaseUpdate -= OnGamePhaseUpdate;
-	}
+//	protected void OnEnable ()
+//	{
+//		GameManager.OnGamePhaseUpdate += OnGamePhaseUpdate;
+//	}
+//	
+//	protected void OnDisable ()
+//	{
+//		GameManager.OnGamePhaseUpdate -= OnGamePhaseUpdate;
+//	}
     
     protected void Awake ()
     {
@@ -41,10 +41,10 @@ public class MazeVertex : MonoBehaviour, ISpriteButtonListener
         };
     }
     
-	private void OnGamePhaseUpdate (GamePhase p_gamePhase)
-	{
-		m_objAddHexButton.SetActive (p_gamePhase == GamePhase.Edit);
-	}
+//	private void OnGamePhaseUpdate (GamePhase p_gamePhase)
+//	{
+//		m_HexButtonManager.gameObject.SetActive (p_gamePhase == GamePhase.Edit);
+//	}
     
     public void ExtendWalls (float p_scale, float p_padding)
     {
@@ -139,6 +139,6 @@ public class MazeVertex : MonoBehaviour, ISpriteButtonListener
     {
         //throw new System.NotImplementedException ();
         HexSetupPanel.Instance.Open ();
-        HexSetupPanel.Instance.SetPosition (this.transform.position);
+        HexSetupPanel.Instance.SetHexSetupListener (m_hexButtonManager);
     }
 }

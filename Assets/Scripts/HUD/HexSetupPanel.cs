@@ -17,6 +17,7 @@ public class HexSetupPanel : MonoBehaviour
     private List<GameObject> m_objChildren = new List<GameObject> ();
 	private RectTransform m_rectTransform;
     private Canvas m_canvas;
+    private HexButtonManager m_listener;
 	
 	protected void Awake ()
 	{
@@ -43,6 +44,7 @@ public class HexSetupPanel : MonoBehaviour
 	
 	public void Close ()
 	{
+        m_listener = null;
         m_canvas.enabled = false;
         for (int idx = m_objChildren.Count-1; idx >= 0; --idx)
         {
@@ -50,8 +52,16 @@ public class HexSetupPanel : MonoBehaviour
         }
 	}
 	
-	public void SetPosition (Vector2 p_v2Position)
+    public void OnChoosePlayerType (string p_strPlayerType)
+    {
+        PlayerType playerType = (PlayerType) System.Enum.Parse (typeof (PlayerType), p_strPlayerType);
+        m_listener.OnHexSetupPanelResult (playerType);
+        Close ();
+    }
+    
+	public void SetHexSetupListener (HexButtonManager p_hexBtn)
 	{
-		m_rectTransform.anchoredPosition = p_v2Position;
+        m_listener = p_hexBtn;
+		m_rectTransform.anchoredPosition = p_hexBtn.transform.position;
 	}
 }

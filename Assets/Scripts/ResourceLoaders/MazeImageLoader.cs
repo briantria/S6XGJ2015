@@ -13,6 +13,8 @@ public class MazeImageLoader : ScriptableObject
     private Sprite m_spritePipeI;
     private Sprite m_spritePipeX;
     private Sprite m_spritePipeT;
+    
+    private Sprite m_spriteHexButton;
 
     #region SINGLETON
 	private static MazeImageLoader m_instance = null;
@@ -35,6 +37,8 @@ public class MazeImageLoader : ScriptableObject
     public Sprite PipeI {get {return m_spritePipeI;}}
     public Sprite PipeX {get {return m_spritePipeX;}}
     public Sprite PipeT {get {return m_spritePipeT;}}
+    
+    public Sprite SpriteHexButton {get {return m_spriteHexButton;}}
     #endregion
     
     public void LoadImages ()
@@ -43,5 +47,7 @@ public class MazeImageLoader : ScriptableObject
         m_spritePipeI = Resources.Load<Sprite> ("Images/Pipes/pipes-03");
         m_spritePipeX = Resources.Load<Sprite> ("Images/Pipes/pipes-04");
         m_spritePipeT = Resources.Load<Sprite> ("Images/Pipes/pipes-05");
+        
+        m_spriteHexButton = Resources.Load<Sprite> ("Images/hex_outline_glow");
     }
 }

@@ -22,6 +22,9 @@ public class AppLoader : MonoBehaviour
         #region RESOURCE LOADERS
         MazeImageLoader.Instance.LoadImages ();
         yield return new WaitForEndOfFrame ();
+        PlayerTypeInfo.Instance.LoadColors ();
+        PlayerTypeInfo.Instance.LoadImages ();
+        yield return new WaitForEndOfFrame ();
         #endregion
     
 		#region LOAD HOME SCREEN OBJECTS
