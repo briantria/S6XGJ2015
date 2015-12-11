@@ -49,7 +49,7 @@ public class PlayerTypeInfo : ScriptableObject
     
     public void LoadImages ()
     {
-        m_spriteBody = Resources.Load<Sprite> ("Images/Player/Body");
+        m_spriteBody = Resources.Load<Sprite> ("Images/Player/body");
     }
 }
 

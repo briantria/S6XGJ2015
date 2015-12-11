@@ -42,6 +42,6 @@ public class HexButtonManager : MonoBehaviour
         }
         
         m_spriteRenderer.color = PlayerTypeInfo.Instance.PlayerColor [p_playerType];
-        Debug.Log (PlayerTypeInfo.Instance.PlayerColor [p_playerType]);
+//        Debug.Log (PlayerTypeInfo.Instance.PlayerColor [p_playerType]);
     }
 }
