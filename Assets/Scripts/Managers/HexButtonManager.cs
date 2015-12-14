@@ -9,7 +9,8 @@ using System.Collections;
 
 public class HexButtonManager : MonoBehaviour
 {
-    [SerializeField] private SpriteRenderer m_spriteRenderer;
+    [SerializeField] private SpriteRenderer m_spriteRendererBody;
+    [SerializeField] private SpriteRenderer m_spriteRendererFace;
 	private bool m_bIsEmpty = true;
     
     protected void OnEnable ()
@@ -25,7 +26,7 @@ public class HexButtonManager : MonoBehaviour
     private void OnGamePhaseUpdate (GamePhase p_gamePhase)
     {
         //m_HexButtonManager.gameObject.SetActive (p_gamePhase == GamePhase.Edit);
-        m_spriteRenderer.enabled = ((p_gamePhase == GamePhase.Edit) || !m_bIsEmpty);
+        m_spriteRendererBody.enabled = ((p_gamePhase == GamePhase.Edit) || !m_bIsEmpty);
     }
     
     public void OnHexSetupPanelResult (PlayerType p_playerType)
@@ -38,11 +39,18 @@ public class HexButtonManager : MonoBehaviour
 //        }
 //        else
 //        {
-            m_spriteRenderer.sprite = PlayerTypeInfo.Instance.SpriteBody;
+            m_spriteRendererBody.sprite = PlayerTypeInfo.Instance.SpriteBody;
 //        }
         
-        m_spriteRenderer.color = PlayerTypeInfo.Instance.PlayerColor [p_playerType];
-        // replace with face dictionary
-//        Debug.Log (PlayerTypeInfo.Instance.PlayerColor [p_playerType]);
+        if (p_playerType == PlayerType.None)
+        {
+            m_spriteRendererBody.color = PlayerTypeInfo.Instance.PlayerColor [p_playerType];
+            m_spriteRendererFace.sprite = null;
+        }
+        else
+        {
+            m_spriteRendererBody.color = Color.white;
+            m_spriteRendererFace.sprite = PlayerTypeInfo.Instance.PlayerFace [p_playerType];
+        }
     }
 }

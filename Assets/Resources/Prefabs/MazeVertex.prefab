@@ -622,7 +622,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b6877db496687847b560f4dc7923b97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_spriteRenderer: {fileID: 21210576}
+  m_spriteRendererBody: {fileID: 21210576}
+  m_spriteRendererFace: {fileID: 21242790}
 --- !u!114 &11415514
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -784,7 +785,7 @@ SpriteRenderer:
   m_SortingLayerID: -1937830731
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 4bb6f21c7789c4391ae8cc2a661cb40f, type: 3}
-  m_Color: {r: .667603791, g: .926470578, b: .808641613, a: 1}
+  m_Color: {r: .666666687, g: .925490201, b: .807843149, a: 1}
 --- !u!212 &21212714
 SpriteRenderer:
   m_ObjectHideFlags: 1

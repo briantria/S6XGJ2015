@@ -30,24 +30,12 @@ public class PlayerTypeInfo : ScriptableObject
 	private Dictionary <PlayerType, Sprite> m_dictFaces = new Dictionary <PlayerType, Sprite> ();
     
     private Sprite m_spriteBody;
-    private Sprite m_spriteFaceDrowxy;
-    private Sprite m_spriteFaceGeexy;
-    private Sprite m_spriteFaceXhy;
-	private Sprite m_spriteFaceXauxy;
-	private Sprite m_spriteFaceFlexy;
-	private Sprite m_spriteFaceQuirxy;
     
     #region PROPERTIES
     public Dictionary <PlayerType, Color> PlayerColor {get {return m_dictColors;}}
 	public Dictionary <PlayerType, Sprite> PlayerFace {get {return m_dictFaces;}}
     
     public Sprite SpriteBody       {get {return m_spriteBody;}}
-	public Sprite SpriteFaceDrowxy {get {return m_spriteFaceDrowxy;}}
-	public Sprite SpriteFaceGeexy  {get {return m_spriteFaceGeexy;}}
-	public Sprite SpriteFaceXhy    {get {return m_spriteFaceXhy;}}
-	public Sprite SpriteFaceXauxy  {get {return m_spriteFaceXauxy;}}
-	public Sprite SpriteFaceFlexy  {get {return m_spriteFaceFlexy;}}
-	public Sprite SpriteFaceQuirxy {get {return m_spriteFaceQuirxy;}}
     #endregion
     
     public void LoadColors ()
@@ -65,15 +53,14 @@ public class PlayerTypeInfo : ScriptableObject
     
     public void LoadImages ()
     {
-    	// use dictionary
-    
         m_spriteBody = Resources.Load<Sprite> ("Images/Player/body");
-		m_spriteFaceDrowxy = Resources.Load<Sprite> ("Images/Player/face_blue_drowxy");
-		m_spriteFaceGeexy = Resources.Load<Sprite> ("Images/Player/face_green_geexy");
-		m_spriteFaceXhy = Resources.Load<Sprite> ("Images/Player/face_mint_green_xhy");
-		m_spriteFaceXauxy = Resources.Load<Sprite> ("Images/Player/face_pink_xauxy");
-		m_spriteFaceFlexy = Resources.Load<Sprite> ("Images/Player/face_red_flexy");
-		m_spriteFaceQuirxy = Resources.Load<Sprite> ("Images/Player/face_yellow_quirxy");
+        
+        m_dictFaces.Add (PlayerType.Drowxy, Resources.Load<Sprite> ("Images/Player/face_blue_drowxy"));
+        m_dictFaces.Add (PlayerType.Xhy,    Resources.Load<Sprite> ("Images/Player/face_mint_green_xhy"));
+        m_dictFaces.Add (PlayerType.Quirxy, Resources.Load<Sprite> ("Images/Player/face_yellow_quirxy"));
+        m_dictFaces.Add (PlayerType.Flexy,  Resources.Load<Sprite> ("Images/Player/face_red_flexy"));
+        m_dictFaces.Add (PlayerType.Geexy,  Resources.Load<Sprite> ("Images/Player/face_green_geexy"));
+        m_dictFaces.Add (PlayerType.Xauxy,  Resources.Load<Sprite> ("Images/Player/face_pink_xauxy"));
     }
 }
 
