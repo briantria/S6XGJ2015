@@ -70,6 +70,8 @@ public class MazeVertex : MonoBehaviour, ISpriteButtonListener
         position = tRightWall.position;
         position.y -= ((1.5f * p_scale * 0.5f));
         tRightWall.position = position;
+        
+        m_hexButtonManager.OnExtendWalls (p_scale);
     }
     
     public void ConnectorSetup ()

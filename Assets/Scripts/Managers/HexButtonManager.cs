@@ -11,7 +11,10 @@ public class HexButtonManager : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer m_spriteRendererBody;
     [SerializeField] private SpriteRenderer m_spriteRendererFace;
-	private bool m_bIsEmpty = true;
+	
+    private bool m_bIsEmpty = true;
+    private Transform m_transform;
+    private Vector2 m_spriteSize;
     
     protected void OnEnable ()
     {
@@ -23,10 +26,24 @@ public class HexButtonManager : MonoBehaviour
         GameManager.OnGamePhaseUpdate -= OnGamePhaseUpdate;
     }
     
+    protected void Awake ()
+    {
+        m_transform = this.transform;
+        m_spriteSize = m_spriteRendererBody.sprite.bounds.size;
+    }
+    
     private void OnGamePhaseUpdate (GamePhase p_gamePhase)
     {
         //m_HexButtonManager.gameObject.SetActive (p_gamePhase == GamePhase.Edit);
         m_spriteRendererBody.enabled = ((p_gamePhase == GamePhase.Edit) || !m_bIsEmpty);
+    }
+    
+    public void OnExtendWalls (float p_scale)
+    {
+        Vector3 position = m_transform.position;
+        position.x -= (m_spriteSize.x * p_scale * 0.05f);
+        position.y -= (m_spriteSize.y * p_scale * 0.1f);
+        m_transform.position = position;
     }
     
     public void OnHexSetupPanelResult (PlayerType p_playerType)
