@@ -32,16 +32,17 @@ public class HexButtonManager : MonoBehaviour
     {
         m_bIsEmpty = ((p_playerType | PlayerType.None) == 0);
         
-        if (m_bIsEmpty)
-        {
-            m_spriteRenderer.sprite = MazeImageLoader.Instance.SpriteHexButton;
-        }
-        else
-        {
+//        if (m_bIsEmpty)
+//        {
+//            m_spriteRenderer.sprite = MazeImageLoader.Instance.SpriteHexButton;
+//        }
+//        else
+//        {
             m_spriteRenderer.sprite = PlayerTypeInfo.Instance.SpriteBody;
-        }
+//        }
         
         m_spriteRenderer.color = PlayerTypeInfo.Instance.PlayerColor [p_playerType];
+        // replace with face dictionary
 //        Debug.Log (PlayerTypeInfo.Instance.PlayerColor [p_playerType]);
     }
 }

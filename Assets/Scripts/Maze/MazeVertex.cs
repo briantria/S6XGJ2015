@@ -99,7 +99,7 @@ public class MazeVertex : MonoBehaviour, ISpriteButtonListener
         }
         
         connectorCase |= (int) this.ActiveWallFlags;
-        string str = "id: " + this.Id + ", coordinate: " + this.Coordinates.ToString () + ", connector: " + connectorCase;
+//        string str = "id: " + this.Id + ", coordinate: " + this.Coordinates.ToString () + ", connector: " + connectorCase;
         
         bool bConnectorNeeded = connectorCase > 0;
         m_vertexConnector.Enable (bConnectorNeeded);
