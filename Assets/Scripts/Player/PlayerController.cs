@@ -10,12 +10,12 @@ using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour
 {
-	[SerializeField] private GameObject m_objDrowxy;
-	[SerializeField] private GameObject m_objXhy;
-	[SerializeField] private GameObject m_objGeexy;
-	[SerializeField] private GameObject m_objXauxy;
-	[SerializeField] private GameObject m_objFlexy;
-	[SerializeField] private GameObject m_objQuirxy;
+	[SerializeField] private GameObject  m_objDrowxy;
+	[SerializeField] private GameObject  m_objXhy;
+	[SerializeField] private GameObject  m_objGeexy;
+	[SerializeField] private GameObject  m_objXauxy;
+	[SerializeField] private GameObject  m_objFlexy;
+	[SerializeField] private GameObject  m_objQuirxy;
 
 	private static PlayerController m_instance = null;
 	public	static PlayerController Instance {get {return m_instance;}}
@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 m_v3InitPosition;
     private Transform m_transform;
+    private Rigidbody2D m_rigidBody2D;
 	private PlayerType m_currentPlayerCombo = PlayerType.None;
 	private Dictionary <PlayerType, GameObject> m_dictPlayerHex = new Dictionary <PlayerType, GameObject> ();
 	
@@ -42,6 +43,7 @@ public class PlayerController : MonoBehaviour
 		m_instance = this;
         m_transform = this.transform;
         m_v3InitPosition = m_transform.position;
+        m_rigidBody2D = this.GetComponent<Rigidbody2D> ();
 	
 		m_dictPlayerHex.Add (PlayerType.Drowxy, m_objDrowxy);
 		m_dictPlayerHex.Add (PlayerType.Xhy,    m_objXhy   );
@@ -71,11 +73,14 @@ public class PlayerController : MonoBehaviour
             position.y = InitMazeVertex.transform.position.y;
             m_transform.position = position;
             m_currentPlayerCombo = InitMazeVertex.PlayerType;
+            m_rigidBody2D.isKinematic = false;
+            InitMazeVertex.AnimateOut ();
             
             break;
         }
         case GamePhase.Edit:
         {
+            m_rigidBody2D.isKinematic = true;
             m_transform.position = m_v3InitPosition;
             m_currentPlayerCombo = PlayerType.None;
             

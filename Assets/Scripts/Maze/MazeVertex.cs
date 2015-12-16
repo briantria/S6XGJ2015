@@ -123,6 +123,11 @@ public class MazeVertex : MonoBehaviour, ISpriteButtonListener
         }
     }
 
+    public void AnimateOut ()
+    {
+        m_hexButtonManager.AnimateOut ();
+    }
+
     public void OnClickSpriteButton ()
     {
         //throw new System.NotImplementedException ();

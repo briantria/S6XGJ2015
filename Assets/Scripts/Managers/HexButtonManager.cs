@@ -40,6 +40,18 @@ public class HexButtonManager : MonoBehaviour
     {
         //m_HexButtonManager.gameObject.SetActive (p_gamePhase == GamePhase.Edit);
         m_spriteRendererBody.enabled = ((p_gamePhase == GamePhase.Edit) || !m_bIsEmpty);
+        m_spriteRendererFace.enabled = ((p_gamePhase == GamePhase.Edit) || !m_bIsEmpty);
+    }
+    
+    private void AsyncAnimateOut ()
+    {
+        m_spriteRendererFace.enabled = false;
+        m_spriteRendererBody.enabled = false;
+    }
+    
+    public void AnimateOut ()
+    {
+        Invoke ("AsyncAnimateOut", 0.1f);
     }
     
     public void OnExtendWalls (float p_scale)
