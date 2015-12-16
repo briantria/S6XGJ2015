@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 m_v3InitPosition;
     private Transform m_transform;
     private Rigidbody2D m_rigidBody2D;
-	private PlayerType m_currentPlayerCombo = PlayerType.None;
+    private PlayerType m_currentPlayerCombo = PlayerType.None;
     private Dictionary <PlayerType, PlayerStateInfo> m_dictPlayerStateInfo = new Dictionary <PlayerType, PlayerStateInfo> ();
 	
     #region Initializations
@@ -65,7 +65,14 @@ public class PlayerController : MonoBehaviour
 			keyValPair.Value.SetActive ((m_currentPlayerCombo & keyValPair.Key) > 0);
 		}
         
-        m_rigidBody2D.isKinematic = (m_currentPlayerCombo & PlayerType.Drowxy) > 0;
+        if ((m_currentPlayerCombo & PlayerType.Drowxy) > 0)
+        {
+            m_rigidBody2D.constraints = RigidbodyConstraints2D.FreezeAll;
+        }
+        else
+        {
+            m_rigidBody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
+        }
 	}
 	
     private void OnGamePhaseUpdate (GamePhase p_gamePhase)
@@ -78,14 +85,14 @@ public class PlayerController : MonoBehaviour
             position.y = InitMazeVertex.transform.position.y;
             m_transform.position = position;
             m_currentPlayerCombo = InitMazeVertex.PlayerType;
-            m_rigidBody2D.isKinematic = false;
+            m_rigidBody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
             InitMazeVertex.AnimateOut ();
             
             break;
         }
         case GamePhase.Edit:
         {
-            m_rigidBody2D.isKinematic = true;
+            m_rigidBody2D.constraints = RigidbodyConstraints2D.FreezeAll;
             m_transform.position = m_v3InitPosition;
             m_currentPlayerCombo = PlayerType.None;
             

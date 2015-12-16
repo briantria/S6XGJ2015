@@ -107,6 +107,7 @@ public class Maze : MonoBehaviour
                     pos.x -= (PADDING * scaleUp * 0.5f);
                     pos.y -= (PADDING * scaleUp * 0.5f);
                     m_tEndPoint.position = pos;
+                    m_tEndPoint.tag = "EndPoint";
                 }
             }
             break;

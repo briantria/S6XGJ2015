@@ -9,7 +9,7 @@ using System.Collections;
 
 public class PlayerInputManager : MonoBehaviour
 {
-    [SerializeField] private float m_moveSpeed = 0.2f;
+    [SerializeField] private float m_moveSpeed = 0.1f;
 
 	protected void Update ()
     {
@@ -19,16 +19,19 @@ public class PlayerInputManager : MonoBehaviour
             Vector3 playerPosition = PlayerController.Instance.transform.position;
         
             if (Input.GetKey (KeyCode.RightArrow))
+//            && (BlockerCollisionChecker.CurrentBlockers & BlockerPosition.Right) <= 0)
             {
                 playerPosition.x += m_moveSpeed;
             }
             
             if (Input.GetKey (KeyCode.LeftArrow))
+//            && (BlockerCollisionChecker.CurrentBlockers & BlockerPosition.Left) <= 0)
             {
                 playerPosition.x -= m_moveSpeed;
             }
             
             PlayerController.Instance.transform.position = playerPosition;
+//            BlockerCollisionChecker.CurrentBlockers = BlockerPosition.None;
         }
         
         if (PlayerController.Instance.IsVerticalMovementEnabled ())
@@ -36,16 +39,19 @@ public class PlayerInputManager : MonoBehaviour
             Vector3 playerPosition = PlayerController.Instance.transform.position;
         
             if (Input.GetKey (KeyCode.UpArrow))
+//            && (BlockerCollisionChecker.CurrentBlockers & BlockerPosition.Up) <= 0)
             {
                 playerPosition.y += m_moveSpeed;
             }
             
             if (Input.GetKey (KeyCode.DownArrow))
+//            && (BlockerCollisionChecker.CurrentBlockers & BlockerPosition.Down) <= 0)
             {
                 playerPosition.y -= m_moveSpeed;
             }
             
             PlayerController.Instance.transform.position = playerPosition;
+//            BlockerCollisionChecker.CurrentBlockers = BlockerPosition.None;
         }
         #endregion
         

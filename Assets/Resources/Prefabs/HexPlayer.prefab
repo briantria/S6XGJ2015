@@ -29,6 +29,7 @@ GameObject:
   - 212: {fileID: 21295708}
   - 58: {fileID: 5856732}
   - 114: {fileID: 11437410}
+  - 114: {fileID: 11447796}
   m_Layer: 0
   m_Name: Xauxy
   m_TagString: Player
@@ -47,6 +48,7 @@ GameObject:
   - 212: {fileID: 21225160}
   - 58: {fileID: 5811520}
   - 114: {fileID: 11421258}
+  - 114: {fileID: 11460778}
   m_Layer: 0
   m_Name: Quirxy
   m_TagString: Player
@@ -113,6 +115,7 @@ GameObject:
   - 212: {fileID: 21238334}
   - 58: {fileID: 5833386}
   - 114: {fileID: 11489308}
+  - 114: {fileID: 11480040}
   m_Layer: 0
   m_Name: Geexy
   m_TagString: Player
@@ -131,6 +134,7 @@ GameObject:
   - 212: {fileID: 21279126}
   - 58: {fileID: 5873648}
   - 114: {fileID: 11499884}
+  - 114: {fileID: 11459274}
   m_Layer: 0
   m_Name: Flexy
   m_TagString: Player
@@ -149,6 +153,7 @@ GameObject:
   - 212: {fileID: 21239864}
   - 58: {fileID: 5802936}
   - 114: {fileID: 11485300}
+  - 114: {fileID: 11458024}
   m_Layer: 0
   m_Name: Drowxy
   m_TagString: Player
@@ -183,6 +188,7 @@ GameObject:
   - 212: {fileID: 21277400}
   - 58: {fileID: 5834770}
   - 114: {fileID: 11467656}
+  - 114: {fileID: 11430150}
   m_Layer: 0
   m_Name: Xhy
   m_TagString: Player
@@ -401,7 +407,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
   m_GravityScale: 1
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -512,6 +518,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc7d1174d5841194aab98f30b6f8ae39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11430150
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 181000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad2aa9973bf4d1742b960cce8ea16f37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11437410
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -521,6 +538,50 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc7d1174d5841194aab98f30b6f8ae39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &11447796
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 103518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad2aa9973bf4d1742b960cce8ea16f37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &11458024
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 157186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad2aa9973bf4d1742b960cce8ea16f37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &11459274
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 156914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad2aa9973bf4d1742b960cce8ea16f37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &11460778
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 119188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad2aa9973bf4d1742b960cce8ea16f37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &11467656
@@ -543,6 +604,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eff6421e3a6ed1e4f9925cc7c55a9881, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_moveSpeed: .200000003
+--- !u!114 &11480040
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 153250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad2aa9973bf4d1742b960cce8ea16f37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &11485300
