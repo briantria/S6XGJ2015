@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour
 	private static PlayerController m_instance = null;
 	public	static PlayerController Instance {get {return m_instance;}}
 
+    public MazeVertex InitMazeVertex { set; get; }
+
 	private PlayerType m_currentPlayerCombo = PlayerType.None;
 	private Dictionary <PlayerType, GameObject> m_dictPlayerHex = new Dictionary <PlayerType, GameObject> ();
 	
@@ -54,4 +56,10 @@ public class PlayerController : MonoBehaviour
 	{
 		m_currentPlayerCombo &= ~p_playerType;
 	}
+    
+    public bool IsInitMazeVertexValid ()
+    {
+        if (InitMazeVertex == null) { return false; }
+        return (InitMazeVertex.PlayerType | PlayerType.None) > 0;
+    }
 }

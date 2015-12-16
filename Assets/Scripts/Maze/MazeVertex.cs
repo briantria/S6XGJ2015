@@ -21,6 +21,7 @@ public class MazeVertex : MonoBehaviour, ISpriteButtonListener
     public int Id { get; set; }
     public IntVector2 Coordinates { get; set; }
     public RelativePosition ActiveWallFlags {get {return m_activeWallFlags;}}
+    public PlayerType PlayerType {get {return m_hexButtonManager.PlayerType;}}
     
 //	protected void OnEnable ()
 //	{

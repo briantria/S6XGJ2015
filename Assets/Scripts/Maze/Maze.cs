@@ -97,6 +97,8 @@ public class Maze : MonoBehaviour
                     pos.y +=   4;
                     pos.z  = -10;
                     m_mainCamera.transform.position = pos;
+                    
+                    PlayerController.Instance.InitMazeVertex = m_listVerteces[idx];
                 }
                 
                 if (idx == m_iEndPointID)

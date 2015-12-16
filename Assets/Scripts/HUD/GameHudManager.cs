@@ -16,8 +16,15 @@ public class GameHudManager : MonoBehaviour //HudManager
 	{
 		if (GameManager.Instance.CurrentGamePhase == GamePhase.Edit)
 		{
-			m_textPlayButtonLabel.text = "Edit";
-			GameManager.Instance.UpdateGamePhase (GamePhase.Play);
+            if (PlayerController.Instance.IsInitMazeVertexValid ())
+            {   
+                m_textPlayButtonLabel.text = "Edit";
+                GameManager.Instance.UpdateGamePhase (GamePhase.Play);
+            }
+            else 
+            {
+                Debug.LogError ("Invalid Init Maze Vertex!");
+            }
 		}
 		else if (GameManager.Instance.CurrentGamePhase == GamePhase.Play)
 		{
