@@ -22,12 +22,26 @@ public class PlayerController : MonoBehaviour
 
     public MazeVertex InitMazeVertex { set; get; }
 
+    private Vector3 m_v3InitPosition;
+    private Transform m_transform;
 	private PlayerType m_currentPlayerCombo = PlayerType.None;
 	private Dictionary <PlayerType, GameObject> m_dictPlayerHex = new Dictionary <PlayerType, GameObject> ();
 	
+    protected void OnEnable ()
+    {
+        GameManager.OnGamePhaseUpdate += OnGamePhaseUpdate;
+    }
+    
+    protected void OnDisable ()
+    {
+        GameManager.OnGamePhaseUpdate -= OnGamePhaseUpdate;
+    }
+    
 	protected void Awake ()
 	{
 		m_instance = this;
+        m_transform = this.transform;
+        m_v3InitPosition = m_transform.position;
 	
 		m_dictPlayerHex.Add (PlayerType.Drowxy, m_objDrowxy);
 		m_dictPlayerHex.Add (PlayerType.Xhy,    m_objXhy   );
@@ -47,14 +61,40 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 	
+    private void OnGamePhaseUpdate (GamePhase p_gamePhase)
+    {
+        switch (p_gamePhase){
+        case GamePhase.Play:
+        {
+            Vector3 position = m_transform.position;
+            position.x = InitMazeVertex.transform.position.x;
+            position.y = InitMazeVertex.transform.position.y;
+            m_transform.position = position;
+            m_currentPlayerCombo = InitMazeVertex.PlayerType;
+            
+            break;
+        }
+        case GamePhase.Edit:
+        {
+            m_transform.position = m_v3InitPosition;
+            m_currentPlayerCombo = PlayerType.None;
+            
+            break;
+        }}
+        
+        UpdatePlayerComboDisplay ();
+    }
+    
 	public void AddPlayerHex (PlayerType p_playerType)
 	{
 		m_currentPlayerCombo |= p_playerType;
+        UpdatePlayerComboDisplay ();
 	}
 	
 	public void RemovePlayerHex (PlayerType p_playerType)
 	{
 		m_currentPlayerCombo &= ~p_playerType;
+        UpdatePlayerComboDisplay ();
 	}
     
     public bool IsInitMazeVertexValid ()

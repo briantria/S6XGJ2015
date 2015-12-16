@@ -14,6 +14,8 @@ public class GameHudManager : MonoBehaviour //HudManager
 	
 	public void ToggleGamePhase ()
 	{
+        HexSetupPanel.Instance.Close ();
+    
 		if (GameManager.Instance.CurrentGamePhase == GamePhase.Edit)
 		{
             if (PlayerController.Instance.IsInitMazeVertexValid ())

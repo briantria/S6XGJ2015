@@ -23,16 +23,6 @@ public class MazeVertex : MonoBehaviour, ISpriteButtonListener
     public RelativePosition ActiveWallFlags {get {return m_activeWallFlags;}}
     public PlayerType PlayerType {get {return m_hexButtonManager.PlayerType;}}
     
-//	protected void OnEnable ()
-//	{
-//		GameManager.OnGamePhaseUpdate += OnGamePhaseUpdate;
-//	}
-//	
-//	protected void OnDisable ()
-//	{
-//		GameManager.OnGamePhaseUpdate -= OnGamePhaseUpdate;
-//	}
-    
     protected void Awake ()
     {
         m_dictWalls = new Dictionary<RelativePosition, GameObject> ()
@@ -41,11 +31,6 @@ public class MazeVertex : MonoBehaviour, ISpriteButtonListener
             { RelativePosition.Right, m_listWalls[1] }
         };
     }
-    
-//	private void OnGamePhaseUpdate (GamePhase p_gamePhase)
-//	{
-//		m_HexButtonManager.gameObject.SetActive (p_gamePhase == GamePhase.Edit);
-//	}
     
     public void ExtendWalls (float p_scale, float p_padding)
     {
@@ -141,6 +126,8 @@ public class MazeVertex : MonoBehaviour, ISpriteButtonListener
     public void OnClickSpriteButton ()
     {
         //throw new System.NotImplementedException ();
+        if (GameManager.Instance.CurrentGamePhase != GamePhase.Edit) { return; }
+        
         HexSetupPanel.Instance.Open ();
         HexSetupPanel.Instance.SetHexSetupListener (m_hexButtonManager);
     }
