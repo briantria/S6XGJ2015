@@ -488,7 +488,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69512f92c7c902c4faa63686fe13f6b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_rigidBody2D: {fileID: 0}
   m_objDrowxy: {fileID: 157186}
   m_objXhy: {fileID: 181000}
   m_objGeexy: {fileID: 153250}
