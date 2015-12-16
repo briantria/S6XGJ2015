@@ -26,8 +26,9 @@ public class PlayerController : MonoBehaviour
     private Transform m_transform;
     private Rigidbody2D m_rigidBody2D;
 	private PlayerType m_currentPlayerCombo = PlayerType.None;
-	private Dictionary <PlayerType, GameObject> m_dictPlayerHex = new Dictionary <PlayerType, GameObject> ();
+    private Dictionary <PlayerType, PlayerStateInfo> m_dictPlayerStateInfo = new Dictionary <PlayerType, PlayerStateInfo> ();
 	
+    #region Initializations
     protected void OnEnable ()
     {
         GameManager.OnGamePhaseUpdate += OnGamePhaseUpdate;
@@ -44,23 +45,27 @@ public class PlayerController : MonoBehaviour
         m_transform = this.transform;
         m_v3InitPosition = m_transform.position;
         m_rigidBody2D = this.GetComponent<Rigidbody2D> ();
-	
-		m_dictPlayerHex.Add (PlayerType.Drowxy, m_objDrowxy);
-		m_dictPlayerHex.Add (PlayerType.Xhy,    m_objXhy   );
-		m_dictPlayerHex.Add (PlayerType.Geexy,  m_objGeexy );
-		m_dictPlayerHex.Add (PlayerType.Xauxy,  m_objXauxy );
-		m_dictPlayerHex.Add (PlayerType.Flexy,  m_objFlexy );
-		m_dictPlayerHex.Add (PlayerType.Quirxy, m_objQuirxy);
+        
+        m_dictPlayerStateInfo.Add (PlayerType.Drowxy, m_objDrowxy.GetComponent<PlayerStateInfo> ());
+        m_dictPlayerStateInfo.Add (PlayerType.Xhy,    m_objXhy   .GetComponent<PlayerStateInfo> ());
+        m_dictPlayerStateInfo.Add (PlayerType.Geexy,  m_objGeexy .GetComponent<PlayerStateInfo> ());
+        m_dictPlayerStateInfo.Add (PlayerType.Xauxy,  m_objXauxy .GetComponent<PlayerStateInfo> ());
+        m_dictPlayerStateInfo.Add (PlayerType.Flexy,  m_objFlexy .GetComponent<PlayerStateInfo> ());
+        m_dictPlayerStateInfo.Add (PlayerType.Quirxy, m_objQuirxy.GetComponent<PlayerStateInfo> ());
 		
 		UpdatePlayerComboDisplay ();
 	}
+    #endregion
 	
+    #region Game Loop Updates / Events
 	private void UpdatePlayerComboDisplay ()
 	{
-		foreach (KeyValuePair <PlayerType, GameObject> keyValPair in m_dictPlayerHex)
+        foreach (KeyValuePair <PlayerType, PlayerStateInfo> keyValPair in m_dictPlayerStateInfo)
 		{
 			keyValPair.Value.SetActive ((m_currentPlayerCombo & keyValPair.Key) > 0);
 		}
+        
+        m_rigidBody2D.isKinematic = (m_currentPlayerCombo & PlayerType.Drowxy) > 0;
 	}
 	
     private void OnGamePhaseUpdate (GamePhase p_gamePhase)
@@ -89,6 +94,7 @@ public class PlayerController : MonoBehaviour
         
         UpdatePlayerComboDisplay ();
     }
+    #endregion
     
 	public void AddPlayerHex (PlayerType p_playerType)
 	{
@@ -102,9 +108,26 @@ public class PlayerController : MonoBehaviour
         UpdatePlayerComboDisplay ();
 	}
     
+    public PlayerState GetPlayerState (PlayerType p_playerType)
+    {
+        return m_dictPlayerStateInfo[p_playerType].CurrentPlayerState;
+    }
+    
+    #region Boolean Checkers
+    public bool IsHorizontalMovementEnabled ()
+    {
+        return (m_currentPlayerCombo | PlayerType.None) > 0;
+    }
+    
+    public bool IsVerticalMovementEnabled ()
+    {
+        return (m_currentPlayerCombo & PlayerType.Drowxy) > 0;
+    }
+    
     public bool IsInitMazeVertexValid ()
     {
         if (InitMazeVertex == null) { return false; }
         return (InitMazeVertex.PlayerType | PlayerType.None) > 0;
     }
+    #endregion
 }
