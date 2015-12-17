@@ -36,6 +36,16 @@ public class HexButtonManager : MonoBehaviour
         m_playerType = PlayerType.None;
     }
     
+    protected void OnTriggerEnter2D (Collider2D p_collider)
+    {
+		if (GameManager.Instance.CurrentGamePhase == GamePhase.Play && !m_bIsEmpty
+	    &&  p_collider.CompareTag ("Player"))
+    	{
+    		AnimateOut ();
+    		PlayerController.Instance.AddPlayerHex (m_playerType);
+    	}
+    }
+    
     private void OnGamePhaseUpdate (GamePhase p_gamePhase)
     {
         //m_HexButtonManager.gameObject.SetActive (p_gamePhase == GamePhase.Edit);
