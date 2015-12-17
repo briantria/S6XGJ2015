@@ -19,8 +19,12 @@ public class PlayerController : MonoBehaviour
 
 	private static PlayerController m_instance = null;
 	public	static PlayerController Instance {get {return m_instance;}}
+	
+	public delegate void ComboAction (PlayerType p_playerType);
+	public static event ComboAction OnPlayerComboUpdate;
 
     public MazeVertex InitMazeVertex { set; get; }
+    public PlayerType CurrentPlayerType {get {return m_currentPlayerCombo;}}
 
     private Vector3 m_v3InitPosition;
     private Transform m_transform;
@@ -72,6 +76,11 @@ public class PlayerController : MonoBehaviour
         else
         {
             m_rigidBody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
+        }
+        
+        if (OnPlayerComboUpdate != null)
+        {
+        	OnPlayerComboUpdate (m_currentPlayerCombo);
         }
 	}
 	

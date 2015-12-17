@@ -9,7 +9,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 498886}
   - 61: {fileID: 6134274}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ColliderI
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -25,7 +25,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 454004}
   - 60: {fileID: 6052810}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ColliderL
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - 58: {fileID: 5804060}
   - 114: {fileID: 11415514}
   - 114: {fileID: 11408068}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: AddHexButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60,7 +60,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 474142}
   - 212: {fileID: 21242790}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Face
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -77,7 +77,7 @@ GameObject:
   - 4: {fileID: 498204}
   - 212: {fileID: 21225758}
   - 114: {fileID: 11404758}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TLConnector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - 4: {fileID: 465118}
   - 212: {fileID: 21286960}
   - 61: {fileID: 6184528}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WallRight
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -111,7 +111,7 @@ GameObject:
   - 4: {fileID: 431846}
   - 212: {fileID: 21263088}
   - 114: {fileID: 11445346}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BRConnector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127,7 +127,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 434418}
   - 60: {fileID: 6019612}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ColliderX
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -143,7 +143,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 480122}
   - 212: {fileID: 21212856}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WallLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -160,7 +160,7 @@ GameObject:
   - 4: {fileID: 447768}
   - 212: {fileID: 21212714}
   - 114: {fileID: 11443466}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TRConnector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -176,7 +176,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 435764}
   - 212: {fileID: 21208270}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WallBottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -192,7 +192,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 465982}
   - 60: {fileID: 6001778}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ColliderT
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -208,7 +208,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 477854}
   - 114: {fileID: 11475014}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MazeVertex
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -224,7 +224,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 479352}
   - 114: {fileID: 11431310}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LowerBounds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -241,7 +241,7 @@ GameObject:
   - 4: {fileID: 413714}
   - 212: {fileID: 21221260}
   - 114: {fileID: 11493708}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BLConnector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -258,7 +258,7 @@ GameObject:
   - 4: {fileID: 496134}
   - 212: {fileID: 21204636}
   - 61: {fileID: 6191026}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WallUp
   m_TagString: Wall
   m_Icon: {fileID: 0}

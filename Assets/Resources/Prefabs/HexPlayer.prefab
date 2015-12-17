@@ -11,9 +11,9 @@ GameObject:
   - 50: {fileID: 5058848}
   - 114: {fileID: 11410660}
   - 114: {fileID: 11475440}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: HexPlayer
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30,7 +30,7 @@ GameObject:
   - 58: {fileID: 5856732}
   - 114: {fileID: 11437410}
   - 114: {fileID: 11447796}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Xauxy
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -49,7 +49,7 @@ GameObject:
   - 58: {fileID: 5811520}
   - 114: {fileID: 11421258}
   - 114: {fileID: 11460778}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Quirxy
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -65,7 +65,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 428738}
   - 212: {fileID: 21206700}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Face
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -81,7 +81,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 485160}
   - 212: {fileID: 21267620}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Face
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 401356}
   - 212: {fileID: 21246910}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Face
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,7 +116,7 @@ GameObject:
   - 58: {fileID: 5833386}
   - 114: {fileID: 11489308}
   - 114: {fileID: 11480040}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Geexy
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -135,7 +135,7 @@ GameObject:
   - 58: {fileID: 5873648}
   - 114: {fileID: 11499884}
   - 114: {fileID: 11459274}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Flexy
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -154,7 +154,7 @@ GameObject:
   - 58: {fileID: 5802936}
   - 114: {fileID: 11485300}
   - 114: {fileID: 11458024}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Drowxy
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -170,7 +170,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 485074}
   - 212: {fileID: 21274350}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Face
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -189,7 +189,7 @@ GameObject:
   - 58: {fileID: 5834770}
   - 114: {fileID: 11467656}
   - 114: {fileID: 11430150}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Xhy
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -205,7 +205,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 441030}
   - 212: {fileID: 21204788}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Face
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -221,7 +221,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 407372}
   - 212: {fileID: 21292460}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Face
   m_TagString: Untagged
   m_Icon: {fileID: 0}
