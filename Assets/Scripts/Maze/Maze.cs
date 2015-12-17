@@ -108,6 +108,7 @@ public class Maze : MonoBehaviour
                     pos.y -= (PADDING * scaleUp * 0.5f);
                     m_tEndPoint.position = pos;
                     m_tEndPoint.tag = "EndPoint";
+					m_tEndPoint.GetComponent<SpriteRenderer> ().color = Color.red;
                 }
             }
             break;
