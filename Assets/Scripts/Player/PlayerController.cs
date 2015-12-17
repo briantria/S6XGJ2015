@@ -129,6 +129,11 @@ public class PlayerController : MonoBehaviour
         return m_dictPlayerStateInfo[p_playerType].CurrentPlayerState;
     }
     
+    public void ToggleActiveAsleepState (PlayerType p_playerType)
+    {
+        m_dictPlayerStateInfo[p_playerType].ToggleActiveSleepState ();
+    }
+    
     #region Boolean Checkers
     public bool IsHorizontalMovementEnabled ()
     {

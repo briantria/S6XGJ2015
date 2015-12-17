@@ -60,33 +60,32 @@ public class PlayerInputManager : MonoBehaviour
         #region Toggle Special Abilities
         if (Input.GetKeyUp (KeyCode.Q))
         {
-            // toggle flexy
-            // use playerstateinfo
+            PlayerController.Instance.ToggleActiveAsleepState (PlayerType.Flexy);
         }
         
         if (Input.GetKeyUp (KeyCode.W))
         {
-            // toggle drowxy
+            PlayerController.Instance.ToggleActiveAsleepState (PlayerType.Drowxy);
         }
         
         if (Input.GetKeyUp (KeyCode.E))
         {
-            // toggle quirxy
+            PlayerController.Instance.ToggleActiveAsleepState (PlayerType.Quirxy);
         }
         
         if (Input.GetKeyUp (KeyCode.A))
         {
-            // toggle geexy
+            PlayerController.Instance.ToggleActiveAsleepState (PlayerType.Geexy);
         }
         
         if (Input.GetKeyUp (KeyCode.S))
         {
-            // toggle xhy
+            PlayerController.Instance.ToggleActiveAsleepState (PlayerType.Xhy);
         }
         
         if (Input.GetKeyUp (KeyCode.D))
         {
-            // toggle xauxy
+            PlayerController.Instance.ToggleActiveAsleepState (PlayerType.Xauxy);
         }
         #endregion
     }

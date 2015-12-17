@@ -42,7 +42,7 @@ public class PlayerTypeInfo : ScriptableObject
     {
         float multiplier = 1.0f / 255.0f;
     
-        m_dictColors.Add (PlayerType.None,   new Color (170 * multiplier, 236 * multiplier, 206 * multiplier, 255 * multiplier));
+        m_dictColors.Add (PlayerType.None,   Color.white);//new Color (170 * multiplier, 236 * multiplier, 206 * multiplier, 255 * multiplier));
         m_dictColors.Add (PlayerType.Drowxy, new Color (144 * multiplier, 189 * multiplier, 211 * multiplier, 255 * multiplier));
         m_dictColors.Add (PlayerType.Xhy,    new Color (225 * multiplier, 106 * multiplier,  92 * multiplier, 255 * multiplier));
         m_dictColors.Add (PlayerType.Quirxy, new Color (103 * multiplier, 208 * multiplier, 206 * multiplier, 255 * multiplier));

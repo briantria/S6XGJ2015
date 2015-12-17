@@ -9,9 +9,14 @@ using System.Collections;
 
 public class PlayerStateInfo : MonoBehaviour
 {
+    private const float BATTERY_LIFE = 3.0f;
+    
+    [SerializeField] private SpriteRenderer m_spriteRendererFace;
+    
 	public PlayerState CurrentPlayerState { set; get; }
     
     private GameObject m_gameObject;
+    private float m_fBatteryLifeLeft;
     
     protected void Awake ()
     {
@@ -19,9 +24,53 @@ public class PlayerStateInfo : MonoBehaviour
         CurrentPlayerState = PlayerState.Active;
     }
     
+    private IEnumerator BatteryLifeCountdown ()
+    {
+        while (m_fBatteryLifeLeft > BATTERY_LIFE * 0.3f)
+        {
+            m_fBatteryLifeLeft -= 0.01f;
+            yield return new WaitForSeconds (0.1f);
+        }
+    
+        while (m_fBatteryLifeLeft > 0)
+        {
+            m_fBatteryLifeLeft -= 0.01f;
+            m_spriteRendererFace.color = new Color (1.0f, 1.0f, 1.0f, Mathf.PingPong (Time.time, 0.4f) + 0.6f);
+            yield return new WaitForSeconds (0.1f);
+        }
+        
+        m_spriteRendererFace.color = new Color (0.6f, 0.6f, 0.6f, 1.0f);
+        CurrentPlayerState = PlayerState.Drained;
+    }
+    
     public void SetActive (bool p_bIsActive)
     {
         m_gameObject.SetActive (p_bIsActive);
+        
+        if (p_bIsActive)
+        {
+            m_fBatteryLifeLeft = BATTERY_LIFE;
+            CurrentPlayerState = PlayerState.Active;
+            StartCoroutine ("BatteryLifeCountdown");
+        }
+    }
+    
+    public void ToggleActiveSleepState ()
+    {
+        if (CurrentPlayerState == PlayerState.Drained) { return; }
+        
+        if (CurrentPlayerState == PlayerState.Active)
+        {
+            CurrentPlayerState = PlayerState.Asleep;
+            m_spriteRendererFace.color = new Color (1.0f, 1.0f, 1.0f, 0.6f);
+            StopCoroutine ("BatteryLifeCountdown");
+        }
+        else if (CurrentPlayerState == PlayerState.Asleep)
+        {
+            CurrentPlayerState = PlayerState.Active;
+            m_spriteRendererFace.color = Color.white;
+            StartCoroutine ("BatteryLifeCountdown");
+        }
     }
 }
 
