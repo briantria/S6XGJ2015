@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
 	
 	private GamePhase m_currentGamePhase;
 	public GamePhase CurrentGamePhase {get {return m_currentGamePhase;}}
+	public static bool OnPause { set; get; }
 	
 	public delegate void GamePhaseAction (GamePhase p_gamePhase);
 	public static event GamePhaseAction OnGamePhaseUpdate;
@@ -22,6 +23,7 @@ public class GameManager : MonoBehaviour
 	{
 		m_instance = this;
 		m_currentGamePhase = GamePhase.Edit;
+		OnPause = false;
 	}
 	
 	public void UpdateGamePhase (GamePhase p_gamePhase)

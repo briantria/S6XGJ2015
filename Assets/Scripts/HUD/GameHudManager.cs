@@ -15,6 +15,8 @@ public class GameHudManager : MonoBehaviour //HudManager
 	public void ToggleGamePhase ()
 	{
         HexSetupPanel.Instance.Close ();
+        ResultScreenManager.Instance.Close ();
+        GameManager.OnPause = false;
     
 		if (GameManager.Instance.CurrentGamePhase == GamePhase.Edit)
 		{

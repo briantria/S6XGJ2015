@@ -24,10 +24,16 @@ public class BlockerCollisionChecker : MonoBehaviour
         if (p_collision.gameObject.CompareTag ("EndPoint"))
         {
             // success
-            Debug.Log ("WIN");
+            //Debug.Log ("WIN");
+            GameManager.OnPause = true;
+            ResultScreenManager.Instance.SetResults (ResultEnum.Win);
+            ResultScreenManager.Instance.Open ();
         }
         else
         {
+			GameManager.OnPause = true;
+			ResultScreenManager.Instance.SetResults (ResultEnum.Lose);
+			ResultScreenManager.Instance.Open ();
             // game over
         }
         

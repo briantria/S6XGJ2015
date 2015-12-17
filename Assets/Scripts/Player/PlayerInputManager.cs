@@ -13,6 +13,8 @@ public class PlayerInputManager : MonoBehaviour
 
 	protected void Update ()
     {
+    	if (GameManager.OnPause) {return;}
+    
         #region Movement Control
         if (PlayerController.Instance.IsHorizontalMovementEnabled ())
         {
