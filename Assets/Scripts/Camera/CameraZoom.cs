@@ -9,8 +9,8 @@ using System.Collections;
 
 public class CameraZoom : MonoBehaviour 
 {
-	public static readonly float ORTHO_SIZE = 7.68f;
-	public static readonly float MAX_ORTHOSIZE = 23.24f;
+	public static readonly float ORTHO_SIZE = 15.0f;//7.68f;
+	public static readonly float MAX_ORTHOSIZE = 30.0f;//23.24f;
 	
 	private Camera m_mainCamera;
 	private float m_fZoomSpeed = 30.5f;
