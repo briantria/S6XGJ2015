@@ -9,7 +9,7 @@ using System.Collections;
 
 public class PlayerStateInfo : MonoBehaviour
 {
-    private const float BATTERY_LIFE = 3.0f;
+    private const float BATTERY_LIFE = 1.0f;
     
     [SerializeField] private SpriteRenderer m_spriteRendererFace;
     
@@ -24,7 +24,7 @@ public class PlayerStateInfo : MonoBehaviour
         CurrentPlayerState = PlayerState.Active;
     }
     
-    private IEnumerator BatteryLifeCountdown ()
+    private IEnumerator BatteryDrain ()
     {
         while (m_fBatteryLifeLeft > BATTERY_LIFE * 0.3f)
         {
@@ -41,18 +41,21 @@ public class PlayerStateInfo : MonoBehaviour
         
         m_spriteRendererFace.color = new Color (0.6f, 0.6f, 0.6f, 1.0f);
         CurrentPlayerState = PlayerState.Drained;
+        yield return new WaitForEndOfFrame ();
     }
     
     public void SetActive (bool p_bIsActive)
     {
         m_gameObject.SetActive (p_bIsActive);
-        
-        if (p_bIsActive)
-        {
-            m_fBatteryLifeLeft = BATTERY_LIFE;
-            CurrentPlayerState = PlayerState.Active;
-            StartCoroutine ("BatteryLifeCountdown");
-        }
+    }
+    
+    public void ResetBattery ()
+    {
+        m_fBatteryLifeLeft = BATTERY_LIFE;
+        CurrentPlayerState = PlayerState.Active;
+        m_spriteRendererFace.color = Color.white;
+        StopCoroutine ("BatteryDrain");
+        StartCoroutine ("BatteryDrain");
     }
     
     public void ToggleActiveSleepState ()
@@ -63,13 +66,14 @@ public class PlayerStateInfo : MonoBehaviour
         {
             CurrentPlayerState = PlayerState.Asleep;
             m_spriteRendererFace.color = new Color (1.0f, 1.0f, 1.0f, 0.6f);
-            StopCoroutine ("BatteryLifeCountdown");
+            StopCoroutine ("BatteryDrain");
         }
         else if (CurrentPlayerState == PlayerState.Asleep)
         {
             CurrentPlayerState = PlayerState.Active;
             m_spriteRendererFace.color = Color.white;
-            StartCoroutine ("BatteryLifeCountdown");
+            StopCoroutine ("BatteryDrain");
+            StartCoroutine ("BatteryDrain");
         }
     }
 }

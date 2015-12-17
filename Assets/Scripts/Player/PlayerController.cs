@@ -116,6 +116,7 @@ public class PlayerController : MonoBehaviour
 	{
 		m_currentPlayerCombo |= p_playerType;
         UpdatePlayerComboDisplay ();
+        m_dictPlayerStateInfo[p_playerType].ResetBattery ();
 	}
 	
 	public void RemovePlayerHex (PlayerType p_playerType)
@@ -137,12 +138,34 @@ public class PlayerController : MonoBehaviour
     #region Boolean Checkers
     public bool IsHorizontalMovementEnabled ()
     {
-        return (m_currentPlayerCombo | PlayerType.None) > 0;
+        PlayerState state = PlayerState.Drained;
+        
+        foreach (KeyValuePair <PlayerType, PlayerStateInfo> pair in m_dictPlayerStateInfo)
+        {
+            state |= pair.Value.CurrentPlayerState;
+        }
+        
+        bool enable =  (m_currentPlayerCombo | PlayerType.None) > 0
+                    && (state & PlayerState.Active) > 0;
+        
+        return enable;
     }
     
     public bool IsVerticalMovementEnabled ()
     {
-        return (m_currentPlayerCombo & PlayerType.Drowxy) > 0;
+        bool enable =  (m_currentPlayerCombo & PlayerType.Drowxy) > 0
+                    && (m_dictPlayerStateInfo[PlayerType.Drowxy].CurrentPlayerState & PlayerState.Active) > 0;
+        
+        if (enable)
+        {
+            m_rigidBody2D.constraints = RigidbodyConstraints2D.FreezeAll;    
+        }
+        else
+        {
+            m_rigidBody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
+        }
+        
+        return enable;
     }
     
     public bool IsInitMazeVertexValid ()

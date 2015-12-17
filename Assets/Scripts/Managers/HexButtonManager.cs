@@ -9,6 +9,7 @@ using System.Collections;
 
 public class HexButtonManager : MonoBehaviour
 {
+    [SerializeField] private Collider2D     m_collider;
     [SerializeField] private SpriteRenderer m_spriteRendererBody;
     [SerializeField] private SpriteRenderer m_spriteRendererFace;
 	
@@ -49,6 +50,7 @@ public class HexButtonManager : MonoBehaviour
     private void OnGamePhaseUpdate (GamePhase p_gamePhase)
     {
         //m_HexButtonManager.gameObject.SetActive (p_gamePhase == GamePhase.Edit);
+        m_collider.enabled = ((p_gamePhase == GamePhase.Edit) || !m_bIsEmpty);
         m_spriteRendererBody.enabled = ((p_gamePhase == GamePhase.Edit) || !m_bIsEmpty);
         m_spriteRendererFace.enabled = ((p_gamePhase == GamePhase.Edit) || !m_bIsEmpty);
     }
@@ -57,6 +59,7 @@ public class HexButtonManager : MonoBehaviour
     {
         m_spriteRendererFace.enabled = false;
         m_spriteRendererBody.enabled = false;
+        m_collider.enabled = false;
     }
     
     public void AnimateOut ()
