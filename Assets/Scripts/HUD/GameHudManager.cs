@@ -10,6 +10,7 @@ using System.Collections;
 
 public class GameHudManager : MonoBehaviour //HudManager
 {
+	[SerializeField] private Text m_textCurrentPhase;
 	[SerializeField] private Text m_textPlayButtonLabel;
 	
 	public void ToggleGamePhase ()
@@ -22,6 +23,7 @@ public class GameHudManager : MonoBehaviour //HudManager
 		{
             if (PlayerController.Instance.IsInitMazeVertexValid ())
             {   
+				m_textCurrentPhase.text = "Play Phase";
                 m_textPlayButtonLabel.text = "Edit";
                 GameManager.Instance.UpdateGamePhase (GamePhase.Play);
             }
@@ -32,6 +34,7 @@ public class GameHudManager : MonoBehaviour //HudManager
 		}
 		else if (GameManager.Instance.CurrentGamePhase == GamePhase.Play)
 		{
+			m_textCurrentPhase.text = "Edit Phase";
 			m_textPlayButtonLabel.text = "Play";
 			GameManager.Instance.UpdateGamePhase (GamePhase.Edit);
 		}

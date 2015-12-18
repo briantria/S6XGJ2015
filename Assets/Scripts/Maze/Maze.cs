@@ -90,7 +90,7 @@ public class Maze : MonoBehaviour
                     pos.x -= (PADDING * scaleUp * 0.5f);
                     pos.y -= (PADDING * scaleUp * 0.5f);
                     m_tStartPoint.position = pos;
-                    
+					m_tStartPoint.GetComponent<SpriteRenderer> ().color = Color.white;
                     m_tStartPoint.name = "StartPoint at " + m_listVerteces[idx].Id;
                 
                     pos.x +=   7;
