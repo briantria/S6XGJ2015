@@ -36,6 +36,12 @@ public class ResultScreenManager : MonoBehaviour
 		m_canvas.enabled = false;
 	}
 	
+	public void OnClickRetry ()
+	{
+		GameManager.Instance.UpdateGamePhase (GamePhase.Edit);
+		Close ();
+	}
+	
 	public void SetResults (ResultEnum p_resultEnum)
 	{
 		GameResult = p_resultEnum;

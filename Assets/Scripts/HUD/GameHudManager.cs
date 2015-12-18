@@ -13,6 +13,16 @@ public class GameHudManager : MonoBehaviour //HudManager
 	[SerializeField] private Text m_textCurrentPhase;
 	[SerializeField] private Text m_textPlayButtonLabel;
 	
+	protected void OnEnable ()
+	{
+		GameManager.OnGamePhaseUpdate += OnGamePhaseUpdate;
+	}
+	
+	protected void OnDisable ()
+	{
+		GameManager.OnGamePhaseUpdate -= OnGamePhaseUpdate;
+	}
+	
 	public void ToggleGamePhase ()
 	{
         HexSetupPanel.Instance.Close ();
@@ -23,8 +33,6 @@ public class GameHudManager : MonoBehaviour //HudManager
 		{
             if (PlayerController.Instance.IsInitMazeVertexValid ())
             {   
-				m_textCurrentPhase.text = "Play Phase";
-                m_textPlayButtonLabel.text = "Edit";
                 GameManager.Instance.UpdateGamePhase (GamePhase.Play);
             }
             else 
@@ -34,10 +42,25 @@ public class GameHudManager : MonoBehaviour //HudManager
 		}
 		else if (GameManager.Instance.CurrentGamePhase == GamePhase.Play)
 		{
-			m_textCurrentPhase.text = "Edit Phase";
-			m_textPlayButtonLabel.text = "Play";
 			GameManager.Instance.UpdateGamePhase (GamePhase.Edit);
 		}
+	}
+	
+	public void OnGamePhaseUpdate (GamePhase p_gamePhase)
+	{
+		switch (p_gamePhase) {
+		case GamePhase.Edit:
+		{
+			m_textCurrentPhase.text = "Edit Phase";
+			m_textPlayButtonLabel.text = "Play";
+			break;
+		}
+		case GamePhase.Play:
+		{
+			m_textCurrentPhase.text = "Play Phase";
+			m_textPlayButtonLabel.text = "Edit";
+			break;
+		}}
 	}
 	
 	public void OpenTutorial ()

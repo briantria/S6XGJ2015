@@ -25,7 +25,7 @@ public class Maze : MonoBehaviour
     private Transform m_tEndPoint;
     // for demo, set init value
     private   int m_iStartPointID = 42;
-    private   int m_iEndPointID = 64;
+    private   int m_iEndPointID = 96;
 
 	protected void OnEnable ()
 	{
@@ -66,6 +66,17 @@ public class Maze : MonoBehaviour
             m_mainCamera.orthographicSize = CameraZoom.ORTHO_SIZE;
             
             break;
+        }
+        case GamePhase.Edit:
+        {
+        	Vector3 pos = PlayerController.Instance.InitMazeVertex.transform.position;
+			pos.x +=   7;
+			pos.y +=   4;
+			pos.z  = -10;
+			m_mainCamera.transform.position = pos;
+			m_mainCamera.orthographicSize = CameraZoom.ORTHO_SIZE;
+			
+        	break;
         }}
     }
     

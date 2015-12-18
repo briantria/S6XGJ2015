@@ -19,6 +19,8 @@ public static class Utilities
         return Application.absoluteURL;
         #elif (UNITY_IOS || UNITY_ANDROID)
         return Application.persistentDataPath;
+		#else
+		return "";
         #endif
     }
     
