@@ -36,4 +36,9 @@ public class GameHudManager : MonoBehaviour //HudManager
 			GameManager.Instance.UpdateGamePhase (GamePhase.Edit);
 		}
 	}
+	
+	public void OpenTutorial ()
+	{
+		TutorialScreenManager.Instance.Open ();
+	}
 }

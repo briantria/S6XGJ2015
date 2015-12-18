@@ -43,12 +43,12 @@ public class ResultScreenManager : MonoBehaviour
 		switch (p_resultEnum) {
 		case ResultEnum.Win:
 		{
-			m_textResult.text = "Yun oh!";
+			m_textResult.text = "You Won!";
 			break;
 		}
 		case ResultEnum.Lose:
 		{
-			m_textResult.text = "Weak!";
+			m_textResult.text = "You Lose!";
 			break;
 		}}
 	}
